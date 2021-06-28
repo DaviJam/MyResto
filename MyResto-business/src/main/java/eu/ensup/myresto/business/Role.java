@@ -11,11 +11,11 @@ public enum Role
 	/**
 	 * Director role.
 	 */
-	RESTAURATEUR (1, "Client"),
+	RESTORER (1, "Restorer"),
 	/**
 	 * Manager role.
 	 */
-	CLIENT  (2, "Restaurateur");
+	CLIENT  (2, "Client");
 
 	private int    numRole;
 	private String name;
@@ -50,7 +50,7 @@ public enum Role
 	{
 		switch(name)
 		{
-			case "Restaurateur": return this.RESTAURATEUR;
+			case "Restorer": return this.RESTORER;
 			default: return this.CLIENT;
 		}
 	}
@@ -65,7 +65,7 @@ public enum Role
 	{
 		switch(num)
 		{
-			case 1: return RESTAURATEUR;
+			case 1: return RESTORER;
 			default: return CLIENT;
 		}
 	}
@@ -79,17 +79,9 @@ public enum Role
 	{
 		List<Role> lRole = new ArrayList<Role>();
 
-		lRole.add(this.RESTAURATEUR);
+		lRole.add(this.RESTORER);
 		lRole.add(this.CLIENT);
 
 		return lRole;
-	}
-
-	@Override
-	public String toString() {
-		return "Role{" +
-				"numRole=" + numRole +
-				", name='" + name + '\'' +
-				'}';
 	}
 }
