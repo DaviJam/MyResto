@@ -48,12 +48,12 @@ public class LoginDao implements ILoginDao {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         try {
             /*
-             * Crer la connexion
+             * Créer la connexion
              */
             cn = openConnection();
 
             /*
-             * CrÃ©er la requÃªte
+             * Créer la requête
              */
             String sql_request = "SELECT id FROM Person WHERE email = ? AND password = ? AND (role = 1 OR role = 2)";
             st = cn.prepareStatement(sql_request);
@@ -61,7 +61,7 @@ public class LoginDao implements ILoginDao {
             st.setString(2, password);
 
             /*
-             * ExÃ©cuter la requÃªte
+             * Exécuter la requête
              */
             rs = st.executeQuery();
 

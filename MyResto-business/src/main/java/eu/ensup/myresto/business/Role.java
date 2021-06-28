@@ -15,7 +15,7 @@ public enum Role
 	/**
 	 * Manager role.
 	 */
-	CLIENT  (2, "Restorer"),
+	CLIENT  (2, "Restorer");
 
 	private int    numRole;
 	private String name;

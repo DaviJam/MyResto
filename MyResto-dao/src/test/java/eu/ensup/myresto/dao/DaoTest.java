@@ -21,14 +21,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 
-import eu.ensup.gestionetablissement.business.Course;
-import eu.ensup.gestionetablissement.business.Person;
-
 /**
  * Unit test for simple App.
  */
 public class DaoTest
 {
+    /*
     PersonDao daoPerson = new PersonDao();
     CourseDao daoCourse = new CourseDao();
 
@@ -165,29 +163,22 @@ public class DaoTest
 void exampleTest() {
     Assertions.assertTrue(trueBool);
     Assertions.assertFalse(falseBool);
-
     Assertions.assertNotNull(notNullString);
     Assertions.assertNull(notNullString);
-
     Assertions.assertNotSame(originalObject, otherObject);
     Assertions.assertEquals(4, 4);
     Assertions.assertNotEquals(3, 2);
-
     Assertions.assertArrayEquals(new int[]{1,2,3}, new int[]{1,2,3}, "Array Equal Test");
-
     Iterable<Integer> listOne = new ArrayList<>(Arrays.asList(1,2,3,4));
     Iterable<Integer> listTwo = new ArrayList<>(Arrays.asList(1,2,3,4));
     Assertions.assertIterableEquals(listOne, listTwo);
-
     Assertions.assertTimeout(Duration.ofMillis(100), () -> {
     Thread.sleep(50);
     return "result";
     });
-
     Throwable exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
     throw new IllegalArgumentException("error message");
     });
-
     Assertions.fail("not found good reason to pass");
+     */
 }
- */

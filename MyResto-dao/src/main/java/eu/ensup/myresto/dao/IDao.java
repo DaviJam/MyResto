@@ -47,7 +47,7 @@ public interface IDao<T>
      * @return the class of type T
      * @throws ExceptionDao the exception dao
      */
-    T get(T index) throws ExceptionDao;
+    T get(int index) throws ExceptionDao;
 
     /**
      * Delete int.
