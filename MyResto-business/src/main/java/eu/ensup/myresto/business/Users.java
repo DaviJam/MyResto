@@ -13,10 +13,10 @@ public class Users{
     private String address;
 
     public Users(){
-        this.id = null;
+        this.id = 0;
         this.surname = "";
         this.firstname = "";
-        this.role = null;
+        this.role = Role.CLIENT;
         this.email = "";
         this.password = "";
         this.address = "";
@@ -45,7 +45,7 @@ public class Users{
     }
 
     public void setSurname(String surname) {
-        this.name = surname;
+        this.surname = surname;
     }
 
     public String getFirstname() {
