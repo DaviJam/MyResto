@@ -1,23 +1,33 @@
 package eu.ensup.myresto.business;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Order {
     private int id;
     private User user;
-    private Product product;
+    private List<Product> product;
     private Date order_date;
     private Status status;
 
     public Order(){
         this.id = 0;
         this.user = new User();
-        this.product = new Product();
+        this.product = new ArrayList<Product>();
         this.order_date = null;
         this.status = Status.ANNULE;
     }
-    public Order(int id, User user, Product product, Date order_date, Status status) {
+
+    public Order(int id, User user, List<Product> product, Date order_date, Status status) {
         this.id = id;
+        this.user = user;
+        this.product = product;
+        this.order_date = order_date;
+        this.status = status;
+    }
+
+    public Order(User user, List<Product> product, Date order_date, Status status) {
         this.user = user;
         this.product = product;
         this.order_date = order_date;
@@ -40,11 +50,11 @@ public class Order {
         this.user = user;
     }
 
-    public Product getProduct() {
+    public List<Product> getProduct() {
         return product;
     }
 
-    public void setProduct(Product product) {
+    public void setProduct(List<Product> product) {
         this.product = product;
     }
 

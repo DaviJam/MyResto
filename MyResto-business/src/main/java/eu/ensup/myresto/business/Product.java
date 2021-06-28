@@ -35,6 +35,16 @@ public class Product{
         this.category = category;
     }
 
+    public Product(String name, String description, double price, String allergen, String image, int stock, Category category) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.allergen = allergen;
+        this.image = image;
+        this.stock = stock;
+        this.category = category;
+    }
+
     public int getId() {
         return id;
     }

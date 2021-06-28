@@ -15,6 +15,7 @@ public enum Role
 	/**
 	 * Manager role.
 	 */
+
 	CLIENT  (2, "Client");
 
 	private int    numRole;
