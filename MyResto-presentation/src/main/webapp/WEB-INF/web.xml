@@ -12,22 +12,17 @@
   </welcome-file-list>
   <servlet>
     <servlet-name>HomeController</servlet-name>
-    <servlet-class>eu.ensup.gestionetablissement.presentation.HomeController</servlet-class>
+    <servlet-class>eu.ensup.myresto.presentation.HomeController</servlet-class>
   </servlet>
 
   <servlet>
     <servlet-name>LoginServlet</servlet-name>
-    <servlet-class>eu.ensup.gestionetablissement.presentation.LoginController</servlet-class>
+    <servlet-class>eu.ensup.myresto.presentation.LoginController</servlet-class>
   </servlet>
 
   <servlet>
     <servlet-name>LogoutServlet</servlet-name>
-    <servlet-class>eu.ensup.gestionetablissement.presentation.LogoutController</servlet-class>
-  </servlet>
-
-  <servlet>
-    <servlet-name>StudentController</servlet-name>
-    <servlet-class>eu.ensup.gestionetablissement.presentation.StudentController</servlet-class>
+    <servlet-class>eu.ensup.myresto.presentation.LogoutController</servlet-class>
   </servlet>
 
   <error-page>

@@ -1,1 +1,0 @@
-Powershell.exe -executionpolicy remotesigned -File  C:\Users\daori\Documents\ECOLE\Dada\Gestion_Etablissement\CopyWar.ps1

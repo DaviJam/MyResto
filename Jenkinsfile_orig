@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-            echo "Buiding Gestion d'établissement"
+            echo "Buiding My Resto"
                 sh 'mvn -Pclient install'
             }
             post {

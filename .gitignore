@@ -11,7 +11,6 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.nar
 *.ear
@@ -19,5 +18,27 @@
 *.tar.gz
 *.rar
 
+# Folder lib
+/lib/
+
+# Eclipse IDE
+/bin/
+.project
+.classpath
+.settings
+
+#Idea IDE
+*.idea
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# intellij
+*.iml
+*target*
+/target/
+/target
+
+# win script
+*.ps1
+*.bat

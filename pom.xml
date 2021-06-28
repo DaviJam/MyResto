@@ -6,7 +6,7 @@
   <version>1.0</version>
   <packaging>pom</packaging>
 
-  <name>GestionEtablissement</name>
+  <name>MyResto</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
   <properties>
@@ -47,7 +47,7 @@
             <!-- MainClass in mainfest make a executable jar -->
             <archive>
               <manifest>
-                <mainClass>eu.ensup.gestionetablissement.presentation.Main</mainClass>
+                <mainClass>eu.ensup.myresto.presentation.Main</mainClass>
               </manifest>
             </archive>
           </configuration>
@@ -117,7 +117,7 @@
 <!--            <archive>-->
 <!--              <manifest>-->
 <!--                <addClasspath>true</addClasspath>-->
-<!--                <mainClass>eu.ensup.gestionetablissement.presentation.Main</mainClass>-->
+<!--                <mainClass>eu.ensup.myresto.presentation.Main</mainClass>-->
 <!--                <classpathPrefix>dependency/</classpathPrefix>-->
 <!--              </manifest>-->
 <!--            </archive>-->
@@ -146,12 +146,12 @@
     </pluginManagement>
   </build>
   <modules>
-    <module>GestionEtablissement-business</module>
-    <module>GestionEtablissement-dao</module>
-    <module>GestionEtablissement-dto</module>
-    <module>GestionEtablissement-logger</module>
-    <module>GestionEtablissement-mapper</module>
-    <module>GestionEtablissement-service</module>
-    <module>GestionEtablissement-presentation</module>
+    <module>MyResto-business</module>
+    <module>MyResto-dao</module>
+    <module>MyResto-dto</module>
+    <module>MyResto-logger</module>
+    <module>MyResto-mapper</module>
+    <module>MyResto-service</module>
+    <module>MyResto-presentation</module>
   </modules>
 </project>
