@@ -11,22 +11,22 @@ public enum Category
     /**
      * Entree category.
      */
-    ENTREE (1, "Client"),
+    ENTREE (1, "Entree"),
     /**
-     * Plat category.
+     * Entree category.
      */
-    PLAT  (2, "Plat"),
+    PLAT (2, "Plat"),
     /**
-     * Dessert category.
+     * Manager category.
      */
-    DESSERT  (3, "Dessert"),
+    DESSERT  (3, "Dessert");
 
-    private int    numRole;
+    private int    numCategory;
     private String name;
 
-    private Role(int numRole, String name)
+    private Category(int numCategory, String name)
     {
-        this.numRole = numRole;
+        this.numCategory = numCategory;
         this.name = name;
     }
 
@@ -35,7 +35,7 @@ public enum Category
      *
      * @return the num
      */
-    public int    getNum()  { return this.numRole; }
+    public int    getNum()  { return this.numCategory; }
 
     /**
      * Gets name.
@@ -45,47 +45,60 @@ public enum Category
     public String getName() { return this.name; }
 
     /**
-     * Gets role by name.
+     * Gets category by name.
      *
      * @param name the name
-     * @return the role by name
+     * @return the category by name
      */
-    public Role getRoleByName(String name)
+    public Category getCategoryByName(String name)
     {
         switch(name)
         {
-            case "Restaurateur": return this.RESTORATEUR;
-            default: return this.CLIENT;
+            case "Entree": return this.ENTREE;
+            case "Plat": return this.PLAT;
+            case "Dessert": return this.DESSERT;
+            default: return this.ENTREE;
         }
     }
 
     /**
-     * Gets role by num.
+     * Gets category by num.
      *
      * @param num the num
-     * @return the role by num
+     * @return the category by num
      */
-    static public Role getRoleByNum(int num)
+    static public Category getCategoryByNum(int num)
     {
         switch(num)
         {
-            case 1: return RESTORATEUR;
-            default: return CLIENT;
+            case 1: return ENTREE;
+            case 2: return PLAT;
+            case 3: return DESSERT;
+            default: return ENTREE;
         }
     }
 
     /**
-     * Gets all roles.
+     * Gets all categories.
      *
-     * @return the all roles
+     * @return the all categories
      */
-    public List<Role> getAllRoles()
+    public List<Category> getAllCategories()
     {
-        List<Role> lRole = new ArrayList<Role>();
+        List<Category> lCategory = new ArrayList<Category>();
 
-        lRole.add(this.RESTORATEUR);
-        lRole.add(this.CLIENT);
+        lCategory.add(this.ENTREE);
+        lCategory.add(this.PLAT);
+        lCategory.add(this.DESSERT);
 
-        return lRole;
+        return lCategory;
     }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "numCategory=" + numCategory +
+                ", name='" + name + '\'' +
+                '}';
     }
+}

@@ -13,6 +13,17 @@ public class Product{
     private int stock;
     private Category category;
 
+    public Product()
+    {
+        this.id = 0;
+        this.name = "";
+        this.description = "";
+        this.price = 0;
+        this.allergen = "";
+        this.image = "";
+        this.stock = 0;
+        this.category = Category.ENTREE;
+    }
     public Product(int id, String name, String description, double price, String allergen, String image, int stock, Category category) {
         this.id = id;
         this.name = name;
@@ -86,5 +97,19 @@ public class Product{
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", allergen='" + allergen + '\'' +
+                ", image='" + image + '\'' +
+                ", stock=" + stock +
+                ", category=" + category +
+                '}';
     }
 }

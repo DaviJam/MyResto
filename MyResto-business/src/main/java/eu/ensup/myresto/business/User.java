@@ -90,9 +90,9 @@ public class User {
 
     @Override
     public String toString() {
-        return "Users{" +
+        return "User{" +
                 "id=" + id +
-                ", surename='" + surname + '\'' +
+                ", surname='" + surname + '\'' +
                 ", firstname='" + firstname + '\'' +
                 ", role=" + role +
                 ", email='" + email + '\'' +
