@@ -1,4 +1,4 @@
-package eu.ensup.gestionetablissement.business;
+package eu.ensup.myresto.business;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,19 +11,11 @@ public enum Role
 	/**
 	 * Director role.
 	 */
-	DIRECTOR (1, "Director"),
+	RESTORATEUR (1, "Client"),
 	/**
 	 * Manager role.
 	 */
-	MANAGER  (2, "Manager"),
-	/**
-	 * Teacher role.
-	 */
-	TEACHER  (3, "Teacher"),
-	/**
-	 * Student role.
-	 */
-	STUDENT  (4, "Student");
+	CLIENT  (2, "Restorer"),
 
 	private int    numRole;
 	private String name;
@@ -58,10 +50,8 @@ public enum Role
 	{
 		switch(name)
 		{
-			case "Director": return this.DIRECTOR;
-			case "Manager": return this.MANAGER;
-			case "Teacher": return this.TEACHER;
-			default: return this.STUDENT;
+			case "Restaurateur": return this.RESTORATEUR;
+			default: return this.CLIENT;
 		}
 	}
 
@@ -75,10 +65,8 @@ public enum Role
 	{
 		switch(num)
 		{
-			case 1: return DIRECTOR;
-			case 2: return MANAGER;
-			case 3: return TEACHER;
-			default: return STUDENT;
+			case 1: return RESTORATEUR;
+			default: return CLIENT;
 		}
 	}
 
@@ -91,10 +79,8 @@ public enum Role
 	{
 		List<Role> lRole = new ArrayList<Role>();
 
-		lRole.add(this.DIRECTOR);
-		lRole.add(this.MANAGER);
-		lRole.add(this.TEACHER);
-		lRole.add(this.STUDENT);
+		lRole.add(this.RESTORATEUR);
+		lRole.add(this.CLIENT);
 
 		return lRole;
 	}
