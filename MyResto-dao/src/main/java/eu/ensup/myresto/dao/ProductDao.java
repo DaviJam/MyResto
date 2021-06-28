@@ -96,7 +96,7 @@ public class ProductDao implements IDao<Product> {
     }
 
     /**
-     * Delete int.
+     * Delete from product.
      *
      * @param entity the entity
      * @return the int
@@ -104,6 +104,19 @@ public class ProductDao implements IDao<Product> {
      */
     @Override
     public int delete(Product entity) throws ExceptionDao {
+        return 0;
+    }
+
+
+    /**
+     * Delete int.
+     *
+     * @param index the entity
+     * @return the int
+     * @throws ExceptionDao the exception dao
+     */
+
+    public int delete(int index) throws ExceptionDao {
         return 0;
     }
 }
