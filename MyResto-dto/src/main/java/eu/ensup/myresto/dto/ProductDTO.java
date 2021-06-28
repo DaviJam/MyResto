@@ -1,79 +1,117 @@
 package eu.ensup.myresto.dto;
 
-import eu.ensup.myresto.business.Role;
+import eu.ensup.myresto.business.Category;
 
 /**
- * The type Teacher dto.
+ * The type Product.
  */
-public class ProductDTO extends PersonDTO{
+public class ProductDTO{
+    private int id;
+    private String name;
+    private String description;
+    private double price;
+    private String allergen;
+    private String image;
+    private int stock;
+    private Category category;
 
-    private String subjectTaught;
-
-    /**
-     * Instantiates a new Teacher.
-     *
-     * @param lastname      the lastname
-     * @param mailAddress   the mail address
-     * @param address       the address
-     * @param phoneNumber   the phone number
-     * @param id            the id
-     * @param firstname     the firstname
-     * @param password      the password
-     * @param subjectTaught the subject taught
-     */
-    public ProductDTO(String lastname, String mailAddress, String address, String phoneNumber, int id, String firstname, String password, String subjectTaught) {
-        super(lastname, mailAddress, address, phoneNumber, id, firstname, Role.TEACHER, password);
-        this.subjectTaught = subjectTaught;
+    public ProductDTO()
+    {
+        this.id = 0;
+        this.name = "";
+        this.description = "";
+        this.price = 0;
+        this.allergen = "";
+        this.image = "";
+        this.stock = 0;
+        this.category = Category.ENTREE;
+    }
+    public ProductDTO(int id, String name, String description, double price, String allergen, String image, int stock, Category category) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.allergen = allergen;
+        this.image = image;
+        this.stock = stock;
+        this.category = category;
     }
 
-    /**
-     * Instantiates a new Teacher dto.
-     *
-     * @param lastname      the lastname
-     * @param mailAddress   the mail address
-     * @param address       the address
-     * @param phoneNumber   the phone number
-     * @param firstname     the firstname
-     * @param password      the password
-     * @param subjectTaught the subject taught
-     */
-    public ProductDTO(String lastname, String mailAddress, String address, String phoneNumber, String firstname, String password, String subjectTaught) {
-        super(lastname, mailAddress, address, phoneNumber, firstname, Role.TEACHER, password);
-        this.subjectTaught = subjectTaught;
+    public int getId() {
+        return id;
     }
 
-    /**
-     * Instantiates a new Teacher dto.
-     */
-    public ProductDTO() {
-
+    public void setId(int id) {
+        this.id = id;
     }
 
-    /**
-     * Get subject taught string.
-     *
-     * @return the string
-     */
-    public String getSubjectTaught(){
-        return subjectTaught;
+    public String getName() {
+        return name;
     }
 
-    /**
-     * Set subject taught.
-     *
-     * @param subjectTaught the subject taught
-     */
-    public void setSubjectTaught(String subjectTaught){
-        this.subjectTaught = subjectTaught;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getAllergen() {
+        return allergen;
+    }
+
+    public void setAllergen(String allergen) {
+        this.allergen = allergen;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override
     public String toString() {
-        String res = super.toString();
-        res = res.replace("Person", "Teacher");
-        res = res.substring(0, res.length()-1);
-        res = res + ", subjectTaught=\" + subjectTaught + \"]";
-
-        return res;
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", allergen='" + allergen + '\'' +
+                ", image='" + image + '\'' +
+                ", stock=" + stock +
+                ", category=" + category +
+                '}';
     }
 }
