@@ -1,151 +1,91 @@
 package eu.ensup.myresto.dto;
 
+import eu.ensup.myresto.business.Product;
 import eu.ensup.myresto.business.Role;
+import eu.ensup.myresto.business.Status;
+import eu.ensup.myresto.business.User;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * The type Student dto.
  */
-public class OrderDTO extends PersonDTO{
-    private Date dateOfBirth;
-    private double average;
-
-    /**
-     * Gets average.
-     *
-     * @return the average
-     */
-    public double getAverage() {
-        return average;
-    }
-
-    /**
-     * Sets average.
-     *
-     * @param average the average
-     */
-    public void setAverage(double average) {
-        this.average = average;
-    }
+public class OrderDTO{
+    private int id;
+    private User user;
+    private List<Product> product;
+    private Date order_date;
+    private Status status;
 
     /**
      * Instantiates a new Student dto.
      */
     public OrderDTO(){ }
 
-
-    /**
-     * Instantiates a new Student dto.
-     *
-     * @param lastname    the lastname
-     * @param mailAddress the mail address
-     * @param address     the address
-     * @param phoneNumber the phone number
-     * @param id          the id
-     * @param firstname   the firstname
-     * @param password    the password
-     * @param dateOfBirth the date of birth
-     * @param average     the average
-     */
-    public OrderDTO(String lastname, String mailAddress, String address, String phoneNumber, int id, String firstname, String password, Date dateOfBirth, double average) {
-        super(lastname, mailAddress, address, phoneNumber, id, firstname, Role.STUDENT, password);
-        this.dateOfBirth = dateOfBirth;
-        this.average = average;
+    public OrderDTO(int id, User user, List<Product> product, Date order_date, Status status) {
+        this.id = id;
+        this.user = user;
+        this.product = product;
+        this.order_date = order_date;
+        this.status = status;
     }
 
-    /**
-     * Instantiates a new Student dto.
-     *
-     * @param lastname    the lastname
-     * @param mailAddress the mail address
-     * @param address     the address
-     * @param phoneNumber the phone number
-     * @param firstname   the firstname
-     * @param password    the password
-     * @param dateOfBirth the date of birth
-     */
-    public OrderDTO(String lastname, String mailAddress, String address, String phoneNumber, String firstname, String password, Date dateOfBirth)
-    {
-        super(lastname, mailAddress, address, phoneNumber, firstname, Role.STUDENT, password);
-        this.dateOfBirth = dateOfBirth;
+    public OrderDTO(User user, List<Product> product, Date order_date, Status status) {
+        this.user = user;
+        this.product = product;
+        this.order_date = order_date;
+        this.status = status;
     }
 
-    /**
-     * Instantiates a new Student
-     *
-     * @param lastname    the lastname
-     * @param mailAddress the mail address
-     * @param address     the address
-     * @param phoneNumber the phone number
-     * @param id          the id
-     * @param firstname   the firstname
-     * @param password    the password
-     * @param dateOfBirth the date of birth
-     */
-    public OrderDTO(String lastname, String mailAddress, String address, String phoneNumber, int id, String firstname, String password, Date dateOfBirth)
-    {
-        super(lastname, mailAddress, address, phoneNumber, id, firstname, Role.STUDENT, password);
-        this.dateOfBirth = dateOfBirth;
+    public int getId() {
+        return id;
     }
 
-    /**
-     * Instantiates a new Student
-     *
-     * @param lastname    the lastname
-     * @param mailAddress the mail address
-     * @param id          the id
-     * @param firstname   the firstname
-     * @param password    the password
-     * @param dateOfBirth the date of birth
-     */
-    public OrderDTO(String lastname, String mailAddress, int id, String firstname, String password, Date dateOfBirth)
-    {
-        super(lastname, mailAddress, id, firstname, password);
-        this.dateOfBirth = dateOfBirth;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    /**
-     * Instantiates a new Student
-     *
-     * @param lastname    the lastname
-     * @param mailAddress the mail address
-     * @param id          the id
-     * @param firstname   the firstname
-     * @param password    the password
-     */
-    public OrderDTO(String lastname, String mailAddress, int id, String firstname, String password)
-    {
-        this(lastname, mailAddress, id, firstname, password, null);
+    public User getUser() {
+        return user;
     }
 
-
-    /**
-     * Gets date of birth.
-     *
-     * @return date of the student birth
-     */
-    public Date getDateOfBirth() {
-        return dateOfBirth;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    /**
-     * Sets date of birth.
-     *
-     * @param dateOfBirth the date of birth
-     */
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public List<Product> getProduct() {
+        return product;
+    }
+
+    public void setProduct(List<Product> product) {
+        this.product = product;
+    }
+
+    public Date getOrder_date() {
+        return order_date;
+    }
+
+    public void setOrder_date(Date order_date) {
+        this.order_date = order_date;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @Override
     public String toString() {
-        String res = super.toString();
-        res = res.replace("Person", "Student");
-        res = res.substring(0, res.length()-1);
-        res = res + ", dateOfBirth=" + dateOfBirth;
-        res = res + ", average=" + average + "]";
-
-        return res;
+        return "OrderDTO{" +
+                "id=" + id +
+                ", user=" + user +
+                ", product=" + product +
+                ", order_date=" + order_date +
+                ", status=" + status +
+                '}';
     }
 }

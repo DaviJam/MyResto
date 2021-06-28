@@ -88,7 +88,41 @@ public class OrderDao implements IDao<Order> {
 
     @Override
     public List<Order> getAll() throws ExceptionDao {
-        return null;
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        Connection cn = Connect.openConnection();
+        List<Order> allOrders = new ArrayList<Order>();
+
+        Statement st = null;
+        ResultSet res = null;
+
+        try{
+            st = cn.createStatement();
+            res = st.executeQuery("SELECT * FROM Order");
+            if(!res.next()){
+                throw new ExceptionDao("Aucune commande disponible dans la base de donnée.");
+            }
+            while( res.next() )
+            {
+                Order order = this.get(res.getInt("id_order"));
+                allOrders.add(order);
+            }
+
+            // TODO:  Add logger failed and successfull
+            if(allOrders.isEmpty())
+            {
+                DaoLogger.logDaoError(className, methodName,"Echec de récupération d'information concernant toutes les commandes.");
+            }
+
+            DaoLogger.logDaoInfo(className, methodName,"La récupération des informations concernant toutes les commandes a réussie.");
+            st.close();
+            cn.close();
+        }
+        catch (SQLException e) {
+
+            // TODO:  Add logger failed and successfull
+            DaoLogger.logDaoError(className, methodName,"La transaction SELECT dans la méthode getAll a échouée.",e);
+            throw new ExceptionDao("Un problème est survenu au niveau de la base de donnée.");
+        }
     }
 
     @Override
@@ -103,7 +137,7 @@ public class OrderDao implements IDao<Order> {
         try
         {
             st = cn.createStatement();
-            res = st.executeQuery("SELECT orders.id_order, order_date, id_status, orders.id_user, users.surname, users.firstname, users.email, users.password, users.password, users.password, users.id_role, list.id_product, product.name, product.description, product.price, product.allergen, product.image, product.id_category FROM orders, users, list, product WHERE orders.id_user = users.id_user AND list.id_product = product.id_product AND orders.id_user = list.id_order AND orders.id_order = " + index + " GROUP BY orders.id_order, orders.id_user, list.id_product;");
+            res = st.executeQuery("SELECT orders.id_order, order_date, id_status, orders.id_user, users.surname, users.firstname, users.email, users.password, users.adress , users.id_role, list.id_product, product.name, product.description, product.price, product.allergen, product.image, product.id_category FROM orders, users, list, product WHERE orders.id_user = users.id_user AND list.id_product = product.id_product AND orders.id_user = list.id_order AND orders.id_order = " + index + " GROUP BY orders.id_order, orders.id_user, list.id_product;");
             if(!res.next()){
                 // TODO:  Add logger failed and successfull
                 DaoLogger.logDaoError(className, methodName,"Echec de récupération d'information concernant la commande. Ce dernier n'existe pas en base de donnée.");
