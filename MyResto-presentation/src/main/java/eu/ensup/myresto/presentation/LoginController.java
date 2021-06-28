@@ -3,7 +3,6 @@ package eu.ensup.myresto.presentation;
 import eu.ensup.myresto.business.Role;
 import eu.ensup.myresto.service.ConnectionService;
 import eu.ensup.myresto.service.ExceptionService;
-import eu.ensup.myresto.service.PersonService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
