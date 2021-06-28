@@ -35,7 +35,7 @@ public enum Category
      *
      * @return the num
      */
-    public int    getNum()  { return this.numCategory; }
+    public int getNum()  { return this.numCategory; }
 
     /**
      * Gets name.
