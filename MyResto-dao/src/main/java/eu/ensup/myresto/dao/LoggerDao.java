@@ -1,6 +1,6 @@
 package eu.ensup.myresto.dao;
 
-import eu.ensup.gestionetablissement.logger.LoggerHandler;
+import eu.ensup.myresto.logger.LoggerHandler;
 import org.apache.log4j.Logger;
 
 public class LoggerDao extends LoggerHandler {

@@ -1,104 +1,86 @@
 package eu.ensup.myresto.dto;
 
+import eu.ensup.myresto.business.Role;
+
 /**
  * The type Course dto.
  */
 public class UserDTO {
 
-    private String courseSubject;
-    private float nbHours;
     private int id;
+    private String surname;
+    private String firstname;
+    private Role role;
+    private String email;
+    private String password;
+    private String address;
 
-    /**
-     * Gets course subject.
-     *
-     * @return the course subject
-     */
-    public String getCourseSubject() {
-        return courseSubject;
+    public UserDTO() {
     }
 
-    /**
-     * Sets course subject.
-     *
-     * @param courseSubject the course subject
-     */
-    public void setCourseSubject(String courseSubject) {
-        this.courseSubject = courseSubject;
+
+    public UserDTO(String surname, String firstname, Role role, String email, String password, String address) {
+        this.surname = surname;
+        this.firstname = firstname;
+        this.role = role;
+        this.email = email;
+        this.password = password;
+        this.address = address;
     }
 
-    /**
-     * Gets nb hours.
-     *
-     * @return the nb hours
-     */
-    public float getNbHours() {
-        return nbHours;
-    }
-
-    /**
-     * Sets nb hours.
-     *
-     * @param nbHours the nb hours
-     */
-    public void setNbHours(float nbHours) {
-        this.nbHours = nbHours;
-    }
-
-    /**
-     * Gets id.
-     *
-     * @return the id
-     */
     public int getId() {
         return id;
     }
 
-    /**
-     * Sets id.
-     *
-     * @param id the id
-     */
     public void setId(int id) {
         this.id = id;
     }
 
-    /**
-     * Instantiates a new Course dto.
-     */
-    public UserDTO() {
+    public String getSurname() {
+        return surname;
     }
 
-    /**
-     * Instantiates a new Course dto.
-     *
-     * @param courseSubject the course subject
-     * @param nbHours       the nb hours
-     * @param id            the id
-     */
-    public UserDTO(String courseSubject, float nbHours, int id) {
-        this.courseSubject = courseSubject;
-        this.nbHours = nbHours;
-        this.id = id;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
-    /**
-     * Instantiates a new Course dto.
-     *
-     * @param courseSubject the course subject
-     * @param nbHours       the nb hours
-     */
-    public UserDTO(String courseSubject, float nbHours) {
-        this.courseSubject = courseSubject;
-        this.nbHours = nbHours;
+    public String getFirstname() {
+        return firstname;
     }
 
-    @Override
-    public String toString() {
-        return "CourseDTO{" +
-                "courseSubject='" + courseSubject + '\'' +
-                ", nbHours=" + nbHours +
-                ", id=" + id +
-                '}';
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

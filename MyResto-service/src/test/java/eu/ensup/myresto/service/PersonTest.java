@@ -3,7 +3,7 @@ package eu.ensup.myresto.service;
 import eu.ensup.myresto.business.Course;
 import eu.ensup.myresto.dao.CourseDao;
 import eu.ensup.myresto.dao.ExceptionDao;
-import eu.ensup.myresto.dao.PersonDao;
+import eu.ensup.myresto.dao.UserDao;
 import eu.ensup.myresto.dto.OrderDTO;
 import eu.ensup.myresto.mapper.StudentMapper;
 import org.junit.Test;
@@ -24,10 +24,10 @@ import static org.junit.Assert.assertNotEquals;
 public class PersonTest
 {
     @Spy
-    PersonDao dao;
+    UserDao dao;
 
     @InjectMocks
-    PersonService service;
+    UserService service;
 
     @Test
     public void CreatePersonOk() throws ExceptionDao, ExceptionService {

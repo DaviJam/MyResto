@@ -3,7 +3,7 @@ package eu.ensup.myresto.presentation;
 import eu.ensup.myresto.business.Role;
 import eu.ensup.myresto.service.ConnectionService;
 import eu.ensup.myresto.service.ExceptionService;
-import eu.ensup.myresto.service.PersonService;
+import eu.ensup.myresto.service.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -49,7 +49,7 @@ public class LoginController extends HttpServlet {
         RequestDispatcher requestDispatcher;
 
         ConnectionService cs = new ConnectionService();
-        PersonService ps = new PersonService();
+        UserService ps = new UserService();
         Role role = null;
         try {
             cs.checkConnection(id, pass);
