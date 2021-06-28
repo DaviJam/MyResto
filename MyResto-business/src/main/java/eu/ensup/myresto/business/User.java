@@ -3,7 +3,7 @@ package eu.ensup.myresto.business;
 /**
  * The type Users.
  */
-public class Users{
+public class User {
     private int id;
     private String surname;
     private String firstname;
@@ -12,7 +12,7 @@ public class Users{
     private String password;
     private String address;
 
-    public Users(){
+    public User(){
         this.id = 0;
         this.surname = "";
         this.firstname = "";
@@ -22,7 +22,7 @@ public class Users{
         this.address = "";
     }
 
-    public Users(int id, String surname, String firstname, Role role, String email, String password, String address) {
+    public User(int id, String surname, String firstname, Role role, String email, String password, String address) {
         this.id = id;
         this.surname = surname;
         this.firstname = firstname;
