@@ -29,7 +29,6 @@ public class OrderDao implements IDao<Order> {
              * CrÃ©er la connexion
              */
             cn = openConnection();
-            java.sql.Date date = new java.sql.Date();
 
             /*
              * Créer la requete
