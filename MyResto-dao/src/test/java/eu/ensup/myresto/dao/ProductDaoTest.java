@@ -4,6 +4,7 @@ import eu.ensup.myresto.business.Category;
 import eu.ensup.myresto.business.Product;
 import eu.ensup.myresto.business.Role;
 import eu.ensup.myresto.business.User;
+
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
@@ -44,6 +45,7 @@ public class ProductDaoTest
     public void TearDown() throws ExceptionDao {
         if(p != null) {
             daoProduct.delete(p);
+
         }
     }
 
@@ -167,7 +169,6 @@ public class ProductDaoTest
 //        assertThat(c.getNbHours() ,equalTo(d.getNbHours()));
 //    }
 
-}
 
 /*
 @org.junit.jupiter.api.Test
@@ -200,3 +201,35 @@ void exampleTest() {
     Assertions.fail("not found good reason to pass");
 }
  */
+
+    @DisplayName("Create a product and check if it exist")
+    @Tag("ProductDaoTest")
+    public void createProduct() throws ExceptionDao {
+        Product p =  new Product();
+        p.setName("cheeseburger");
+        p.setDescription("pain à burger, cheddar");
+        p.setPrice(15);
+        p.setAllergen("sésame");
+        p.setCategory(Category.PLAT);
+        daoProduct.create(p);
+        Product p1 = daoProduct.get("cheeseburger");
+        assertNotNull(p1);
+        daoProduct.delete(p1.getId());
+    }
+
+    @Test
+    @DisplayName("update a product and check if it exist")
+    @Tag("ProductDaoTest")
+    public void updateProduct() throws ExceptionDao {
+        Product p =  new Product();
+        p.setName("cheeseburger");
+        p.setDescription("pain à burger, cheddar");
+        p.setPrice(15);
+        p.setAllergen("sésame");
+        p.setCategory(Category.PLAT);
+        // TODO : execute update and check if it was corretly executed
+    }
+
+
+
+}
