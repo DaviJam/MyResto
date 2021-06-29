@@ -1,6 +1,7 @@
 package eu.ensup.myresto.presentation;
 
 import eu.ensup.myresto.business.Role;
+import eu.ensup.myresto.dto.UserDTO;
 import eu.ensup.myresto.service.ConnectionService;
 import eu.ensup.myresto.service.ExceptionService;
 import eu.ensup.myresto.service.UserService;
@@ -53,8 +54,8 @@ public class LoginController extends HttpServlet {
         Role role = null;
         try {
             cs.checkConnection(id, pass);
-            PersonDTO person = ps.get(id);
-            role = person.getRole();
+            UserDTO user = ps.get(id);
+            role = user.getRole();
 
         } catch (ExceptionService exceptionService) {
             req.setAttribute(errorFlag, exceptionService.getMessage());

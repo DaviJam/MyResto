@@ -18,25 +18,25 @@ public class UserDao implements IDao<User>
 {
     /**
      * The Cn.
+     * initialisation des variables java permettant de dialoguer avec la bdd
      */
-// initialisation des variables java permettant de dialoguer avec la bdd
-    // connecter a la base de données
     Connection cn = null;
     /**
      * The St.
+     * executer la requete
      */
-// executer la requete
     PreparedStatement st = null;
     /**
      * The Rs.
+     * récupérer le résultat
      */
-// récupérer le résultat
     ResultSet rs = null;
     /**
      * The Res.
+     * nombre de mises à jour
      */
-// nombre de mises à jour
     int res = 0;
+
     // nom de la classe
     String className = getClass().getName();
 
@@ -146,17 +146,18 @@ public class UserDao implements IDao<User>
              */
             res = st.executeUpdate();
 
-            if( res == 0)
+            /*
+             * Fermer la connexion
+             */
+            cn.close();
+
+            if(res == 0)
             {
                 DaoLogger.logDaoError(className, methodName,"Echec de la mise à jour de l'utilisateur" + entity.getSurname() + " " +entity.getFirstname() + " " + entity.getEmail());
                 throw new ExceptionDao("La mise à jour a échoué. L'utilisateur n'existe pas en base de donnée.");
             }
 
             DaoLogger.logDaoInfo(className, methodName,"Les information de l'utilisateur " + entity.getSurname() +" "+entity.getFirstname() + " " + entity.getEmail() + " ont bien été modifié.");
-            /*
-             * Fermer la connexion
-             */
-            cn.close();
 
         } catch (SQLException e) {
             DaoLogger.logDaoError(className, methodName,"La transaction UPDATE dans la méthode update a échouée.",e);

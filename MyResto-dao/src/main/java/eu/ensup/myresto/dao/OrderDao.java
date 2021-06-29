@@ -123,6 +123,7 @@ public class OrderDao implements IDao<Order> {
             DaoLogger.logDaoError(className, methodName,"La transaction SELECT dans la méthode getAll a échouée.",e);
             throw new ExceptionDao("Un problème est survenu au niveau de la base de donnée.");
         }
+        return allOrders;
     }
 
     @Override

@@ -115,7 +115,10 @@ public class UserService implements IService<UserDTO> {
         try{
         User user = this.dao.get(index);
         UserDTO userDto = null;
+
+        if(user != null)
             userDto = UserMapper.businessToDto(user);
+
         return userDto;
         }catch (ExceptionDao exceptionDao){
             serviceLogger.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode.");

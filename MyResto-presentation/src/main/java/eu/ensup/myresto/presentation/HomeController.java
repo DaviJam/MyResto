@@ -62,7 +62,7 @@ documentedproject-1.0-SNAPSHOT.war
 //https://colorhunt.co/palette/273466
 @WebServlet(
         name = "HomeController",
-        urlPatterns = "/accueil"
+        urlPatterns = "/"
 )
 public class HomeController extends HttpServlet {
 
