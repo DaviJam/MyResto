@@ -97,14 +97,17 @@ public class OrderDao implements IDao<Order> {
 
         try{
             st = cn.createStatement();
-            res = st.executeQuery("SELECT * FROM Order");
+            res = st.executeQuery("SELECT * FROM Orders");
             if(!res.next()){
                 throw new ExceptionDao("Aucune commande disponible dans la base de donnée.");
             }
-            while( res.next() )
+            else
             {
-                Order order = this.get(res.getInt("id_order"));
-                allOrders.add(order);
+                do {
+                    Order order = this.get(res.getInt("id_order"));
+                    allOrders.add(order);
+                }
+                while(res.next());
             }
 
             // TODO:  Add logger failed and successfull
@@ -138,7 +141,8 @@ public class OrderDao implements IDao<Order> {
         try
         {
             st = cn.createStatement();
-            res = st.executeQuery("SELECT orders.id_order, order_date, id_status, orders.id_user, users.surname, users.firstname, users.email, users.password, users.adress , users.id_role, list.id_product, product.name, product.description, product.price, product.allergen, product.image, product.id_category FROM orders, users, list, product WHERE orders.id_user = users.id_user AND list.id_product = product.id_product AND orders.id_user = list.id_order AND orders.id_order = " + index + " GROUP BY orders.id_order, orders.id_user, list.id_product;");
+            res = st.executeQuery("SELECT orders.id_order, order_date, id_status, orders.id_user, users.surname, users.firstname, users.email, users.password, users.address , users.id_role, list.id_product, product.name, product.description, product.price, product.allergen, product.image, product.stock, product.id_category FROM orders, users, list, product WHERE orders.id_user = users.id_user AND list.id_product = product.id_product AND orders.id_user = list.id_order AND orders.id_order = " + index + " GROUP BY orders.id_order, orders.id_user, list.id_product;");
+            System.out.println(res.toString());
             if(!res.next()){
                 // TODO:  Add logger failed and successfull
                 DaoLogger.logDaoError(className, methodName,"Echec de récupération d'information concernant la commande. Ce dernier n'existe pas en base de donnée.");
@@ -148,17 +152,27 @@ public class OrderDao implements IDao<Order> {
             {
                 List<Product> listproduct = new ArrayList<Product>();
                 User user = new User(res.getString("surname"), res.getString("firstname"), Role.CLIENT, res.getString("email"), res.getString("password"), res.getString("address"));
+                java.sql.Date date = res.getDate("order_date");
+                Status status = Status.getStatusByNum(res.getInt("id_status"));
+                int idorder = res.getInt("id_order");
                 do
                 {
-                    Product product = new Product(res.getString("name"), res.getString("description"), res.getDouble("price"), res.getString("allergen"), res.getString("image"), res.getInt("stock"), Category.getCategoryByNum(res.getInt("id_category")));
+                    Product product = new Product(res.getString("name"),
+                            res.getString("description"),
+                            res.getDouble("price"),
+                            res.getString("allergen"),
+                            res.getString("image"),
+                            res.getInt("stock"),
+                            Category.getCategoryByNum(res.getInt("id_category")));
+
                     listproduct.add(product);
                 }
                 while(res.next());
 
-                order = new Order(user, listproduct, res.getDate("order_date"), Status.getStatusByNum(res.getInt("id_status")));
+                order = new Order(idorder,user, listproduct, date, status);
 
                 // TODO:  Add logger failed and successfull
-                DaoLogger.logDaoInfo(className, methodName, "Les information du cours " + res.getString("coursesubject") + " " + res.getFloat("nbhours") + "  ont été récupérer de la base de donnée.");
+                DaoLogger.logDaoInfo(className, methodName, "Les informations de la commande numéro " + index + " ont été récupérées ");
             }
         }
         catch (SQLException e) {
@@ -185,7 +199,6 @@ public class OrderDao implements IDao<Order> {
 
     @Override
     public int delete(Order entity) throws ExceptionDao {
-
         return 0;
     }
 
@@ -202,7 +215,7 @@ public class OrderDao implements IDao<Order> {
             try
             {
                 st = cn.createStatement();
-                st.execute("DELETE FROM List WHERE id="+index);
+                st.execute("DELETE FROM List WHERE id_order="+index);
 
                 DaoLogger.logDaoInfo(className, methodName,"La suppression des produits relié à la commande a réussie.");
                 st.close();
@@ -215,8 +228,9 @@ public class OrderDao implements IDao<Order> {
             // Delete la commande
             try
             {
+                cn = Connect.openConnection();
                 st = cn.createStatement();
-                st.execute("DELETE FROM Order WHERE id="+index);
+                st.execute("DELETE FROM Orders WHERE id_order="+index);
 
                 DaoLogger.logDaoInfo(className, methodName,"La suppression de la commande a réussie.");
                 st.close();
@@ -232,6 +246,30 @@ public class OrderDao implements IDao<Order> {
             DaoLogger.logDaoError(className, methodName,"Echec lors de la suppression de la commande. Ce dernier n'existe pas dans la base de donnée.");
         }
 
+        return res;
+    }
+
+    public Boolean update(int index, int status) throws ExceptionDao {
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        Boolean res = false;
+
+            Connection cn = Connect.openConnection();
+            Statement st = null;
+            try {
+                st = cn.createStatement();
+                st.execute("UPDATE Orders SET id_status = "+status+" WHERE id_order="+index);
+
+                DaoLogger.logDaoInfo(className, methodName,"Le statut de la commande numéro " + index + " a bien été modifié en " + status);
+                st.close();
+                cn.close();
+                res = true;
+            }
+            catch( SQLException sqle) {
+                res = false;
+                // TODO:  Add logger failed and successfull
+                DaoLogger.logDaoError(className, methodName,"Probleme de modification de la base de donnée.",sqle);
+                throw new ExceptionDao("Un problème est survenu au niveau de la base de donnée.");
+            }
         return res;
     }
 }

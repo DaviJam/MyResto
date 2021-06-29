@@ -80,13 +80,27 @@ public class OrderService implements IService<OrderDTO>{
         return delete(orderDTO.getId());
     }
 
-    @Override
+
     public int delete(int index) throws ExceptionService {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         int ret;
         try {
             ret = this.dao.delete(index);
         } catch (ExceptionDao exceptionDao) {
+            serviceLogger.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode.");
+            throw new ExceptionService(exceptionDao.getMessage());
+        }
+        return ret;
+    }
+
+    public Boolean update(int index, int status) throws ExceptionService{
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        Boolean ret = false;
+        try {
+            this.dao.update(index, status);
+            ret = true;
+        } catch (ExceptionDao exceptionDao) {
+            ret = false;
             serviceLogger.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode.");
             throw new ExceptionService(exceptionDao.getMessage());
         }
