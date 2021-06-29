@@ -33,19 +33,20 @@ public class LoginController extends HttpServlet {
         /**
          * Set the content type
          */
-        requestDispatcher = req.getRequestDispatcher("connexion.jsp");
+        requestDispatcher = req.getRequestDispatcher("testLogin.jsp");
 
         requestDispatcher.forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         /**
          * Check for user id
          */
-        String id = req.getParameter("Ident");
-        String pass = req.getParameter("Password");
+        String id = req.getParameter("login");
+        String pass = req.getParameter("pwd");
+
+        System.out.println(id +" "+ pass);
 
         RequestDispatcher requestDispatcher;
 
@@ -59,7 +60,7 @@ public class LoginController extends HttpServlet {
 
         } catch (ExceptionService exceptionService) {
             req.setAttribute(errorFlag, exceptionService.getMessage());
-            requestDispatcher = req.getRequestDispatcher("connexion.jsp");
+            requestDispatcher = req.getRequestDispatcher("login.jsp");
             requestDispatcher.forward(req, resp);
             return;
         }
@@ -74,10 +75,7 @@ public class LoginController extends HttpServlet {
         /**
          * Set the content type
          */
-        resp.sendRedirect(req.getContextPath() + "/accueil");
-//        req.getRequestDispatcher("/accueil");
-//
-//        requestDispatcher.forward(req, resp);
-
+        requestDispatcher = req.getRequestDispatcher("index.jsp");
+        requestDispatcher.forward(req, resp);
     }
 }

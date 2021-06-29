@@ -55,7 +55,7 @@ public class LoginDao implements ILoginDao {
             /*
              * Créer la requête
              */
-            String sql_request = "SELECT id FROM Person WHERE email = ? AND password = ? AND (role = 1 OR role = 2)";
+            String sql_request = "SELECT id_user FROM users WHERE email = ? AND password = ? AND (id_role = 1 OR id_role = 2)";
             st = cn.prepareStatement(sql_request);
             st.setString(1, mail);
             st.setString(2, password);
@@ -67,7 +67,7 @@ public class LoginDao implements ILoginDao {
 
 
             if (rs.next()) {
-                id = rs.getInt("id");
+                id = rs.getInt("id_user");
                 DaoLogger.logDaoInfo(className, methodName,"L'utilisateur " + mail +  " authentifié");
             } else {
                 DaoLogger.logDaoError(className, methodName,mail + " : Identifiant ou mot de passe incorrect.");
