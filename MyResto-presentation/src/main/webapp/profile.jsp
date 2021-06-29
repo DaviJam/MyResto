@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,23 +13,23 @@
 </head>
 <body>
     <header>
-        <img src="img/menu.svg" alt="" onclick="document.querySelector('header').classList.toggle('active');">
+        <img src="<%=request.getContextPath()%>/img/menu.svg" alt="" onclick="document.querySelector('header').classList.toggle('active');">
         <ul class="nav">
-            <li><a href="index.html">La carte</a></li>
-            <li><a href="profile.html">Mon compte</a></li>
-            <li><a href="manage_orders.html">Commandes à préparer</a></li>
-            <li><a href="manage_stock.html">Gérer les stocks</a></li>
-            <li><a href="login.html">Login</a></li>
+            <li><a href="index.jsp">La carte</a></li>
+            <li><a href="profile">Mon compte</a></li>
+            <li><a href="manage_orders.jsp">Commandes à préparer</a></li>
+            <li><a href="manage_stock.jsp">Gérer les stocks</a></li>
+            <li><a href="login.jsp">Login</a></li>
             <li class="btn">Deconnexion</li>
         </ul>
     </header>
     
     <h1 class="main-title"><i></i> Mes informations personnelles</h1>
     <div class="relative px" id="profile">
-        <p>Nom : <span>Morvan</span></p>
-        <p>Prénom : <span>Steven</span></p>
-        <p>Email : <span>pro.morvan.steven@gmail.com</span></p>
-        <p>Adresse : <span>37 rue de la vallée, 78970, Mézières sur seine</span></p>
+        <p>Nom : <span>${surname}</span></p>
+        <p>Prénom : <span>${firstname}</span></p>
+        <p>Email : <span>${email}</span></p>
+        <p>Adresse : <span>${address}</span></p>
         <a href="#" class="btn fixed">Deconnexion</a>
     </div>
     

@@ -1,5 +1,6 @@
+<%@ page pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -67,10 +68,10 @@
         <img src="img/card.svg" alt="" id="card" onclick="document.querySelector('#modal_card').classList.toggle('active');">
         <ul class="nav">
             <li class="active"><a href="index.html">La carte</a></li>
-            <li><a href="profile.html">Mon compte</a></li>
-            <li><a href="manage_orders.html">Commandes à préparer</a></li>
-            <li><a href="manage_stock.html">Gérer les stocks</a></li>
-            <li><a href="login.html">Login</a></li>
+            <li><a href="profile">Mon compte</a></li>
+            <li><a href="manage_orders.jsp">Commandes à préparer</a></li>
+            <li><a href="manage_stock.jsp">Gérer les stocks</a></li>
+            <li><a href="login.jsp">Login</a></li>
             <li class="btn">Deconnexion</li>
         </ul>
     </header>

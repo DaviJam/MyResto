@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,12 +15,12 @@
     <header>
         <img src="img/menu.svg" alt="" onclick="document.querySelector('header').classList.toggle('active');">
         <ul class="nav">
-            <li><a href="index.html">La carte</a></li>
-            <li><a href="profile.html">Mon compte</a></li>
+            <li><a href="index.jsp">La carte</a></li>
+            <li><a href="profile">Mon compte</a></li>
 
-            <li><a href="manage_orders.html">Commandes à préparer</a></li>
-            <li><a href="manage_stock.html">Gérer les stocks</a></li>
-            <li><a href="login.html">Login</a></li>
+            <li><a href="manage_orders.jsp">Commandes à préparer</a></li>
+            <li><a href="manage_stock.jsp">Gérer les stocks</a></li>
+            <li><a href="login.jsp">Login</a></li>
             <li class="btn">Deconnexion</li>
         </ul>
     </header>
