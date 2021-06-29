@@ -45,7 +45,6 @@ public class ProductDaoTest
     public void TearDown() throws ExceptionDao {
         if(p != null) {
             daoProduct.delete(p);
-
         }
     }
 
@@ -118,6 +117,8 @@ public class ProductDaoTest
         p2 = daoProduct.getAll();
 
         assertThat(p2.size(), Matchers.greaterThanOrEqualTo(2));
+
+        daoProduct.delete(p1);
     }
 //
 //    @Test
