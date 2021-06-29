@@ -105,7 +105,7 @@ public class HomeController extends HttpServlet {
             req.setAttribute("listProduct", listProduct);
             req.setAttribute("listCategory", listCategory);
 
-            this.getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
+            req.getRequestDispatcher("/index.jsp").forward(req, resp);
         } catch (ExceptionService exceptionService) {
             System.out.println("dans le catch");
         }
