@@ -93,7 +93,7 @@ public class UserService implements IService<UserDTO> {
             serviceLogger.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode.");
             throw new ExceptionService(exceptionDao.getMessage());
         }
-        return 0;
+        return res;
     }
 
     @Override
