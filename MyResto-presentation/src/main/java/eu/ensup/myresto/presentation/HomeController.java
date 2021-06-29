@@ -1,5 +1,12 @@
 package eu.ensup.myresto.presentation;
 
+import eu.ensup.myresto.business.Category;
+import eu.ensup.myresto.business.Product;
+import eu.ensup.myresto.dto.ProductDTO;
+import eu.ensup.myresto.service.ExceptionService;
+import eu.ensup.myresto.service.LoggerService;
+import eu.ensup.myresto.service.ProductService;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,6 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /* source
  .
@@ -65,21 +75,42 @@ documentedproject-1.0-SNAPSHOT.war
         urlPatterns = "/"
 )
 public class HomeController extends HttpServlet {
-
+    private LoggerService productServiceLogger = new LoggerService();
     public HomeController() {
         super();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            /**
+             * Set the content type
+             */
+            ProductService productService = new ProductService();
 
-        RequestDispatcher requestDispatcher;
-        /**
-         * Set the content type
-         */
-        requestDispatcher = req.getRequestDispatcher("index.jsp");
+            List<ProductDTO> listProduct = productService.getAll();
 
-        requestDispatcher.forward(req, resp);
+            List<Category> listCategory = Arrays.asList(Category.values());
+            /*for(Category category : listCategory) {
+                System.out.println("category : " + category);
+                System.out.println("category.getNum() : " + category.getNum());
+            }
+            for(ProductDTO productDTO : listProduct) {
+                System.out.println("productDTO : " + productDTO);
+                System.out.println("productDTO.getName() : " + productDTO.getName());
+                System.out.println("productDTO.getDescription(): " + productDTO.getDescription());
+            }*/
+            System.out.println("listProduct.size() : " + listProduct.size());
+
+            req.setAttribute("listProduct", listProduct);
+            req.setAttribute("listCategory", listCategory);
+
+            this.getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
+        } catch (ExceptionService exceptionService) {
+            System.out.println("dans le catch");
+        }
+
+
 
     }
 }
