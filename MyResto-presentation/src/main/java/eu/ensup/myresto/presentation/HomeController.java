@@ -72,7 +72,7 @@ documentedproject-1.0-SNAPSHOT.war
 //https://colorhunt.co/palette/273466
 @WebServlet(
         name = "HomeController",
-        urlPatterns = "/"
+        urlPatterns = "/accueil"
 )
 public class HomeController extends HttpServlet {
     private LoggerService productServiceLogger = new LoggerService();
@@ -82,6 +82,7 @@ public class HomeController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        RequestDispatcher requestDispatcher;
         try {
             /**
              * Set the content type
@@ -105,12 +106,10 @@ public class HomeController extends HttpServlet {
             req.setAttribute("listProduct", listProduct);
             req.setAttribute("listCategory", listCategory);
 
-            req.getRequestDispatcher("/index.jsp").forward(req, resp);
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
         } catch (ExceptionService exceptionService) {
             System.out.println("dans le catch");
         }
-
-
 
     }
 }

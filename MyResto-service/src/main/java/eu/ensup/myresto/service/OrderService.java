@@ -27,6 +27,7 @@ public class OrderService implements IService<OrderDTO>{
     String className = getClass().getName();
 
     public OrderService(OrderDao orderdao){ this.dao = orderdao; }
+    public OrderService() { this.dao = new OrderDao(); }
 
 
     @Override

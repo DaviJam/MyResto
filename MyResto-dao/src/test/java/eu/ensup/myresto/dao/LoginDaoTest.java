@@ -29,7 +29,7 @@ public class LoginDaoTest {
     @After
     public void TearDown() throws ExceptionDao {
         if(user != null) {
-            userDao.delete(user);
+            userDao.delete(user.getEmail());
         }
     }
 
