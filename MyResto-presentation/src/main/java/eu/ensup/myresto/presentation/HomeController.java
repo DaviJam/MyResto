@@ -72,7 +72,7 @@ documentedproject-1.0-SNAPSHOT.war
 //https://colorhunt.co/palette/273466
 @WebServlet(
         name = "HomeController",
-        urlPatterns = "/"
+        urlPatterns = "/accueil"
 )
 public class HomeController extends HttpServlet {
     private LoggerService productServiceLogger = new LoggerService();
