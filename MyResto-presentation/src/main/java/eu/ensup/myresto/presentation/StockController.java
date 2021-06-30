@@ -2,6 +2,7 @@ package eu.ensup.myresto.presentation;
 
 import eu.ensup.myresto.dto.ProductDTO;
 import eu.ensup.myresto.service.ExceptionService;
+import eu.ensup.myresto.service.LoggerService;
 import eu.ensup.myresto.service.ProductService;
 
 import javax.servlet.ServletException;
@@ -19,6 +20,8 @@ import java.util.List;
 )
 
 public class StockController extends HttpServlet {
+
+    private LoggerService loggerService = new LoggerService();
 
     public StockController() {
         super();
@@ -39,34 +42,25 @@ public class StockController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //try {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        try {
+            ProductService productService = new ProductService();
             Enumeration keys = req.getParameterNames();
             while (keys.hasMoreElements() ) {
                 String key = (String) keys.nextElement();
-                System.out.println("key : " + key);
+                int stockValue = Integer.parseInt( req.getParameter(key) );
 
-                String vCode = key.substring(key.indexOf("_") + 1);
-                System.out.println("vCode : " + vCode);
 
-                String[] arrayParameters = req.getParameterValues(key);
-                System.out.println("arrayParameters.length : " + arrayParameters.length);
+                ProductDTO productToUpdate = productService.get(Integer.parseInt(key));
+                productToUpdate.setStock(stockValue);
+
+
+                productService.update(productToUpdate);
+
             }
-
-            /*int product_id = Integer.parseInt( req.getParameter("product_id") );
-            int stock = Integer.parseInt( req.getParameter("stock") );
-            ProductService productService = new ProductService();
-
-            ProductDTO productToUpdate = productService.get(product_id);
-            productToUpdate.setStock(stock);
-            productService.update(productToUpdate);*/
-
-            resp.sendRedirect("/manage_stock");
-        /*} catch (ExceptionService exceptionService) {
-            exceptionService.printStackTrace();
-        }*/
-
-
-
+        } catch (ExceptionService exceptionService) {
+            loggerService.logServiceError(exceptionService.getClass().getName(), "doPost stock controller", "La modification du stock n'as pus être effectué");
+        }
+        resp.sendRedirect(req.getContextPath() + "/home");
     }
 }
