@@ -5,8 +5,15 @@ import eu.ensup.myresto.business.*;
 import static eu.ensup.myresto.dao.Connect.openConnection;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class OrderDao implements IDao<Order> {
 
@@ -91,23 +98,25 @@ public class OrderDao implements IDao<Order> {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         Connection cn = Connect.openConnection();
         List<Order> allOrders = new ArrayList<Order>();
-
+        List<Integer> allidOrders = new ArrayList<>();
         Statement st = null;
         ResultSet res = null;
 
         try{
             st = cn.createStatement();
             res = st.executeQuery("SELECT * FROM Orders");
-            if(!res.next()){
+            while(res.next()){
+                allidOrders.add(res.getInt("id_order"));
+            }
+            if(allidOrders.isEmpty())
+            {
                 throw new ExceptionDao("Aucune commande disponible dans la base de donnée.");
             }
-            else
-            {
-                do {
-                    Order order = this.get(res.getInt("id_order"));
-                    allOrders.add(order);
-                }
-                while(res.next());
+            st.close();
+            cn.close();
+
+            for(int o : allidOrders){
+                allOrders.add(this.get(o));
             }
 
             // TODO:  Add logger failed and successfull
@@ -117,8 +126,9 @@ public class OrderDao implements IDao<Order> {
             }
 
             DaoLogger.logDaoInfo(className, methodName,"La récupération des informations concernant toutes les commandes a réussie.");
-            st.close();
-            cn.close();
+
+
+
         }
         catch (SQLException e) {
 
@@ -141,8 +151,7 @@ public class OrderDao implements IDao<Order> {
         try
         {
             st = cn.createStatement();
-            res = st.executeQuery("SELECT orders.id_order, order_date, id_status, orders.id_user, users.surname, users.firstname, users.email, users.password, users.address , users.id_role, list.id_product, product.name, product.description, product.price, product.allergen, product.image, product.stock, product.id_category FROM orders, users, list, product WHERE orders.id_user = users.id_user AND list.id_product = product.id_product AND orders.id_user = list.id_order AND orders.id_order = " + index + " GROUP BY orders.id_order, orders.id_user, list.id_product;");
-            System.out.println(res.toString());
+            res = st.executeQuery("SELECT orders.id_order, order_date, id_status, orders.id_user, users.surname, users.firstname, users.email, users.password, users.address , users.id_role, list.id_product, list.quantity, product.name, product.description, product.price, product.allergen, product.image, product.stock, product.id_category FROM orders, users, list, product WHERE orders.id_user = users.id_user AND list.id_product = product.id_product AND orders.id_order = list.id_order AND orders.id_order = " + index + " GROUP BY orders.id_order, orders.id_user, list.id_product;");
             if(!res.next()){
                 // TODO:  Add logger failed and successfull
                 DaoLogger.logDaoError(className, methodName,"Echec de récupération d'information concernant la commande. Ce dernier n'existe pas en base de donnée.");
@@ -153,6 +162,9 @@ public class OrderDao implements IDao<Order> {
                 List<Product> listproduct = new ArrayList<Product>();
                 User user = new User(res.getString("surname"), res.getString("firstname"), Role.CLIENT, res.getString("email"), res.getString("password"), res.getString("address"));
                 java.sql.Date date = res.getDate("order_date");
+                java.sql.Time time = res.getTime("order_date");
+                System.out.println(time.toString());
+
                 Status status = Status.getStatusByNum(res.getInt("id_status"));
                 int idorder = res.getInt("id_order");
                 do
@@ -162,7 +174,7 @@ public class OrderDao implements IDao<Order> {
                             res.getDouble("price"),
                             res.getString("allergen"),
                             res.getString("image"),
-                            res.getInt("stock"),
+                            res.getInt("quantity"),
                             Category.getCategoryByNum(res.getInt("id_category")));
 
                     listproduct.add(product);
