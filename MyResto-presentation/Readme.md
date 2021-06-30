@@ -18,15 +18,15 @@ Ce logiciel permet de gérer un établissement scolaire. Il est actuellement pos
 * Accéder à la liste des étudiants (pour le directeur uniquement)
 
 :warning: Les fonctionnalités suivantes n'ont pas été implémentées :
-* Accéder au menu de l'organisation depuis l'accueil,
+* Accéder au menu de l'organisation depuis l'p,
 * Créer un compte,
-* Accéder au menu Planning depuis l'accueil,
+* Accéder au menu Planning depuis l'p,
 
 ## Installation
 
 * Importer le fichier de base de donnée **gestion_etablissement.sql** dans votre base de donnée.  Le nom de la base de donnée est le même que celui du fichier .sql.
 * Copier/Coller le fichier **etablissement.war** dans le répertoire '**webapps**' de votre container web. Vous devez avoir une instance de tomcat en fonctionnement.
-* Ouvrir la page web **http://localhost:8080/etablissement/accueil** dans votre navigateur
+* Ouvrir la page web **http://localhost:8080/etablissement/home** dans votre navigateur
 
 Deux choix sont alors possibles.
 

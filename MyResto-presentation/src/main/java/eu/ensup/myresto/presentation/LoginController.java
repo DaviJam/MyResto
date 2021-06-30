@@ -75,7 +75,7 @@ public class LoginController extends HttpServlet {
         /**
          * Set the content type
          */
-        resp.sendRedirect(req.getContextPath() + "/accueil");
+        resp.sendRedirect(req.getContextPath() + "/home");
         //requestDispatcher = req.getRequestDispatcher("index.jsp");
         //requestDispatcher.forward(req, resp);
     }
