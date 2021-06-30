@@ -33,7 +33,7 @@ public class LoginController extends HttpServlet {
         /**
          * Set the content type
          */
-        requestDispatcher = req.getRequestDispatcher("testLogin.jsp");
+        requestDispatcher = req.getRequestDispatcher("login.jsp");
 
         requestDispatcher.forward(req, resp);
     }
@@ -69,13 +69,14 @@ public class LoginController extends HttpServlet {
          * If success create user session
          */
         HttpSession session = req.getSession();
-        session.setAttribute("user-id", id);
-        session.setAttribute("role", role.getNum());
+        session.setAttribute("email", id);
+        session.setAttribute("role", String.valueOf(role.getNum()));
 
         /**
          * Set the content type
          */
-        requestDispatcher = req.getRequestDispatcher("index.jsp");
-        requestDispatcher.forward(req, resp);
+        resp.sendRedirect(req.getContextPath() + "/accueil");
+        //requestDispatcher = req.getRequestDispatcher("index.jsp");
+        //requestDispatcher.forward(req, resp);
     }
 }

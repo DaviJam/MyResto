@@ -11,6 +11,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -68,5 +70,42 @@ public class OrderTest {
         int ret = service.delete(1);
         assertEquals(ret, 1);
         Mockito.verify(dao, Mockito.atLeast(1)).delete(1);
+    }
+
+    @Test
+    public void TestOrder(){
+        //RequestDispatcher requestDispatcher;
+        //requestDispatcher = req.getRequestDispatcher("testorderlist.jsp");
+
+        //HttpSession session = req.getSession();
+        //session.setAttribute("email", "youness@gmail.com");
+        //session.setAttribute("role", "2");
+        //String emailuser = (String) session.getAttribute("email");
+        String role = "2";
+        String emailuser = "youness@gmail.com";
+        OrderService orderService = new OrderService();
+        List<OrderDTO> orderlist = new ArrayList<OrderDTO>();
+
+        try { // Récupération de toutes les commandes
+            orderlist = orderService.getAll();
+            System.out.println("order list : " + orderlist.toString());
+        } catch (ExceptionService exceptionService) {
+            // exceptionService.printStackTrace();
+        }
+        // Si l'utilisateur est un client, on trie les commandes pour ne récupérer que les siennes
+        if(role == "1"){ // Si c'est un client, on trie les commandes
+            List<OrderDTO> neworderlist = new ArrayList<OrderDTO>();
+            for(OrderDTO o : orderlist){
+                if(o.getUser().getEmail() == emailuser)
+                {
+                    neworderlist.add(o);
+                }
+            }
+            System.out.println(neworderlist);
+        }
+        else
+        {
+        }
+        System.out.println(orderlist);
     }
 }

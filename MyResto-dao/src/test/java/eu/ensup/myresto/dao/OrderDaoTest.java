@@ -65,7 +65,6 @@ public class OrderDaoTest {
     @Tag("OrderDaoTest")
     public void orderGetAll() throws ExceptionDao {
         List<Order> orderlist = orderDao.getAll();
-        System.out.println(orderlist);
         assertNotNull(orderlist);
     }
 }
