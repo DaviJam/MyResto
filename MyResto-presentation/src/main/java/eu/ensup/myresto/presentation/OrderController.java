@@ -32,8 +32,8 @@ public class OrderController extends HttpServlet {
         requestDispatcher = req.getRequestDispatcher("manage_orders.jsp");
 
         HttpSession session = req.getSession();
-        session.setAttribute("email", "youness@gmail.com"); // VALEUR DE TEST SANS SESSION
-        session.setAttribute("role", "2"); // VALEUR DE TEST SANS SESSION
+        session.setAttribute("email", "clients@gmail.com"); //TODO VALEUR DE TEST SANS SESSION
+        session.setAttribute("role", "1"); //TODO VALEUR DE TEST SANS SESSION
         String emailuser = (String) session.getAttribute("email");
         OrderService orderService = new OrderService();
         List<OrderDTO> orderlist = new ArrayList<OrderDTO>();
@@ -47,7 +47,7 @@ public class OrderController extends HttpServlet {
         if((String) session.getAttribute("role") == "1"){ // Si c'est un client, on trie les commandes
             List<OrderDTO> neworderlist = new ArrayList<OrderDTO>();
             for(OrderDTO o : orderlist){
-                if(o.getUser().getEmail() == emailuser)
+                if(o.getUser().getEmail().equals(emailuser))
                 {
                     neworderlist.add(o);
                 }
