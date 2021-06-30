@@ -36,6 +36,6 @@ public class LogoutController extends HttpServlet {
         /**
          * Set the content type
          */
-         resp.sendRedirect("index.jsp");
+         resp.sendRedirect(req.getContextPath() + "/accueil");
     }
 }
