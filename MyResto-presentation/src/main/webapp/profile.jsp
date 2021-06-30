@@ -14,7 +14,7 @@
         <p>Prénom : <span>${firstname}</span></p>
         <p>Email : <span>${email}</span></p>
         <p>Adresse : <span>${address}</span></p>
-        <a href="#" class="btn fixed">Deconnexion</a>
+        <a href="logout" class="btn fixed">Deconnexion</a>
     </div>
     
 </body>

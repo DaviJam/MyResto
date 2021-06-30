@@ -3,10 +3,10 @@
     <img src="img/menu.svg" alt="" onclick="document.querySelector('header').classList.toggle('active');">
     <img src="img/card.svg" alt="" id="card" onclick="document.querySelector('#modal_card').classList.toggle('active');">
     <ul class="nav">
-        <li class="active"><a href="accueil">La carte</a></li>
+        <li class="active"><a href="home">La carte</a></li>
         <% if (session.getAttribute("role") != null) { %>
             <% String str = (String) session.getAttribute("role"); %>
-            <% if (str.equals("2")) { %>
+            <% if (str.equals("1")) { %>
                 <li><a href="manage_orders">Commandes à préparer</a></li>
                 <li><a href="manage_stock">Gérer les stocks</a></li>
             <% } else { %>

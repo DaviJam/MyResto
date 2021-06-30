@@ -1,6 +1,7 @@
 <%@ page pageEncoding="UTF-8" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <%@include file="head.jsp" %>
 </head>
@@ -9,60 +10,25 @@
     <%@include file="header.jsp" %>
     
     <h1 class="main-title">Actualise ton stock</h1>
-    <div class="relative px">
-        <div class="product">
-            <div class="product-body">
-                <img src="img/burger.png" alt="">
-                <span>Famous burger</span>  
-            </div>
-            <div class="product-action">
-                <div class="action-stock">
-                    <button>-</button>
-                    <input type="text" value="12">
-                    <button>+</button>    
+    <form method="POST" action="manage_stock">
+        <div id="listProduct" class="relative px">
+            <c:forEach items="${listProduct}" var="product">
+                <div class="product">
+                    <div class="product-body">
+                        <img src="${ product.image }" alt="">
+                        <span>${ product.name }</span>
+                    </div>
+                    <div class="product-action">
+                        <div class="action-stock">
+                            <button type="button" direction="bottom" class="qtt_stock">-</button>
+                            <input type="number" value="${ product.stock }" id="${ product.id }">
+                            <button type="button" direction="top" class="qtt_stock">+</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </c:forEach>
         </div>
-        <div class="product">
-            <div class="product-body">
-                <img src="img/burger.png" alt="">
-                <span>Famous burger</span>  
-            </div>
-            <div class="product-action">
-                <div class="action-stock">
-                    <button>-</button>
-                    <input type="text" value="12">
-                    <button>+</button>    
-                </div>
-            </div>
-        </div>
-        <div class="product">
-            <div class="product-body">
-                <img src="img/burger.png" alt="">
-                <span>Famous burger</span>  
-            </div>
-            <div class="product-action">
-                <div class="action-stock">
-                    <button>-</button>
-                    <input type="text" value="12">
-                    <button>+</button>    
-                </div>
-            </div>
-        </div>
-        <div class="product">
-            <div class="product-body">
-                <img src="img/burger.png" alt="">
-                <span>Famous burger</span>  
-            </div>
-            <div class="product-action">
-                <div class="action-stock">
-                    <button>-</button>
-                    <input type="text" value="12">
-                    <button>+</button>    
-                </div>
-            </div>
-        </div>
-    </div>
-    <a href="" class="btn" style="position: fixed; bottom: 25px; right: 25px; box-shadow: 0 5px 10px rgb(154 160 185 / 45%), 0 15px 40px rgb(166 173 201 / 20%);">Enregistrer le stock</a>
+        <input type="submit" class="btn" style="position: fixed; bottom: 25px; right: 25px; box-shadow: 0 5px 10px rgb(154 160 185 / 45%), 0 15px 40px rgb(166 173 201 / 20%);" value="Enregistrer le stock"/>
+    </form>
 </body>
 </html>

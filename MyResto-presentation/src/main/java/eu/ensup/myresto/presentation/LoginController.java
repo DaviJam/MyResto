@@ -69,14 +69,13 @@ public class LoginController extends HttpServlet {
          * If success create user session
          */
         HttpSession session = req.getSession();
-        session.setAttribute("user-id", id);
+        session.setAttribute("email", id);
         session.setAttribute("role", String.valueOf(role.getNum()));
-        System.out.println(String.valueOf(role.getNum()));
 
         /**
          * Set the content type
          */
-        resp.sendRedirect(req.getContextPath() + "/accueil");
+        resp.sendRedirect(req.getContextPath() + "/home");
         //requestDispatcher = req.getRequestDispatcher("index.jsp");
         //requestDispatcher.forward(req, resp);
     }
