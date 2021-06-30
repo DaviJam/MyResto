@@ -20,9 +20,9 @@
                     </div>
                     <div class="product-action">
                         <div class="action-stock">
-                            <button>-</button>
-                            <input type="text" value="${ product.stock }" id="${ product.id }">
-                            <button>+</button>
+                            <button type="button" direction="bottom" class="qtt_stock">-</button>
+                            <input type="number" value="${ product.stock }" id="${ product.id }">
+                            <button type="button" direction="top" class="qtt_stock">+</button>
                         </div>
                     </div>
                 </div>
