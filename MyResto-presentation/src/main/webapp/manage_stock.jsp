@@ -1,4 +1,6 @@
 <%@ page pageEncoding="UTF-8" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,18 +17,20 @@
     <header>
         <img src="img/menu.svg" alt="" onclick="document.querySelector('header').classList.toggle('active');">
         <ul class="nav">
-            <li><a href="index.jsp">La carte</a></li>
-            <li><a href="profile">Mon compte</a></li>
-
-            <li><a href="manage_orders.jsp">Commandes à préparer</a></li>
-            <li><a href="manage_stock.jsp">Gérer les stocks</a></li>
-            <li><a href="login.jsp">Login</a></li>
+            <li><a href="index.html">La carte</a></li>
+            <li><a href="profile.html">Mon compte</a></li>
+            <li><a href="manage_orders.html">Commandes à préparer</a></li>
+            <li><a href="manage_stock.html">Gérer les stocks</a></li>
+            <li><a href="login.html">Login</a></li>
             <li class="btn">Deconnexion</li>
         </ul>
     </header>
+
+
     
     <h1 class="main-title">Actualise ton stock</h1>
-    <div class="relative px">
+    <form method="POST" action="gestion-stock">
+    <div id="listProduct" class="relative px">
         <div class="product">
             <div class="product-body">
                 <img src="img/burger.png" alt="">
@@ -80,6 +84,8 @@
             </div>
         </div>
     </div>
-    <a href="" class="btn" style="position: fixed; bottom: 25px; right: 25px; box-shadow: 0 5px 10px rgb(154 160 185 / 45%), 0 15px 40px rgb(166 173 201 / 20%);">Enregistrer le stock</a>
+    <input type="submit" class="btn" style="position: fixed; bottom: 25px; right: 25px; box-shadow: 0 5px 10px rgb(154 160 185 / 45%), 0 15px 40px rgb(166 173 201 / 20%);" value="Enregistrer le stock"/>
+
+    </form>
 </body>
 </html>
