@@ -25,19 +25,13 @@ public class ProfilController extends HttpServlet {
         requestDispatcher = req.getRequestDispatcher("profile.jsp");
 
         HttpSession session = req.getSession();
-        session.setAttribute("email", "Lacomblez.thomas@gmail.com");
         String email = (String) session.getAttribute("email");
-
-        req.setAttribute("test", "test");
-
         UserService service = new UserService();
         try {
-            UserDTO userDTO = service.get("Lacomblez.thomas@gmail.com");
-            req.setAttribute("id_user", userDTO.getId());
+            UserDTO userDTO = service.get(email);
             req.setAttribute("surname", userDTO.getSurname());
             req.setAttribute("firstname", userDTO.getFirstname());
             req.setAttribute("email", userDTO.getEmail());
-            req.setAttribute("password", userDTO.getPassword());
             req.setAttribute("address", userDTO.getAddress());
             req.setAttribute("id_role", userDTO.getRole());
 

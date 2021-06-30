@@ -69,9 +69,8 @@ public class LoginController extends HttpServlet {
          * If success create user session
          */
         HttpSession session = req.getSession();
-        session.setAttribute("user-id", id);
+        session.setAttribute("email", id);
         session.setAttribute("role", String.valueOf(role.getNum()));
-        System.out.println(String.valueOf(role.getNum()));
 
         /**
          * Set the content type
