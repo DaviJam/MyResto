@@ -64,7 +64,7 @@ header #card{float: right; cursor: pointer;}
 .product .product-body span{line-height: 48px; padding: 0 25px;}
 .product .product-action{float: left; position: relative; width: 100%;}
 .product .product-action .action-stock{float: right;}
-.product .product-action .action-stock button{height: 32px; width: 32px; border: none; background-color: #292d30; color: #fff; font-size: x-large; float: left;}
+.product .product-action .action-stock button{height: 32px; width: 32px; border: none; background-color: #292d30; color: #fff; font-size: x-large; float: left; cursor: pointer;}
 .product .product-action .action-stock button:first-child{border-top-left-radius: 25px; border-bottom-left-radius: 25px;}
 .product .product-action .action-stock button:last-child{border-top-right-radius: 25px; border-bottom-right-radius: 25px;}
 .product .product-action .action-stock input{border: none; height: 32px; width: 48px; float: left; background-color: #E4E4E4; color: #292D30; padding: 0; text-align: center; font-weight: 700;}
