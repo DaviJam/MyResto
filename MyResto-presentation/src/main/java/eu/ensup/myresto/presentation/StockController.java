@@ -15,7 +15,7 @@ import java.util.List;
 
 @WebServlet(
         name = "StockController",
-        urlPatterns = "/gestion-stock"
+        urlPatterns = "/manage_stock"
 )
 
 public class StockController extends HttpServlet {
@@ -61,7 +61,7 @@ public class StockController extends HttpServlet {
             productToUpdate.setStock(stock);
             productService.update(productToUpdate);*/
 
-            resp.sendRedirect("/gestion_stock");
+            resp.sendRedirect("/manage_stock");
         /*} catch (ExceptionService exceptionService) {
             exceptionService.printStackTrace();
         }*/

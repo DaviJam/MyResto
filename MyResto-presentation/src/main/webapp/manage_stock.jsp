@@ -10,7 +10,7 @@
     <%@include file="header.jsp" %>
     
     <h1 class="main-title">Actualise ton stock</h1>
-    <form method="POST" action="gestion-stock">
+    <form method="POST" action="manage_stock">
     <div id="listProduct" class="relative px">
         <div class="product">
             <div class="product-body">
