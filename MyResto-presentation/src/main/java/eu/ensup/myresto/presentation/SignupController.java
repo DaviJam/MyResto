@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @WebServlet(
         name = "SignupServlet",
-        urlPatterns = "/signup"
+        urlPatterns = "/register"
 )
 public class SignupController extends HttpServlet {
 
@@ -33,7 +33,7 @@ public class SignupController extends HttpServlet {
         /**
          * Set the content type
          */
-        requestDispatcher = req.getRequestDispatcher("testSignup.jsp");
+        requestDispatcher = req.getRequestDispatcher("register.jsp");
 
         requestDispatcher.forward(req, resp);
     }
@@ -56,7 +56,7 @@ public class SignupController extends HttpServlet {
             userService.create(userDto);
         } catch (ExceptionService exceptionService) {
             req.setAttribute(errorFlag, exceptionService.getMessage());
-            requestDispatcher = req.getRequestDispatcher("signup.jsp");
+            requestDispatcher = req.getRequestDispatcher("register.jsp");
             requestDispatcher.forward(req, resp);
             return;
         }
