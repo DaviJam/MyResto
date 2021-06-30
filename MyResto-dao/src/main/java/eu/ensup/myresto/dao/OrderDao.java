@@ -45,9 +45,9 @@ public class OrderDao implements IDao<Order> {
                     "id_status," +
                     "id_user)" +
                     "VALUES(?, ?, ?) ";
-            st = cn.prepareStatement(sql_request);
+            st = cn.prepareStatement(sql_request, Statement.RETURN_GENERATED_KEYS);
             st.setDate(1, new java.sql.Date(entity.getOrder_date().getTime()));
-            st.setString(2, entity.getStatus().getName());
+            st.setInt(2, entity.getStatus().getNum());
             st.setInt(3, entity.getUser().getId());
 
 
@@ -55,21 +55,32 @@ public class OrderDao implements IDao<Order> {
              * Exécuter la requête
              */
             res = st.executeUpdate();
+            ResultSet resultset = st.getGeneratedKeys();
+            int id_order = 0;
+            if(!resultset.next()){
 
-            // Ajout des produits dans la table List avec l'id de la commande
-            for(Product product : entity.getProduct())
-            {
-                String sql_request_list = "INSERT INTO List(" +
-                        "id_product," +
-                        "id_order)" +
-                        "VALUES(?, ?) ";
-                st = cn.prepareStatement(sql_request_list);
-                st.setInt(1, product.getId());
-                st.setInt(2, entity.getId());
-
-                res = st.executeUpdate();
             }
-            //*****************//
+            else
+            {
+                id_order = resultset.getInt(1);
+
+                // Ajout des produits dans la table List avec l'id de la commande
+                for(Product product : entity.getProduct())
+                {
+                    String sql_request_list = "INSERT INTO List(" +
+                            "id_product," +
+                            "id_order)" +
+                            "VALUES(?, ?) ";
+                    st = cn.prepareStatement(sql_request_list);
+                    st.setInt(1, product.getId());
+                    st.setInt(2, id_order);
+
+                    res = st.executeUpdate();
+                }
+                //*****************//
+            }
+
+
 
             /*
              * Fermer la connexion

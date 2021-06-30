@@ -383,4 +383,77 @@ public class ProductDao implements IDao<Product> {
         }
         return 0;
     }
+
+    public static Product getProductById(int index) throws ExceptionDao {
+        Connection cn = null;
+        /**
+         * The St.
+         * executer la requete
+         */
+        PreparedStatement st = null;
+        /**
+         * The Rs.
+         * récupérer le résultat
+         */
+        ResultSet rs = null;
+        /**
+         * The Res.
+         * nombre de mises à jour
+         */
+        int res = 0;
+
+        // nom de la classe
+        String className = null;
+
+        Product product = null;
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        try {
+            /*
+             * CrÃ©er la connexion
+             */
+            cn = Connect.openConnection();
+
+            /*
+             * CrÃ©er la requÃªte
+             */
+            String sql_request = "SELECT * FROM product WHERE id_product = ?";
+            st = cn.prepareStatement(sql_request);
+            st.setInt(1, index);
+
+            /*
+             * ExÃ©cuter la requÃªte
+             */
+            rs = st.executeQuery();
+
+            /*
+             * Créer une personne
+             */
+            if(rs.next())
+            {
+                int id = rs.getInt("id_product");
+                String name = rs.getString("name");
+                String desc = rs.getString("description");
+                double price = rs.getDouble("price");
+                String allergen = rs.getString("allergen");
+                String image = rs.getString("image");
+                int stock = rs.getInt("stock");
+                Category category = Category.getCategoryByNum(rs.getInt("id_category"));
+
+                product = new Product(id, name, desc, price, allergen, image, stock, category);
+                DaoLogger.logDaoInfo(className, methodName,"La récupération des informations concernant le produit a réussie.");
+            }  else {
+                DaoLogger.logDaoError(className, methodName,"Echec de récupération d'information concernant le produit. Ce dernier n'existe pas en base de donnée.");
+                throw new ExceptionDao("Impossible de récupérer les informations de ce produit. Veuillez contacter votre administrateur.");
+            }
+
+            /*
+             * Fermer la connexion
+             */
+            cn.close();
+        } catch (SQLException e) {
+            DaoLogger.logDaoError(className, methodName,"La transaction SELECT dans la méthode get a échouée.",e);
+            throw new ExceptionDao("Impossible de récupérer les informations demandées. Veuillez contacter votre administrateur.");
+        }
+        return product;
+    }
 }
