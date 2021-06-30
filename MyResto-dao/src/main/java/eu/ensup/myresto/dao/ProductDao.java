@@ -85,7 +85,7 @@ public class ProductDao implements IDao<Product> {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         try {
             Connection cn = openConnection();
-            String request = "UPDATE `product` SET `id_product`=?,`name`=?,`description`=?,`price`=?,`allergen`=?,`image`=?,`id_category`=? WHERE id_product=?";
+            String request = "UPDATE `product` SET `name`=?,`description`=?,`price`=?,`allergen`=?,`image`=?, `stock`=?, `id_category`=? WHERE id_product=?";
 
             PreparedStatement st = cn.prepareStatement(request);
             st.setString(1, entity.getName());
@@ -93,15 +93,16 @@ public class ProductDao implements IDao<Product> {
             st.setDouble(3, entity.getPrice());
             st.setString(4, entity.getAllergen());
             st.setString(5, entity.getImage());
-            st.setInt(6, entity.getCategory().getNum());
-            st.setInt(7, entity.getId());
+            st.setInt(6, entity.getStock());
+            st.setInt(7, entity.getCategory().getNum());
+            st.setInt(8, entity.getId());
             st.executeUpdate();
 
-            if(res == 0)
+            /*if(res == 0)
             {
-                DaoLogger.logDaoError(className, methodName,"Echec de la mise à jour du produit" + entity.getName());
+                DaoLogger.logDaoError(className, methodName,"Echec de la mise à jour du produit : " + entity.getName());
                 throw new ExceptionDao("La mise à jour a échoué. Le produit n'existe pas en base de donnée.");
-            }
+            }*/
 
             DaoLogger.logDaoInfo(className, methodName,"Les information du produit " + entity.getName() + " ont bien été modifié.");
 
