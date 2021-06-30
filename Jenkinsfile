@@ -9,7 +9,7 @@ pipeline {
 		stage ("Git checkout") {
 			steps {
 				echo "Checking out branch..."
-				checkout([$class: 'GitSCM', branches: [[name: '*/MyResto']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/DaviJam/MyResto.git']]])
+				checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/DaviJam/MyResto.git']]])
 			}
 		}
 		stage("Initialize") {
