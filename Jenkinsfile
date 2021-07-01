@@ -41,7 +41,7 @@ pipeline {
 				echo "Deploying..."
 				script {
 					try {
-						deploy adapters: [tomcat7(credentialsId: 'e8677a13-83bc-4756-8dc9-c76e332cb99b', url: 'http://vps-2489945c.vps.ovh.net:8080/')], contextPath: '/myresto', war: '**/*.war'
+						deploy adapters: [tomcat7(credentialsId: 'e8677a13-83bc-4756-8dc9-c76e332cb99b', url: 'http://vps-2489945c.vps.ovh.net:5789/')], contextPath: '/myresto', war: '**/*.war'
 					} catch (err) {
 						echo "Error deploying war file..."
 					}
