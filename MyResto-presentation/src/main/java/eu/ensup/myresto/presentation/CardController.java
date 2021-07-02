@@ -45,6 +45,12 @@ public class CardController extends HttpServlet {
         String product = req.getParameter("product");
         System.out.println(product);
 
+        //On supprime le panier si la session est null
+        HttpSession session = req.getSession(true);
+        if (session.getAttribute("cards") == null) {
+            listProduct.clear();
+        }
+
         //On update la variable panier
         ProductDTO p = new ProductDTO();
         try {
@@ -78,10 +84,9 @@ public class CardController extends HttpServlet {
                 "            <a href=\"#\" class=\"btn\" style=\"margin-top: 25px;\">Valider ma commande</a>\n" +
                 "        </div>";
 
-        HttpSession session = req.getSession();
-        session.setAttribute("cards", listProduct);
-        session.setAttribute("sum", listProduct);
 
+
+        session.setAttribute("cards", listProduct);
 
         resp.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
         resp.setCharacterEncoding("UTF-8"); // You want world domination, huh?

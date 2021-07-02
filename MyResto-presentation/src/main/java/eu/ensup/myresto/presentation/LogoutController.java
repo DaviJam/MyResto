@@ -30,6 +30,7 @@ public class LogoutController extends HttpServlet {
          */
         HttpSession session = req.getSession(false);
         if (session != null) {
+            session.setMaxInactiveInterval(1);
             session.invalidate();
         }
 
