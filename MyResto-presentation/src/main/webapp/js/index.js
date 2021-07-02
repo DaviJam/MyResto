@@ -45,7 +45,7 @@ if (DEBUG_MODE) {console.log(formAddToCard);}
 formAddToCard.forEach(f => f.addEventListener('submit', event => {
   event.preventDefault();
   var request = new XMLHttpRequest();
-  var url = "card";
+  var url = "card_add";
   request.open("POST", url, true);
   request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   request.onreadystatechange = function () {
@@ -62,8 +62,21 @@ formAddToCard.forEach(f => f.addEventListener('submit', event => {
   request.send("product=" + formObj.product);
 }));
 
-function sendAjax() {
+//Suppression d'un produit au panier
+function card_delete(elem) {
+  var request = new XMLHttpRequest();
+  var url = "card_delete";
+  request.open("POST", url, true);
+  request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  request.onreadystatechange = function () {
+      if (request.readyState === 4 && request.status === 200) {
+        document.getElementById("modal_card").innerHTML = request.responseText;
+        let bubble = document.querySelector(".cardCount");
+        bubble.innerText = document.querySelectorAll("div.product.no-float").length;
+      }
+  };
 
+  request.send("id=" + elem.getAttribute("data"));
 }
 
 function changeQqt(qtt) {

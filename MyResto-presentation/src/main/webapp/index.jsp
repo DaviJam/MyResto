@@ -33,7 +33,7 @@
                         <img src="${ product.image }" alt="">
                         <p>${ product.name }</p>
                     </a>
-                    <form method="POST" action="card" id="product${ product.id }" class="addToCard">
+                    <form method="POST" action="card_add" id="product${ product.id }" class="addToCard">
                         <input type="hidden" value="${ product.id }" name="product">
                     </form>
                     <input class="link-add-card" type="submit" form="product${ product.id }" value="Ajouter au panier">
