@@ -93,26 +93,33 @@ public class OrderController extends HttpServlet {
             // id_user
 
             List<ProductDTO> list_product = (List<ProductDTO>) req.getSession(false).getAttribute("cards");
-            HashMap<Integer, Integer> productMap = new HashMap<>();
+            HashMap<Integer, ProductDTO> productMap = new HashMap<>();
             for(ProductDTO p : list_product)
             {
                 if(! productMap.containsKey(p.getId())) {
-                    productMap.put(p.getId(), 1);
+                    p.setStock(1);
+                    productMap.put(p.getId(), p);
                 } else {
-                    productMap.put(p.getId(), productMap.get(p.getId()) + 1);
+                    p.setStock(productMap.get(p.getId()).getStock() + 1);
+                    productMap.put(p.getId(), p);
                 }
             }
+            List<ProductDTO> list_product_updated = new ArrayList<>();
+            productMap.forEach((key, value) -> list_product_updated.add(value));
 
             String id_user = (String) req.getSession(false).getAttribute("email");
             try {
                 // Creation de l'order
-                OrderDTO orderDTO = new OrderDTO(new UserService().get(id_user), list_product, new java.sql.Date(Calendar.getInstance().getTime().getTime()), Status.ENCOURS);
+                OrderDTO orderDTO = new OrderDTO(new UserService().get(id_user), list_product_updated, new java.sql.Date(Calendar.getInstance().getTime().getTime()), Status.ENATTENTE);
 
                 orderService.create(orderDTO);
+
+                //resp.sendRedirect("/myresto/orders_show");
+                req.getRequestDispatcher("manage_orders.jsp").forward(req, resp);
+
             } catch (ExceptionService exceptionService) {
                 exceptionService.printStackTrace();
             }
-            resp.sendRedirect(req.getContextPath() + "/orders_show");
         }
     }
 
@@ -179,18 +186,14 @@ public class OrderController extends HttpServlet {
             } catch (ExceptionService exceptionService) {
                 exceptionService.printStackTrace();
             }
-            System.out.println(session.getAttribute("email"));
-            System.out.println(session.getAttribute("role"));
+
             // Si l'utilisateur est un client, on trie les commandes pour ne récupérer que les siennes
             if(session.getAttribute("role").equals("2")){ // Si c'est un client, on trie les commandes
-                System.out.println("L'user est bien un client");
+
                 List<OrderDTO> neworderlist = new ArrayList<OrderDTO>();
                 for(OrderDTO o : orderlist){
-                    System.out.println(o.getUser().getEmail());
-                    System.out.println(emailuser);
                     if(o.getUser().getEmail().equals(emailuser))
                     {
-
                         neworderlist.add(o);
                     }
                 }
