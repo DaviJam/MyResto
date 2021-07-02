@@ -31,11 +31,6 @@
             <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>eu.ensup.myresto.business</groupId>
-            <artifactId>MyResto-business</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
             <groupId>eu.ensup.myresto.service</groupId>
             <artifactId>MyResto-service</artifactId>
             <version>1.0</version>
