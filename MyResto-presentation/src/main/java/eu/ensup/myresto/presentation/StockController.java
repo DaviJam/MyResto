@@ -43,24 +43,29 @@ public class StockController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        System.out.println("INSIDE DOPOST OF STOCK CONTROLLER");
         try {
+            System.out.println("INSIDE DOPOST OF STOCK CONTROLLER");
             ProductService productService = new ProductService();
             Enumeration keys = req.getParameterNames();
             while (keys.hasMoreElements() ) {
                 String key = (String) keys.nextElement();
                 int stockValue = Integer.parseInt( req.getParameter(key) );
 
+                System.out.println("INSIDE DOPOST OF STOCK CONTROLLER");
 
                 ProductDTO productToUpdate = productService.get(Integer.parseInt(key));
                 productToUpdate.setStock(stockValue);
 
-
+                System.out.println("before productService update");
                 productService.update(productToUpdate);
-
+                System.out.println("after productService update");
             }
         } catch (ExceptionService exceptionService) {
+            System.out.println(exceptionService.getMessage());
+            exceptionService.printStackTrace();
             loggerService.logServiceError(exceptionService.getClass().getName(), "doPost stock controller", "La modification du stock n'as pus être effectué");
         }
-        resp.sendRedirect(req.getContextPath() + "/home");
+        resp.sendRedirect(req.getContextPath() + "/manage_stock");
     }
 }

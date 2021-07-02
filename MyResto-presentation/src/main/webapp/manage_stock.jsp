@@ -21,7 +21,7 @@
                     <div class="product-action">
                         <div class="action-stock">
                             <button type="button" direction="bottom" class="qtt_stock">-</button>
-                            <input type="number" value="${ product.stock }" id="${ product.id }">
+                            <input type="number" value="${ product.stock }" id="product-${ product.id }" name="${ product.id }">
                             <button type="button" direction="top" class="qtt_stock">+</button>
                         </div>
                     </div>
