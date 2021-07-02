@@ -62,7 +62,7 @@ public class OrderTest {
     @Test
     public void updateOrderOk() throws ExceptionDao, ExceptionService {
         OrderDTO orderDTO = new OrderDTO(0, new UserDTO(), new ArrayList<ProductDTO>(), new Date(), Status.TERMINE);
-        when(dao.update(any(Order.class))).thenReturn(1);
+        when(dao.update(0,Status.TERMINE)).thenReturn(true);
         Boolean ret = service.update(0, StatusDTO.TERMINE);
         assertEquals(ret, true);
         Mockito.verify(dao, Mockito.atLeast(1)).update(anyInt(), Status.getStatusByNum(anyInt()));
