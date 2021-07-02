@@ -10,7 +10,7 @@
                 <li><a href="orders">Commandes à préparer</a></li>
                 <li><a href="manage_stock">Gérer les stocks</a></li>
             <% } else { %>
-                <li><a href="orders">Mes commandes</a></li>
+                <li><a href="orders/show">Mes commandes</a></li>
             <% } %>
             <li><a href="profile">Mon compte</a></li>
             <li class="btn"><a href="logout">Deconnexion</a></li>

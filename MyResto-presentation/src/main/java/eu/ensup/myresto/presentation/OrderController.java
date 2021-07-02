@@ -46,21 +46,20 @@ public class OrderController extends HttpServlet {
         if (!checkUser(req, resp)) {
             return;
         }
-
         switch (req.getRequestURI()) {
-            case "/order/create": {
+            case "/myresto/order/create": {
                 create(req, resp);
             }
-            case "/order/validate": {
+            case "/myresto/order/validate": {
                 validate(req, resp);
             }
-            case "/order/cancel": {
+            case "/myresto/order/cancel": {
                 cancel(req, resp);
             }
-            case "/order/update": {
+            case "/myresto/order/update": {
                 update(req, resp);
             }
-            case "/orders/show": {
+            case "/myresto/orders/show": {
                 show(req, resp);
             }
         }
@@ -69,9 +68,9 @@ public class OrderController extends HttpServlet {
     boolean checkUser(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         boolean res = true;
         HttpSession checkUserSession = req.getSession(false);
-        if (checkUserSession != null && checkUserSession.getAttribute("user-id") == null) {
+        if (checkUserSession.getAttribute("email") == null) {
             System.out.println(req.getMethod() + " Redirected to home no user logged in");
-            resp.sendRedirect("/home");
+            resp.sendRedirect("/myresto/home");
             res = false;
         }
         return res;
@@ -83,7 +82,7 @@ public class OrderController extends HttpServlet {
             // Create a basket in session
             OrderDTO currentOrder = new OrderDTO();
             req.getSession().setAttribute("basket", currentOrder);
-            resp.sendRedirect("/order/show");
+            resp.sendRedirect("/myresto/order/show");
         }
     }
 
@@ -109,39 +108,39 @@ public class OrderController extends HttpServlet {
     private void show(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if(req.getMethod().equals("GET"))
         {
-        }
+            System.out.println("GET Methods");
+            HttpSession session = req.getSession();
+            session.setAttribute("email", "youness@gmail.com"); //TODO VALEUR DE TEST SANS SESSION
+            session.setAttribute("role", "1"); //TODO VALEUR DE TEST SANS SESSION
 
-        HttpSession session = req.getSession();
-        session.setAttribute("email", "clients@gmail.com"); //TODO VALEUR DE TEST SANS SESSION
-        session.setAttribute("role", "1"); //TODO VALEUR DE TEST SANS SESSION
+            String emailuser = (String) session.getAttribute("email");
 
-        String emailuser = (String) session.getAttribute("email");
+            OrderService orderService = new OrderService();
+            List<OrderDTO> orderlist = new ArrayList<OrderDTO>();
 
-        OrderService orderService = new OrderService();
-        List<OrderDTO> orderlist = new ArrayList<OrderDTO>();
-
-        try { // Récupération de toutes les commandes
-            orderlist = orderService.getAll();
-        } catch (ExceptionService exceptionService) {
-            // exceptionService.printStackTrace();
-        }
-        // Si l'utilisateur est un client, on trie les commandes pour ne récupérer que les siennes
-        if(session.getAttribute("role") == "1"){ // Si c'est un client, on trie les commandes
-            List<OrderDTO> neworderlist = new ArrayList<OrderDTO>();
-            for(OrderDTO o : orderlist){
-                if(o.getUser().getEmail().equals(emailuser))
-                {
-                    neworderlist.add(o);
-                }
+            try { // Récupération de toutes les commandes
+                orderlist = orderService.getAll();
+            } catch (ExceptionService exceptionService) {
+                exceptionService.printStackTrace();
             }
-            req.setAttribute("orderlist", neworderlist);
-        }
-        else
-        {
-            req.setAttribute("orderlist", orderlist);
+            // Si l'utilisateur est un client, on trie les commandes pour ne récupérer que les siennes
+            if((String) session.getAttribute("role") == "2"){ // Si c'est un client, on trie les commandes
+                List<OrderDTO> neworderlist = new ArrayList<OrderDTO>();
+                for(OrderDTO o : orderlist){
+                    if(o.getUser().getEmail().equals(emailuser))
+                    {
+                        neworderlist.add(o);
+                    }
+                }
+                req.setAttribute("orderlist", neworderlist);
+            }
+            else
+            {
+                req.setAttribute("orderlist", orderlist);
+            }
+
+            req.getRequestDispatcher("manage_orders.jsp").forward(req, resp);
         }
 
-        // Récupération du prix total
-        req.getRequestDispatcher("manage_orders.jsp").forward(req, resp);
     }
 }
