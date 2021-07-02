@@ -1,6 +1,5 @@
 package eu.ensup.myresto.presentation;
 
-import eu.ensup.myresto.business.Order;
 import eu.ensup.myresto.business.Role;
 import eu.ensup.myresto.dto.OrderDTO;
 import eu.ensup.myresto.service.ExceptionService;
@@ -16,10 +15,17 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @WebServlet(
         name = "OrderServlet",
-        urlPatterns = "/orders"
+        urlPatterns = {
+                "/order/create", // POST - create a basket
+                "/order/validate", // POST - validate a basket which becomes an order
+                "/order/update", // POST - update current basket
+                "/order/cancel", // POST - cancel current basket
+                "/orders/show" // GET - show all orders
+        }
 )
 public class OrderController extends HttpServlet {
     public OrderController() {
@@ -28,17 +34,88 @@ public class OrderController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher;
-        requestDispatcher = req.getRequestDispatcher("manage_orders.jsp");
+        handleMethods(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        handleMethods(req, resp);
+    }
+
+    private void handleMethods(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (!checkUser(req, resp)) {
+            return;
+        }
+
+        switch (req.getRequestURI()) {
+            case "/order/create": {
+                create(req, resp);
+            }
+            case "/order/validate": {
+                validate(req, resp);
+            }
+            case "/order/cancel": {
+                cancel(req, resp);
+            }
+            case "/order/update": {
+                update(req, resp);
+            }
+            case "/orders/show": {
+                show(req, resp);
+            }
+        }
+    }
+
+    boolean checkUser(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        boolean res = true;
+        HttpSession checkUserSession = req.getSession(false);
+        if (checkUserSession != null && checkUserSession.getAttribute("user-id") == null) {
+            System.out.println(req.getMethod() + " Redirected to home no user logged in");
+            resp.sendRedirect("/home");
+            res = false;
+        }
+        return res;
+    }
+
+    private void create(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if(req.getMethod().equals("POST"))
+        {
+            // Create a basket in session
+            OrderDTO currentOrder = new OrderDTO();
+            req.getSession().setAttribute("basket", currentOrder);
+            resp.sendRedirect("/order/show");
+        }
+    }
+
+
+    private void validate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if(req.getMethod().equals("POST"))
+        {
+        }
+    }
+
+    private void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if(req.getMethod().equals("POST"))
+        {
+        }
+    }
+
+    private void cancel(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if(req.getMethod().equals("POST"))
+        {
+        }
+    }
+
+    private void show(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if(req.getMethod().equals("GET"))
+        {
+        }
 
         HttpSession session = req.getSession();
-        String emailuser = (String) session.getAttribute("email");
-        String roleuser = (String) session.getAttribute("role");
+        session.setAttribute("email", "clients@gmail.com"); //TODO VALEUR DE TEST SANS SESSION
+        session.setAttribute("role", "1"); //TODO VALEUR DE TEST SANS SESSION
 
-        System.out.println(emailuser);
-        System.out.println(roleuser);
-        //session.setAttribute("email", emailuser);
-        //session.setAttribute("role", roleuser);
+        String emailuser = (String) session.getAttribute("email");
 
         OrderService orderService = new OrderService();
         List<OrderDTO> orderlist = new ArrayList<OrderDTO>();
@@ -49,7 +126,7 @@ public class OrderController extends HttpServlet {
             // exceptionService.printStackTrace();
         }
         // Si l'utilisateur est un client, on trie les commandes pour ne récupérer que les siennes
-        if((String) session.getAttribute("role") == "1"){ // Si c'est un client, on trie les commandes
+        if(session.getAttribute("role") == "1"){ // Si c'est un client, on trie les commandes
             List<OrderDTO> neworderlist = new ArrayList<OrderDTO>();
             for(OrderDTO o : orderlist){
                 if(o.getUser().getEmail().equals(emailuser))
@@ -65,11 +142,6 @@ public class OrderController extends HttpServlet {
         }
 
         // Récupération du prix total
-        requestDispatcher.forward(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        req.getRequestDispatcher("manage_orders.jsp").forward(req, resp);
     }
 }
