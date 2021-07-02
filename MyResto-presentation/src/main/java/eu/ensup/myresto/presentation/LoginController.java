@@ -53,10 +53,12 @@ public class LoginController extends HttpServlet {
         ConnectionService cs = new ConnectionService();
         UserService ps = new UserService();
         Role role = null;
+        int userId = 0;
         try {
             cs.checkConnection(id, pass);
             UserDTO user = ps.get(id);
             role = user.getRole();
+            userId = user.getId();
 
         } catch (ExceptionService exceptionService) {
             req.setAttribute(errorFlag, exceptionService.getMessage());
@@ -70,6 +72,7 @@ public class LoginController extends HttpServlet {
          */
         HttpSession session = req.getSession();
         session.setAttribute("email", id);
+        session.setAttribute("id_user", userId);
         session.setAttribute("role", String.valueOf(role.getNum()));
 
         /**
