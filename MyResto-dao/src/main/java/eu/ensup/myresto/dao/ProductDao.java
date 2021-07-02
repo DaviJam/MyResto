@@ -385,7 +385,7 @@ public class ProductDao implements IDao<Product> {
         return 0;
     }
 
-    public static Product getProductById(int index) throws ExceptionDao {
+    public Product getProductById(int index) throws ExceptionDao {
         Connection cn = null;
         /**
          * The St.
@@ -404,7 +404,7 @@ public class ProductDao implements IDao<Product> {
         int res = 0;
 
         // nom de la classe
-        String className = null;
+        String className = "ProductDao";
 
         Product product = null;
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -457,4 +457,33 @@ public class ProductDao implements IDao<Product> {
         }
         return product;
     }
+
+    public Boolean updateStock(int id_product, int quantity) throws ExceptionDao {
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        try {
+
+            Product product = this.getProductById(id_product);
+            int finalstock = product.getStock() - quantity;
+
+            Connection cn = openConnection();
+            String request = "UPDATE `product` SET `stock`=? WHERE id_product=?";
+            // Update TableA a Set Valeur_Total = (select sum(Valeur) from TableA where id1 = A.ID1 and ID2 = A.ID2)
+            PreparedStatement st = cn.prepareStatement(request);
+            st.setInt(1, finalstock);
+            st.executeUpdate();
+
+            /*if(res == 0)
+            {
+                DaoLogger.logDaoError(className, methodName,"Echec de la mise à jour du produit : " + entity.getName());
+                throw new ExceptionDao("La mise à jour a échoué. Le produit n'existe pas en base de donnée.");
+            }*/
+
+            DaoLogger.logDaoInfo(className, methodName,"Les information du produit " + product.getName() + " ont bien été modifié.");
+            return true;
+        } catch (SQLException | ExceptionDao e) {
+            DaoLogger.logDaoError(className, methodName,"La transaction UPDATE dans la méthode update a échouée.",e);
+            throw new ExceptionDao("Un problème est survenu au niveau de la base de donnée. Veuillez contacter votre administrateur.");
+        }
+    }
+
 }

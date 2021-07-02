@@ -113,4 +113,17 @@ public class ProductService implements IService<ProductDTO> {
         }
 
     }
+
+    public Boolean updateStock(int id_product, int quantity) throws ExceptionDao, ExceptionService {
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        try
+        {
+            return this.productDao.updateStock(id_product, quantity);
+        }
+        catch(ExceptionDao e)
+        {
+            serviceLogger.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode.");
+            throw new ExceptionService(e.getMessage());
+        }
+    }
 }

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -21,7 +22,6 @@ import java.util.concurrent.atomic.AtomicReference;
         name = "OrderServlet",
         urlPatterns = {
                 "/order_create", // POST - create a basket
-                "/order_validate", // POST - validate a basket which becomes an order
                 "/order_update", // POST - update current basket
                 "/order_cancel", // POST - cancel current basket
                 "/orders_show" // GET - show all orders
@@ -50,9 +50,6 @@ public class OrderController extends HttpServlet {
             case "/myresto/order_create": {
                 create(req, resp);
             }
-            case "/myresto/order_validate": {
-                validate(req, resp);
-            }
             case "/myresto/order_cancel": {
                 cancel(req, resp);
             }
@@ -79,6 +76,12 @@ public class OrderController extends HttpServlet {
     private void create(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if(req.getMethod().equals("POST"))
         {
+            // list id_product List(1,2,2,2,2)
+            // for(
+            // id_user
+
+            List<Integer> list_product = new ArrayList<>();
+
             // Create a basket in session
             OrderDTO currentOrder = new OrderDTO();
             req.getSession().setAttribute("basket", currentOrder);
@@ -86,12 +89,6 @@ public class OrderController extends HttpServlet {
         }
     }
 
-
-    private void validate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(req.getMethod().equals("POST"))
-        {
-        }
-    }
 
     private void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if(req.getMethod().equals("POST"))
@@ -139,11 +136,12 @@ public class OrderController extends HttpServlet {
             }
             else
             {
+                Comparator<OrderDTO> compareByStatusAsc = Comparator.comparing(OrderDTO::getStatus);
+                orderlist.sort(compareByStatusAsc);
                 req.setAttribute("orderlist", orderlist);
             }
 
             req.getRequestDispatcher("manage_orders.jsp").forward(req, resp);
         }
-
     }
 }
