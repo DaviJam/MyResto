@@ -13,7 +13,7 @@
     <div class="relative px">
         <c:forEach items="${orderlist}" var="orders">
             <div class="orders">
-                <p class="orders-time">Il y a 5 min <span>${orders.status.name}</span></p>
+                <p class="orders-time">Il y a 5 min <span class="product-status">${orders.status.name}</span></p>
                 <p class="orders-id">N° ${orders.id} - ${orders.user.surname} ${orders.user.firstname}</p>
                 <hr>
                 <table>

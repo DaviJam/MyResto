@@ -14,6 +14,53 @@ qqt.forEach(q => q.addEventListener('click', event => {
     changeQqt(event.target);
 }));
 
+//Status d'une commande
+let status = document.querySelectorAll(".product-status");
+if (DEBUG_MODE) {console.log(status);}
+status.forEach(function(s){
+    switch (s.innerText) {
+      case 'En cours':
+        s.style.borderColor = "#ffc529";
+        s.style.color = "#ffc529";
+        break;
+      case 'Terminé':
+        s.style.borderColor = "#5dc157";
+        s.style.color = "#5dc157";
+        break;
+      case 'Annulé':
+        s.style.borderColor = "#fd734e";
+        s.style.color = "#fd734e";
+        break;
+      default:
+        console.log(`Le status de la commande ne correspond pas : ${expr}.`);
+    }
+});
+
+//Ajout d'un produit au panier
+let formAddToCard = document.querySelectorAll(".addToCard");
+if (DEBUG_MODE) {console.log(formAddToCard);}
+formAddToCard.forEach(f => f.addEventListener('submit', event => {
+  event.preventDefault();
+  var request = new XMLHttpRequest();
+  var url = "card";
+  request.open("POST", url, true);
+  request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  request.onreadystatechange = function () {
+      if (request.readyState === 4 && request.status === 200) {
+
+      }
+  };
+  let form = event.target;
+  let data = new FormData(form);
+  let formObj = serialize(data);
+
+  request.send("product=" + formObj.product);
+}));
+
+function sendAjax() {
+
+}
+
 function changeQqt(qtt) {
     if (qtt.getAttribute("direction") == "bottom") {
         qtt.parentElement.querySelector("input").value = parseInt(qtt.parentElement.querySelector("input").value) - 1;
@@ -34,4 +81,19 @@ function filterProduct(filter) {
     });
 
     document.querySelector(".defaut-title").innerText = cnt + " produits trouvés";
+}
+
+function serialize (data) {
+	let obj = {};
+	for (let [key, value] of data) {
+		if (obj[key] !== undefined) {
+			if (!Array.isArray(obj[key])) {
+				obj[key] = [obj[key]];
+			}
+			obj[key].push(value);
+		} else {
+			obj[key] = value;
+		}
+	}
+	return obj;
 }

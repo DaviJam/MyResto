@@ -7,7 +7,7 @@ public enum Status {
     /**
      * En cours status.
      */
-    ENCOURS (1, "Encours"),
+    ENCOURS (1, "En cours"),
     /**
      * Terminé status.
      */

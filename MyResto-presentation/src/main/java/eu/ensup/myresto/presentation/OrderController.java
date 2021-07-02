@@ -32,9 +32,14 @@ public class OrderController extends HttpServlet {
         requestDispatcher = req.getRequestDispatcher("manage_orders.jsp");
 
         HttpSession session = req.getSession();
-        session.setAttribute("email", "clients@gmail.com"); //TODO VALEUR DE TEST SANS SESSION
-        session.setAttribute("role", "1"); //TODO VALEUR DE TEST SANS SESSION
         String emailuser = (String) session.getAttribute("email");
+        String roleuser = (String) session.getAttribute("role");
+
+        System.out.println(emailuser);
+        System.out.println(roleuser);
+        //session.setAttribute("email", emailuser);
+        //session.setAttribute("role", roleuser);
+
         OrderService orderService = new OrderService();
         List<OrderDTO> orderlist = new ArrayList<OrderDTO>();
 
