@@ -87,6 +87,7 @@ public class CardController extends HttpServlet {
 
 
         session.setAttribute("cards", listProduct);
+        session.setAttribute("sum", String.valueOf(sum));
 
         resp.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
         resp.setCharacterEncoding("UTF-8"); // You want world domination, huh?
