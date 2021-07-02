@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -139,11 +140,12 @@ public class OrderController extends HttpServlet {
             }
             else
             {
+                Comparator<OrderDTO> compareByStatusAsc = Comparator.comparing(OrderDTO::getStatus);
+                orderlist.sort(compareByStatusAsc);
                 req.setAttribute("orderlist", orderlist);
             }
 
             req.getRequestDispatcher("manage_orders.jsp").forward(req, resp);
         }
-
     }
 }

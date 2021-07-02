@@ -5,17 +5,21 @@ import java.util.List;
 
 public enum Status {
     /**
+     * En attente status.
+     */
+    ENATTENTE (1, "En attente"),
+    /**
      * En cours status.
      */
-    ENCOURS (1, "En cours"),
+    ENCOURS (2, "En cours"),
     /**
      * Terminé status.
      */
-    TERMINE (2, "Terminé"),
+    TERMINE (3, "Terminé"),
     /**
      * Annulé status.
      */
-    ANNULE  (3, "Annulé");
+    ANNULE  (4, "Annulé");
 
     private int    numStatus;
     private String name;
@@ -50,6 +54,7 @@ public enum Status {
     {
         switch(name)
         {
+            case "Enattente": return this.ENATTENTE;
             case "Encours": return this.ENCOURS;
             case "Terminé": return this.TERMINE;
             case "Annulé": return this.ANNULE;
@@ -67,9 +72,10 @@ public enum Status {
     {
         switch(num)
         {
-            case 1: return ENCOURS;
-            case 2: return TERMINE;
-            case 3: return ANNULE;
+            case 1: return ENATTENTE;
+            case 2: return ENCOURS;
+            case 3: return TERMINE;
+            case 4: return ANNULE;
             default: return ENCOURS;
         }
     }
@@ -83,6 +89,7 @@ public enum Status {
     {
         List<Status> lStatus = new ArrayList<Status>();
 
+        lStatus.add(this.ENATTENTE);
         lStatus.add(this.ENCOURS);
         lStatus.add(this.TERMINE);
         lStatus.add(this.ANNULE);
