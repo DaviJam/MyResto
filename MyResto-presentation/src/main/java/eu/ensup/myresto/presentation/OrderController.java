@@ -20,11 +20,11 @@ import java.util.concurrent.atomic.AtomicReference;
 @WebServlet(
         name = "OrderServlet",
         urlPatterns = {
-                "/order/create", // POST - create a basket
-                "/order/validate", // POST - validate a basket which becomes an order
-                "/order/update", // POST - update current basket
-                "/order/cancel", // POST - cancel current basket
-                "/orders/show" // GET - show all orders
+                "/order_create", // POST - create a basket
+                "/order_validate", // POST - validate a basket which becomes an order
+                "/order_update", // POST - update current basket
+                "/order_cancel", // POST - cancel current basket
+                "/orders_show" // GET - show all orders
         }
 )
 public class OrderController extends HttpServlet {
@@ -47,19 +47,19 @@ public class OrderController extends HttpServlet {
             return;
         }
         switch (req.getRequestURI()) {
-            case "/myresto/order/create": {
+            case "/myresto/order_create": {
                 create(req, resp);
             }
-            case "/myresto/order/validate": {
+            case "/myresto/order_validate": {
                 validate(req, resp);
             }
-            case "/myresto/order/cancel": {
+            case "/myresto/order_cancel": {
                 cancel(req, resp);
             }
-            case "/myresto/order/update": {
+            case "/myresto/order_update": {
                 update(req, resp);
             }
-            case "/myresto/orders/show": {
+            case "/myresto/orders_show": {
                 show(req, resp);
             }
         }
@@ -82,7 +82,7 @@ public class OrderController extends HttpServlet {
             // Create a basket in session
             OrderDTO currentOrder = new OrderDTO();
             req.getSession().setAttribute("basket", currentOrder);
-            resp.sendRedirect("/myresto/order/show");
+            resp.sendRedirect("/myresto/order_show");
         }
     }
 
@@ -108,10 +108,7 @@ public class OrderController extends HttpServlet {
     private void show(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if(req.getMethod().equals("GET"))
         {
-            System.out.println("GET Methods");
             HttpSession session = req.getSession();
-            session.setAttribute("email", "youness@gmail.com"); //TODO VALEUR DE TEST SANS SESSION
-            session.setAttribute("role", "1"); //TODO VALEUR DE TEST SANS SESSION
 
             String emailuser = (String) session.getAttribute("email");
 
@@ -123,12 +120,18 @@ public class OrderController extends HttpServlet {
             } catch (ExceptionService exceptionService) {
                 exceptionService.printStackTrace();
             }
+            System.out.println(session.getAttribute("email"));
+            System.out.println(session.getAttribute("role"));
             // Si l'utilisateur est un client, on trie les commandes pour ne récupérer que les siennes
-            if((String) session.getAttribute("role") == "2"){ // Si c'est un client, on trie les commandes
+            if(session.getAttribute("role").equals("2")){ // Si c'est un client, on trie les commandes
+                System.out.println("L'user est bien un client");
                 List<OrderDTO> neworderlist = new ArrayList<OrderDTO>();
                 for(OrderDTO o : orderlist){
+                    System.out.println(o.getUser().getEmail());
+                    System.out.println(emailuser);
                     if(o.getUser().getEmail().equals(emailuser))
                     {
+
                         neworderlist.add(o);
                     }
                 }
