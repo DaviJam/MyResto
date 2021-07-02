@@ -88,6 +88,7 @@ function changeQqt(qtt) {
 }
 
 function filterProduct(filter) {
+debugger;
     let cnt = 0;
     let allCard = document.querySelectorAll(".card");
     let categories = document.querySelectorAll(".filter");

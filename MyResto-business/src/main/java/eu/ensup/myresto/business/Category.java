@@ -11,15 +11,19 @@ public enum Category
     /**
      * Entree category.
      */
-    ENTREE (1, "Entree"),
+    MENU (1, "Menu"),
     /**
      * Entree category.
      */
-    PLAT (2, "Plat"),
+    BURGER (2, "Burger"),
     /**
      * Manager category.
      */
-    DESSERT  (3, "Dessert");
+    SUPPLEMENT  (3, "Supplément"),
+    /**
+     * Manager category.
+     */
+    DRINK  (4, "Boisson");
 
     private int    numCategory;
     private String name;
@@ -54,10 +58,11 @@ public enum Category
     {
         switch(name)
         {
-            case "Entree": return this.ENTREE;
-            case "Plat": return this.PLAT;
-            case "Dessert": return this.DESSERT;
-            default: return this.ENTREE;
+            case "Menu": return this.MENU;
+            case "Burger": return this.BURGER;
+            case "Supplément": return this.SUPPLEMENT;
+            case "Boisson": return this.DRINK;
+            default: return this.MENU;
         }
     }
 
@@ -71,10 +76,11 @@ public enum Category
     {
         switch(num)
         {
-            case 1: return ENTREE;
-            case 2: return PLAT;
-            case 3: return DESSERT;
-            default: return ENTREE;
+            case 1: return MENU;
+            case 2: return BURGER;
+            case 3: return SUPPLEMENT;
+            case 4: return DRINK;
+            default: return MENU;
         }
     }
 
@@ -87,9 +93,10 @@ public enum Category
     {
         List<Category> lCategory = new ArrayList<Category>();
 
-        lCategory.add(this.ENTREE);
-        lCategory.add(this.PLAT);
-        lCategory.add(this.DESSERT);
+        lCategory.add(this.MENU);
+        lCategory.add(this.BURGER);
+        lCategory.add(this.SUPPLEMENT);
+        lCategory.add(this.DRINK);
 
         return lCategory;
     }

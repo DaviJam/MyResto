@@ -35,7 +35,7 @@ public class ProductDaoTest
         p.setAllergen("Aucun");
         p.setDescription("Une tomate fraiche");
         p.setImage("no-image");
-        p.setCategory(Category.ENTREE);
+        p.setCategory(Category.MENU);
         p.setPrice(0.5);
         p.setStock(25);
         daoProduct.create(p);
@@ -108,7 +108,7 @@ public class ProductDaoTest
         p1.setAllergen("Aucun");
         p1.setDescription("Un steak frais");
         p1.setImage("no-image");
-        p1.setCategory(Category.PLAT);
+        p1.setCategory(Category.BURGER);
         p1.setPrice(1.5);
         p1.setStock(50);
         daoProduct.create(p1);
@@ -211,7 +211,7 @@ void exampleTest() {
         p.setDescription("pain à burger, cheddar");
         p.setPrice(15);
         p.setAllergen("sésame");
-        p.setCategory(Category.PLAT);
+        p.setCategory(Category.BURGER);
         daoProduct.create(p);
         Product p1 = daoProduct.get("cheeseburger");
         assertNotNull(p1);
@@ -227,7 +227,7 @@ void exampleTest() {
         p.setDescription("pain à burger, cheddar");
         p.setPrice(15);
         p.setAllergen("sésame");
-        p.setCategory(Category.PLAT);
+        p.setCategory(Category.BURGER);
         // TODO : execute update and check if it was corretly executed
     }
 

@@ -32,7 +32,7 @@ header span.cardCount{position: absolute; right: 15px; top: 15px; background-col
 
 /* Carrousel */
 .main-carrousel{list-style: none; padding: 0; display: flex; overflow-x: auto; color: #818181; padding: 0 25px; overflow-y: hidden;}
-.main-carrousel li{border-radius: 15px; margin-right:3px;}
+.main-carrousel li{border-radius: 20px; margin-right:3px; padding: 4px 12px;}
 .main-carrousel li:hover{background-color: #ffc12ca8; color: #292D30;}
 .main-carrousel li.active{background-color: #FD734E!important; color: #fff;}
 .main-carrousel li a{padding: 4px 15px}

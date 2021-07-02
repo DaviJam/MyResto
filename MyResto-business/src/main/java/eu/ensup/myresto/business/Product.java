@@ -22,7 +22,7 @@ public class Product{
         this.allergen = "";
         this.image = "";
         this.stock = 0;
-        this.category = Category.ENTREE;
+        this.category = Category.MENU;
     }
     public Product(int id, String name, String description, double price, String allergen, String image, int stock, Category category) {
         this.id = id;

@@ -38,8 +38,8 @@ public class OrderTest {
     @Test
     public void getOrderOk() throws ExceptionDao, ExceptionService {
         User user = new User(0, "Lacomblez", "Thomas", Role.CLIENT, "Lacomblez.thomas@gmail.com", "1234", "80 B rue de Chartres");
-        Product product = new Product(0, "cheeseburger", "pain à burger, cheddar", 15.0, "sésame", null, 0, Category.PLAT);
-        Product product2 = new Product(0, "Big Mac", "Le big Mac quoi", 10.0, "sésame", null, 0, Category.PLAT);
+        Product product = new Product(0, "cheeseburger", "pain à burger, cheddar", 15.0, "sésame", null, 0, Category.BURGER);
+        Product product2 = new Product(0, "Big Mac", "Le big Mac quoi", 10.0, "sésame", null, 0, Category.BURGER);
         List<Product> productList = new ArrayList<Product>();
         productList.add(product);
         productList.add(product2);

@@ -32,7 +32,7 @@ public class ProductServiceTest {
     @Test
     public void getProductOk() {
         try {
-            Product product = new Product(4,"triple cheese burger", "trois steak trois tranche de chedar", 16, "sésame", "https://via.placeholder.com/150", 1, Category.PLAT);
+            Product product = new Product(4,"triple cheese burger", "trois steak trois tranche de chedar", 16, "sésame", "https://via.placeholder.com/150", 1, Category.BURGER);
             ProductDTO productDTO1 = ProductMapper.businessToDto(product);
             when(productDao.get(4)).thenReturn(product);
 
@@ -52,7 +52,7 @@ public class ProductServiceTest {
     @Test
     public void createProductOk() {
         try {
-            ProductDTO productDTO = new ProductDTO(4,"triple cheese burger", "trois steak trois tranche de chedar", 16, "sésame", "https://via.placeholder.com/150", 1, Category.PLAT);
+            ProductDTO productDTO = new ProductDTO(4,"triple cheese burger", "trois steak trois tranche de chedar", 16, "sésame", "https://via.placeholder.com/150", 1, Category.MENU);
             when(productDao.create(any(Product.class))).thenReturn(1);
             int res = productService.create(productDTO);
             assertEquals(res, 1);
@@ -67,7 +67,7 @@ public class ProductServiceTest {
     @Test
     public void UpdateProductOk() {
         try {
-            ProductDTO productDTO = new ProductDTO(4,"triple cheese burger", "trois steak trois tranche de chedar", 16, "sésame", "https://via.placeholder.com/150", 1, Category.PLAT);
+            ProductDTO productDTO = new ProductDTO(4,"triple cheese burger", "trois steak trois tranche de chedar", 16, "sésame", "https://via.placeholder.com/150", 1, Category.MENU);
 
             when(productDao.update(any(Product.class))).thenReturn(1);
 

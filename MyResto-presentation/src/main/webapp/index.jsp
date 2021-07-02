@@ -17,9 +17,9 @@
     <div class="relative">
         <ul class="main-carrousel">
 
-            <li class="active filter" data-category="*"><a href="">Tout</a></li>
+            <li class="active filter" data-category="*">Tout</li>
             <c:forEach items="${listCategory}" var="category">
-                <li data-category="${ category.getNum() }" class="filter"><a href="">${ category.getName() }</a></li>
+                <li data-category="${ category.getNum() }" class="filter">${ category.getName() }</li>
             </c:forEach>
         </ul>
     </div>
