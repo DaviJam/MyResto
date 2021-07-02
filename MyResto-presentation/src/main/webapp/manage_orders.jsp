@@ -9,7 +9,7 @@
     <%@include file="card.jsp" %>
     <%@include file="header.jsp" %>
     
-    <h1 class="main-title">Commandes a préparer</h1>
+    <h1 class="main-title">Commandes à préparer</h1>
     <div class="relative px">
         <c:forEach items="${orderlist}" var="orders">
             <div class="orders">
