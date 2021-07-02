@@ -20,19 +20,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 @WebServlet(
         name = "OrderServlet",
         urlPatterns = {
-                "/order_create", // POST - create a basket
-                "/order_update", // POST - update current basket
+                "/order_create", // GET - create a basket
                 "/order_cancel", // POST - cancel current basket
-                "/orders_show" // GET - show all orders
+                "/order_close", // POST - close current order
+                "/orders_show", // GET - show all orders
+                "/order_inprogress" // POST - order in progress
         }
 )
 public class OrderController extends HttpServlet {
@@ -64,11 +62,14 @@ public class OrderController extends HttpServlet {
             case "/myresto/order_cancel": {
                 cancel(req, resp);
             }
-            case "/myresto/order_update": {
-                update(req, resp);
-            }
             case "/myresto/orders_show": {
                 show(req, resp);
+            }
+            case "/myresto/order_close": {
+                close(req, resp);
+            }
+            case "/myresto/order_inprogress": {
+                inProgress(req, resp);
             }
         }
     }
@@ -92,10 +93,14 @@ public class OrderController extends HttpServlet {
             // id_user
 
             List<ProductDTO> list_product = (List<ProductDTO>) req.getSession(false).getAttribute("cards");
-            List<ProductDTO> new_list = new ArrayList<ProductDTO>();
+            HashMap<Integer, Integer> productMap = new HashMap<>();
             for(ProductDTO p : list_product)
             {
-                p.getName();
+                if(! productMap.containsKey(p.getId())) {
+                    productMap.put(p.getId(), 1);
+                } else {
+                    productMap.put(p.getId(), productMap.get(p.getId()) + 1);
+                }
             }
 
             String id_user = (String) req.getSession(false).getAttribute("email");
@@ -111,11 +116,35 @@ public class OrderController extends HttpServlet {
         }
     }
 
-
-    private void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void inProgress(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if(req.getMethod().equals("POST"))
         {
+            // get order id
+            int id_order = Integer.parseInt(req.getParameter("id_order"));
 
+            // update order status
+            try {
+                orderService.update(id_order, StatusDTO.ENCOURS);
+                resp.sendRedirect("/myresto/order_show");
+            } catch (ExceptionService exceptionService) {
+                System.out.println("order InProgress exception" + exceptionService.getMessage());
+            }
+        }
+    }
+
+    private void close(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if(req.getMethod().equals("POST"))
+        {
+            // get order id
+            int id_order = Integer.parseInt(req.getParameter("id_order"));
+
+            // update order status
+            try {
+                orderService.update(id_order, StatusDTO.TERMINE);
+                resp.sendRedirect("/myresto/order_show");
+            } catch (ExceptionService exceptionService) {
+                System.out.println("order close exception" + exceptionService.getMessage());
+            }
         }
     }
 
@@ -123,7 +152,7 @@ public class OrderController extends HttpServlet {
         if(req.getMethod().equals("POST"))
         {
             // get order id
-            int id_order = Integer.parseInt(req.getParameter("order_id"));
+            int id_order = Integer.parseInt(req.getParameter("id_order"));
 
             // update order status
             try {
