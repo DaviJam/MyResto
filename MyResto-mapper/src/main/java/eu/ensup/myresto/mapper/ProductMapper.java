@@ -13,10 +13,11 @@ public class ProductMapper {
         productDTO.setId(product.getId());
         productDTO.setName(product.getName());
         productDTO.setDescription(product.getDescription());
-        productDTO.setPrice(product.getPrice() );
+        productDTO.setPrice(product.getPrice());
         productDTO.setAllergen(product.getAllergen());
         productDTO.setImage(product.getImage());
         productDTO.setStock(product.getStock());
+        productDTO.setCategory(product.getCategory());
         return productDTO;
     };
 
@@ -35,6 +36,7 @@ public class ProductMapper {
         product.setAllergen(productDTO.getAllergen());
         product.setImage(productDTO.getImage());
         product.setStock(productDTO.getStock());
+        product.setCategory(productDTO.getCategory());
         return product;
     };
 }

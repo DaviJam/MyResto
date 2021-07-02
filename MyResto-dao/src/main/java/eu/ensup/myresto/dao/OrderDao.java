@@ -139,7 +139,7 @@ public class OrderDao implements IDao<Order> {
 
         try{
             st = cn.createStatement();
-            res = st.executeQuery("SELECT * FROM Orders");
+            res = st.executeQuery("SELECT * FROM Orders ORDER BY order_date");
             while(res.next()){
                 allidOrders.add(res.getInt("id_order"));
             }
