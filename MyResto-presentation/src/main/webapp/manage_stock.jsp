@@ -28,7 +28,7 @@
                 </div>
             </c:forEach>
         </div>
-        <input type="submit" class="btn" style="position: fixed; bottom: 25px; right: 25px; box-shadow: 0 5px 10px rgb(154 160 185 / 45%), 0 15px 40px rgb(166 173 201 / 20%);" value="Enregistrer le stock"/>
+        <input type="submit" class="btn" style="border: none; position: fixed; bottom: 25px; right: 25px; box-shadow: 0 5px 10px rgb(154 160 185 / 45%), 0 15px 40px rgb(166 173 201 / 20%);" value="Enregistrer le stock"/>
     </form>
 </body>
 </html>
