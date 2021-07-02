@@ -1,5 +1,8 @@
 var DEBUG_MODE = true;
 
+//Bulle nombre de produit dans le panier
+document.querySelector(".cardCount").innerText = document.querySelectorAll("div.product.no-float").length;
+
 //Filtre page accueil
 let filters = document.querySelectorAll(".filter");
 if (DEBUG_MODE) {console.log(filters);}
@@ -47,7 +50,9 @@ formAddToCard.forEach(f => f.addEventListener('submit', event => {
   request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   request.onreadystatechange = function () {
       if (request.readyState === 4 && request.status === 200) {
-
+        document.getElementById("modal_card").innerHTML = request.responseText;
+        let bubble = document.querySelector(".cardCount");
+        bubble.innerText = document.querySelectorAll("div.product.no-float").length;
       }
   };
   let form = event.target;
