@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class OrderDTO{
     private int id;
-    private User user;
-    private List<Product> product;
+    private UserDTO user;
+    private List<ProductDTO> product;
     private Date order_date;
     private Status status;
 
@@ -23,16 +23,16 @@ public class OrderDTO{
      */
     public OrderDTO(){ }
 
-    public OrderDTO(int id, User user, List<Product> product, Date order_date, Status status) {
+    public OrderDTO(int id, UserDTO userDTO, List<ProductDTO> product, Date order_date, Status status) {
         this.id = id;
-        this.user = user;
+        this.user = userDTO;
         this.product = product;
         this.order_date = order_date;
         this.status = status;
     }
 
-    public OrderDTO(User user, List<Product> product, Date order_date, Status status) {
-        this.user = user;
+    public OrderDTO(UserDTO userDTO, List<ProductDTO> product, Date order_date, Status status) {
+        this.user = userDTO;
         this.product = product;
         this.order_date = order_date;
         this.status = status;
@@ -46,19 +46,19 @@ public class OrderDTO{
         this.id = id;
     }
 
-    public User getUser() {
+    public UserDTO getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserDTO user) {
         this.user = user;
     }
 
-    public List<Product> getProduct() {
+    public List<ProductDTO> getProduct() {
         return product;
     }
 
-    public void setProduct(List<Product> product) {
+    public void setProduct(List<ProductDTO> product) {
         this.product = product;
     }
 

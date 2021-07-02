@@ -104,7 +104,7 @@ public class CardController extends HttpServlet {
                 "</div>" +
                         "<h3 class=\"main-title\" style=\"text-align: right; margin: 0;\">Total : " + String.valueOf(sum) + " TTC</h3>\n" +
                         "        <div class=\"relative px\">\n" +
-                        "            <a href=\"#\" class=\"btn\" style=\"margin-top: 25px;\">Valider ma commande</a>\n" +
+                        "            <a href=\"order_create\" class=\"btn\" style=\"margin-top: 25px;\">Valider ma commande</a>\n" +
                         "        </div>";
 
 

@@ -126,4 +126,17 @@ public class ProductService implements IService<ProductDTO> {
             throw new ExceptionService(e.getMessage());
         }
     }
+
+    public ProductDTO getProductById(int index) throws ExceptionService {
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        try
+        {
+            return ProductMapper.businessToDto(this.productDao.getProductById(index));
+        }
+        catch(ExceptionDao e)
+        {
+            serviceLogger.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode.");
+            throw new ExceptionService(e.getMessage());
+        }
+    }
 }

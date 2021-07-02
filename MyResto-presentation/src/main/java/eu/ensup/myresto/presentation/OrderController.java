@@ -1,10 +1,16 @@
 package eu.ensup.myresto.presentation;
 
+import eu.ensup.myresto.business.Category;
+import eu.ensup.myresto.business.Order;
 import eu.ensup.myresto.business.Role;
+import eu.ensup.myresto.business.Status;
 import eu.ensup.myresto.dto.OrderDTO;
+import eu.ensup.myresto.dto.ProductDTO;
 import eu.ensup.myresto.dto.StatusDTO;
 import eu.ensup.myresto.service.ExceptionService;
 import eu.ensup.myresto.service.OrderService;
+import eu.ensup.myresto.service.ProductService;
+import eu.ensup.myresto.service.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -78,18 +85,29 @@ public class OrderController extends HttpServlet {
     }
 
     private void create(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(req.getMethod().equals("POST"))
+        if(req.getMethod().equals("GET"))
         {
             // list id_product List(1,2,2,2,2)
             // for(
             // id_user
 
-            List<Integer> list_product = new ArrayList<>();
+            List<ProductDTO> list_product = (List<ProductDTO>) req.getSession(false).getAttribute("cards");
+            List<ProductDTO> new_list = new ArrayList<ProductDTO>();
+            for(ProductDTO p : list_product)
+            {
+                p.getName();
+            }
 
-            // Create a basket in session
-            OrderDTO currentOrder = new OrderDTO();
-            req.getSession().setAttribute("basket", currentOrder);
-            resp.sendRedirect("/myresto/order_show");
+            String id_user = (String) req.getSession(false).getAttribute("email");
+            try {
+                // Creation de l'order
+                OrderDTO orderDTO = new OrderDTO(new UserService().get(id_user), list_product, new java.sql.Date(Calendar.getInstance().getTime().getTime()), Status.ENCOURS);
+
+                orderService.create(orderDTO);
+            } catch (ExceptionService exceptionService) {
+                exceptionService.printStackTrace();
+            }
+            resp.sendRedirect(req.getContextPath() + "/orders_show");
         }
     }
 

@@ -69,11 +69,14 @@ public class OrderDao implements IDao<Order> {
                 {
                     String sql_request_list = "INSERT INTO List(" +
                             "id_product," +
-                            "id_order)" +
-                            "VALUES(?, ?) ";
+                            "id_order," +
+                            "quantity)" +
+
+                            "VALUES(?, ?, ?) ";
                     st = cn.prepareStatement(sql_request_list);
                     st.setInt(1, product.getId());
                     st.setInt(2, id_order);
+                    st.setInt(3, product.getStock());
 
                     res = st.executeUpdate();
                 }

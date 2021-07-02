@@ -98,15 +98,11 @@ public class OrderService implements IService<OrderDTO>{
 
     public Boolean update(int index, StatusDTO status) throws ExceptionService{
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
-        Boolean ret = false;
         try {
-            this.dao.update(index, Status.getStatusByNum(status.getNum()));
-            ret = true;
+            return this.dao.update(index, Status.getStatusByNum(status.getNum()));
         } catch (ExceptionDao exceptionDao) {
-            ret = false;
             serviceLogger.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode.");
             throw new ExceptionService(exceptionDao.getMessage());
         }
-        return ret;
     }
 }

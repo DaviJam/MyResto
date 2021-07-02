@@ -4,7 +4,9 @@ import eu.ensup.myresto.business.*;
 import eu.ensup.myresto.dao.ExceptionDao;
 import eu.ensup.myresto.dao.OrderDao;
 import eu.ensup.myresto.dto.OrderDTO;
+import eu.ensup.myresto.dto.ProductDTO;
 import eu.ensup.myresto.dto.StatusDTO;
+import eu.ensup.myresto.dto.UserDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -15,6 +17,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -49,7 +52,7 @@ public class OrderTest {
 
     @Test
     public void createOrderOk() throws ExceptionDao, ExceptionService {
-        OrderDTO orderDTO = new OrderDTO(0, new User(), new ArrayList<Product>(), new Date(), Status.TERMINE);
+        OrderDTO orderDTO = new OrderDTO(0, new UserDTO(), new ArrayList<ProductDTO>(), new Date(), Status.TERMINE);
         when(dao.create(any(Order.class))).thenReturn(1);
         int ret = service.create(orderDTO);
         assertEquals(ret, 1);
@@ -58,7 +61,7 @@ public class OrderTest {
 
     @Test
     public void updateOrderOk() throws ExceptionDao, ExceptionService {
-        OrderDTO orderDTO = new OrderDTO(0, new User(), new ArrayList<Product>(), new Date(), Status.TERMINE);
+        OrderDTO orderDTO = new OrderDTO(0, new UserDTO(), new ArrayList<ProductDTO>(), new Date(), Status.TERMINE);
         when(dao.update(any(Order.class))).thenReturn(1);
         Boolean ret = service.update(0, StatusDTO.TERMINE);
         assertEquals(ret, true);
@@ -108,5 +111,22 @@ public class OrderTest {
         {
         }
         System.out.println(orderlist);
+    }
+
+    @Test
+    public void createOrder(){
+        /*List<ProductDTO> test_list = new ArrayList<ProductDTO>();
+        int id_user = 1;
+        try {
+            test_list.add(new ProductService().getProductById(1));
+            test_list.add(new ProductService().getProductById(2));
+
+            // Creation de l'order
+            OrderDTO orderDTO = new OrderDTO(new UserService().get(id_user), test_list, new java.sql.Date(Calendar.getInstance().getTime().getTime()), Status.ENCOURS);
+
+            new OrderService().create(orderDTO);
+        } catch (ExceptionService exceptionService) {
+            exceptionService.printStackTrace();
+        } */
     }
 }
