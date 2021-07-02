@@ -1,11 +1,13 @@
 package eu.ensup.myresto.service;
 
 import eu.ensup.myresto.business.Order;
+import eu.ensup.myresto.business.Status;
 import eu.ensup.myresto.business.User;
 import eu.ensup.myresto.dao.ExceptionDao;
 import eu.ensup.myresto.dao.IDao;
 import eu.ensup.myresto.dao.OrderDao;
 import eu.ensup.myresto.dto.OrderDTO;
+import eu.ensup.myresto.dto.StatusDTO;
 import eu.ensup.myresto.dto.UserDTO;
 import eu.ensup.myresto.mapper.OrderMapper;
 import eu.ensup.myresto.mapper.UserMapper;
@@ -94,11 +96,11 @@ public class OrderService implements IService<OrderDTO>{
         return ret;
     }
 
-    public Boolean update(int index, int status) throws ExceptionService{
+    public Boolean update(int index, StatusDTO status) throws ExceptionService{
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         Boolean ret = false;
         try {
-            this.dao.update(index, status);
+            this.dao.update(index, Status.getStatusByNum(status.getNum()));
             ret = true;
         } catch (ExceptionDao exceptionDao) {
             ret = false;

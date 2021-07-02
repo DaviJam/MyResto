@@ -4,6 +4,7 @@ import eu.ensup.myresto.business.*;
 import eu.ensup.myresto.dao.ExceptionDao;
 import eu.ensup.myresto.dao.OrderDao;
 import eu.ensup.myresto.dto.OrderDTO;
+import eu.ensup.myresto.dto.StatusDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -59,9 +60,9 @@ public class OrderTest {
     public void updateOrderOk() throws ExceptionDao, ExceptionService {
         OrderDTO orderDTO = new OrderDTO(0, new User(), new ArrayList<Product>(), new Date(), Status.TERMINE);
         when(dao.update(any(Order.class))).thenReturn(1);
-        Boolean ret = service.update(0, Status.TERMINE.getNum());
+        Boolean ret = service.update(0, StatusDTO.TERMINE);
         assertEquals(ret, true);
-        Mockito.verify(dao, Mockito.atLeast(1)).update(anyInt(), anyInt());
+        Mockito.verify(dao, Mockito.atLeast(1)).update(anyInt(), Status.getStatusByNum(anyInt()));
     }
 
     @Test

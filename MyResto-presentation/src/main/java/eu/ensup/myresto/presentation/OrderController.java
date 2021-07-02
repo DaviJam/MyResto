@@ -2,6 +2,7 @@ package eu.ensup.myresto.presentation;
 
 import eu.ensup.myresto.business.Role;
 import eu.ensup.myresto.dto.OrderDTO;
+import eu.ensup.myresto.dto.StatusDTO;
 import eu.ensup.myresto.service.ExceptionService;
 import eu.ensup.myresto.service.OrderService;
 
@@ -28,8 +29,11 @@ import java.util.concurrent.atomic.AtomicReference;
         }
 )
 public class OrderController extends HttpServlet {
+    OrderService orderService = null;
+
     public OrderController() {
         super();
+        orderService = new OrderService();
     }
 
     @Override
@@ -93,23 +97,34 @@ public class OrderController extends HttpServlet {
     private void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if(req.getMethod().equals("POST"))
         {
+
         }
     }
 
     private void cancel(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if(req.getMethod().equals("POST"))
         {
+            // get order id
+            int id_order = Integer.parseInt(req.getParameter("order_id"));
+
+            // update order status
+            try {
+                orderService.update(id_order, StatusDTO.ANNULE);
+                resp.sendRedirect("/myresto/order_show");
+            } catch (ExceptionService exceptionService) {
+                System.out.println("order Cancel exception" + exceptionService.getMessage());
+            }
         }
     }
 
     private void show(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if(req.getMethod().equals("GET"))
         {
-            HttpSession session = req.getSession();
+            HttpSession session = req.getSession(false);
 
             String emailuser = (String) session.getAttribute("email");
 
-            OrderService orderService = new OrderService();
+
             List<OrderDTO> orderlist = new ArrayList<OrderDTO>();
 
             try { // Récupération de toutes les commandes

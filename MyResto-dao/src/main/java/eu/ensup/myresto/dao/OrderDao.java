@@ -103,6 +103,27 @@ public class OrderDao implements IDao<Order> {
     public int update(Order entity) throws ExceptionDao {
         return 0;
     }
+    public Boolean update(int index, Status status) throws ExceptionDao {
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        Boolean res = false;
+
+        Connection cn = Connect.openConnection();
+        Statement st = null;
+        try {
+            st = cn.createStatement();
+            st.execute("UPDATE Orders SET id_status = "+status.getNum()+" WHERE id_order="+index);
+
+            DaoLogger.logDaoInfo(className, methodName,"Le statut de la commande numéro " + index + " a bien été modifié en " + status.toString());
+            st.close();
+            cn.close();
+            return true;
+        }
+        catch( SQLException sqle) {
+            // TODO:  Add logger failed and successfull
+            DaoLogger.logDaoError(className, methodName,"Probleme de modification de la base de donnée.",sqle);
+            throw new ExceptionDao("Un problème est survenu au niveau de la base de donnée.");
+        }
+    }
 
     @Override
     public List<Order> getAll() throws ExceptionDao {
@@ -272,27 +293,5 @@ public class OrderDao implements IDao<Order> {
         return res;
     }
 
-    public Boolean update(int index, int status) throws ExceptionDao {
-        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
-        Boolean res = false;
 
-            Connection cn = Connect.openConnection();
-            Statement st = null;
-            try {
-                st = cn.createStatement();
-                st.execute("UPDATE Orders SET id_status = "+status+" WHERE id_order="+index);
-
-                DaoLogger.logDaoInfo(className, methodName,"Le statut de la commande numéro " + index + " a bien été modifié en " + status);
-                st.close();
-                cn.close();
-                res = true;
-            }
-            catch( SQLException sqle) {
-                res = false;
-                // TODO:  Add logger failed and successfull
-                DaoLogger.logDaoError(className, methodName,"Probleme de modification de la base de donnée.",sqle);
-                throw new ExceptionDao("Un problème est survenu au niveau de la base de donnée.");
-            }
-        return res;
-    }
 }

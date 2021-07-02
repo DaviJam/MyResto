@@ -45,7 +45,7 @@ public class OrderDaoTest {
     @DisplayName("update order status")
     @Tag("OrderDaoTest")
     public void orderUpdated() throws ExceptionDao {
-        Boolean res = orderDao.update(1, 2);
+        Boolean res = orderDao.update(1, Status.ENCOURS);
         assertEquals(res, true);
     }
 
