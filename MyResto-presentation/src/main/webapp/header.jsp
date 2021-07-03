@@ -20,8 +20,8 @@
             <li class="<%if(foo.equals("/myresto/profile.jsp")){%>active<%}%>"><a href="profile">Mon compte</a></li>
             <li class="btn"><a href="logout">Deconnexion</a></li>
         <% } else { %>
-            <li class="<%if(foo.equals("/myresto/login.jsp")){%>active<%}%>"><a href="login">Login</a></li>
-            <li class="<%if(foo.equals("/myresto/register.jsp")){%>active<%}%>"><a href="register">Créer un compte</a></li>
+            <li class="<%if(foo.equals("/myresto/login.jsp")){%>active<%}%> right"><a href="login">Login</a></li>
+            <li class="<%if(foo.equals("/myresto/register.jsp")){%>active<%}%> right"><a href="register">Créer un compte</a></li>
         <% } %>
     </ul>
 </header>

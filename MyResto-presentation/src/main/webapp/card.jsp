@@ -15,7 +15,7 @@
                 <hr>
             </c:forEach>
         </div>
-        <h3 class="main-title" style="text-align: right; margin: 0;">Total : ${sessionScope.sum} TTC</h3>
+        <h3 class="main-title" style="text-align: right; margin: 0;">Total : ${sessionScope.sum}€ TTC</h3>
         <div class="relative px">
             <a href="#" class="btn" style="margin-top: 25px;">Valider ma commande</a>
         </div>

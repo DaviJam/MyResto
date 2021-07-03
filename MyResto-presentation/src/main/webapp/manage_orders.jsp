@@ -31,18 +31,12 @@
 
                 <form method="POST" action="order_cancel">
                     <input type="hidden" name="id_order" value="${orders.id}">
-                    <input type="submit" class="btn" style="border: none; position: fixed; bottom: 25px; right: 25px; box-shadow: 0 5px 10px rgb(154 160 185 / 45%), 0 15px 40px rgb(166 173 201 / 20%);" value="Annuler cette commande"/>
+                    <input type="submit" class="btn btn-unset order" value="Annuler cette commande"/>
                 </form>
-                <form method="POST" action="order_close">
+                <form method="POST" action="${orders.status.name == 'En attente' ? 'order_inprogress' : 'order_close'}">
                     <input type="hidden" name="id_order" value="${orders.id}">
-                    <input type="submit" class="btn" style="border: none; position: fixed; bottom: 25px; right: 25px; box-shadow: 0 5px 10px rgb(154 160 185 / 45%), 0 15px 40px rgb(166 173 201 / 20%);" value="Terminer"/>
+                    <input type="submit" class="btn order" value="${orders.status.name == 'En attente' ? 'Je prépare cette commande' : 'Commande finalisée'}"/>
                 </form>
-                <form method="POST" action="order_inprogress">
-                    <input type="hidden" name="id_order" value="${orders.id}">
-                    <input type="submit" class="btn" style="border: none; position: fixed; bottom: 25px; right: 25px; box-shadow: 0 5px 10px rgb(154 160 185 / 45%), 0 15px 40px rgb(166 173 201 / 20%);" value="En cours de préparation"/>
-                </form>
-                <a href="" class="btn btn-unset">Annuler</a>
-                <a href="" class="btn">Terminer</a>
             </div>
         </c:forEach>
     </div>

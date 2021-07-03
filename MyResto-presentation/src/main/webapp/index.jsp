@@ -32,7 +32,9 @@
                     <a class="link-product" href="">
                         <img src="${ product.image }" alt="">
                         <p>${ product.name }</p>
+                        <span>${ product.price }€</span>
                     </a>
+                    <hr noshade style="border-color: #292d30; margin: 8px 15px;">
                     <form method="POST" action="card_add" id="product${ product.id }" class="addToCard">
                         <input type="hidden" value="${ product.id }" name="product">
                     </form>

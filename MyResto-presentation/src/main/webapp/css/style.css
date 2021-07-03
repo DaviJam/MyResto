@@ -21,7 +21,6 @@ header .nav li.btn{background-color: #292d30; color: #fff; border-radius: 25px;}
 header .nav li.active{background-color: #FD734E; color: #fff; border-radius: 25px;}
 header #card{float: right; cursor: pointer;}
 header span.cardCount{position: absolute; right: 15px; top: 15px; background-color: #fcc42e; width: 20px; height: 20px; border-radius: 10px; text-align: center; line-height: 20px;font-size: x-small;font-weight: 900;}
-
 /* Positionning */
 .relative{position: relative; float: left; width: 100%;}
 .center{text-align: center;}
@@ -45,7 +44,8 @@ header span.cardCount{position: absolute; right: 15px; top: 15px; background-col
 .v-carrousel .card .link-product{display: block; min-height: 100%; min-width: 100%; text-decoration: none;}
 .v-carrousel .card .link-product img{position: relative; top: -25px; left: 50%; transform: translateX(-50%); width: 100%;}
 .v-carrousel .card .link-product p{color: #292d30; text-align: center; font-weight: 300; font-size: large; padding: 0 15px; margin: 0;}
-.v-carrousel .card .link-add-card{color: #292d30; text-decoration: none; font-size: small; font-weight: 800; position: relative; display: block; margin-top: 25px; margin-left: auto; margin-right: auto; border:none; background-color: transparent;}
+.v-carrousel .card .link-product span{margin-top: 15px;display: block; margin-left: auto;margin-right: auto;width: fit-content;padding: 4px 12px; background-color: #fcc42e; border-radius: 25px; font-weight: 900;font-size: larger;}
+.v-carrousel .card .link-add-card{color: #292d30; text-decoration: none; font-size: small; font-weight: 800; position: relative; display: block; margin-top: 15px; margin-left: auto; margin-right: auto; border:none; background-color: transparent;}
 .v-carrousel .card .link-add-card:hover{text-decoration: underline; text-decoration-thickness: 2px;}
 
 /* Button */
@@ -89,7 +89,7 @@ header span.cardCount{position: absolute; right: 15px; top: 15px; background-col
     header #card{display: block; position: absolute; top: 50%; right: 25px; width: 32px; transform: translateY(-50%);}
     header .nav li{float: left;}
     header .nav li.btn{float: right;}
-
+    header .right{float: right!important;}
     /* All card */
     .product{width: calc(33.33% - 83px); float: left; margin-left: 25px;}
     .orders{width: calc(33.33% - 83px); float: left; margin-left: 25px;}
@@ -99,6 +99,9 @@ header span.cardCount{position: absolute; right: 15px; top: 15px; background-col
     #modal_card.active{width: 50%; max-width: 400px; top: 93px; height: calc(100vh - 117px);}
 }
 
+@media (min-width: 1600px) {
+    .product{width: calc(16.66% - 83px); float: left; margin-left: 25px;}
+}
 /* Inputs */
 .form-control{border: 2px solid transparent; background-color: #E4E4E4; color: #292D30; height: 48px; border-radius: 15px; padding: 0 25px; font-family: 'Poppins'; letter-spacing: -0.5px; transition: 0.1s;}
 .form-control:active, .form-control:focus{outline: none!important; border-color: grey!important;}
@@ -136,7 +139,7 @@ header span.cardCount{position: absolute; right: 15px; top: 15px; background-col
 .btn:active, .btn:focus{color:lightgrey;}
 .btn.btn-unset{color: #f6724c; background-color: white; box-shadow: none;}
 .btn.btn-unset:hover{text-decoration: underline; text-decoration-color: #f6724c;}
-
+.btn.order{width: 100%; border: none;}
 
 /* scrollbar */
 .scrollbar::-webkit-scrollbar-track{border-radius: 10px;}
