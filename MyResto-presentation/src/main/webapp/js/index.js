@@ -22,6 +22,10 @@ let status = document.querySelectorAll(".product-status");
 if (DEBUG_MODE) {console.log(status);}
 status.forEach(function(s){
     switch (s.innerText) {
+      case 'En attente':
+        s.style.borderColor = "#818181";
+        s.style.color = "#818181";
+        break;
       case 'En cours':
         s.style.borderColor = "#ffc529";
         s.style.color = "#ffc529";
@@ -35,7 +39,7 @@ status.forEach(function(s){
         s.style.color = "#fd734e";
         break;
       default:
-        console.log(`Le status de la commande ne correspond pas : ${expr}.`);
+        console.log(`Le status de la commande ne correspond pas`);
     }
 });
 

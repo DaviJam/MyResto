@@ -58,18 +58,23 @@ public class OrderController extends HttpServlet {
         switch (req.getRequestURI()) {
             case "/myresto/order_create": {
                 create(req, resp);
+                break;
             }
             case "/myresto/order_cancel": {
                 cancel(req, resp);
+                break;
             }
             case "/myresto/orders_show": {
                 show(req, resp);
+                break;
             }
             case "/myresto/order_close": {
                 close(req, resp);
+                break;
             }
             case "/myresto/order_inprogress": {
                 inProgress(req, resp);
+                break;
             }
         }
     }
@@ -132,10 +137,10 @@ public class OrderController extends HttpServlet {
             // update order status
             try {
                 orderService.update(id_order, StatusDTO.ENCOURS);
-                resp.sendRedirect("/myresto/order_show");
             } catch (ExceptionService exceptionService) {
                 System.out.println("order InProgress exception" + exceptionService.getMessage());
             }
+            resp.sendRedirect(req.getContextPath() + "/orders_show");
         }
     }
 
@@ -148,10 +153,10 @@ public class OrderController extends HttpServlet {
             // update order status
             try {
                 orderService.update(id_order, StatusDTO.TERMINE);
-                resp.sendRedirect("/myresto/order_show");
             } catch (ExceptionService exceptionService) {
                 System.out.println("order close exception" + exceptionService.getMessage());
             }
+            resp.sendRedirect(req.getContextPath() + "/orders_show");
         }
     }
 
@@ -164,10 +169,10 @@ public class OrderController extends HttpServlet {
             // update order status
             try {
                 orderService.update(id_order, StatusDTO.ANNULE);
-                resp.sendRedirect("/myresto/order_show");
             } catch (ExceptionService exceptionService) {
                 System.out.println("order Cancel exception" + exceptionService.getMessage());
             }
+            resp.sendRedirect(req.getContextPath() + "/orders_show");
         }
     }
 

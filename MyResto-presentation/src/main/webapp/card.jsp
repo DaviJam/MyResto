@@ -17,6 +17,6 @@
         </div>
         <h3 class="main-title" style="text-align: right; margin: 0;">Total : ${sessionScope.sum}€ TTC</h3>
         <div class="relative px">
-            <a href="#" class="btn" style="margin-top: 25px;">Valider ma commande</a>
+            <a href="order_create" class="btn" style="margin-top: 25px;">Valider ma commande</a>
         </div>
     </div>
