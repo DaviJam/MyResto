@@ -1,15 +1,12 @@
 package eu.ensup.myresto.presentation;
-
-import eu.ensup.myresto.business.Category;
-import eu.ensup.myresto.business.Order;
-import eu.ensup.myresto.business.Role;
 import eu.ensup.myresto.business.Status;
 import eu.ensup.myresto.dto.OrderDTO;
 import eu.ensup.myresto.dto.ProductDTO;
+import eu.ensup.myresto.dto.RoleDTO;
 import eu.ensup.myresto.dto.StatusDTO;
 import eu.ensup.myresto.service.ExceptionService;
+import eu.ensup.myresto.service.LoggerService;
 import eu.ensup.myresto.service.OrderService;
-import eu.ensup.myresto.service.ProductService;
 import eu.ensup.myresto.service.UserService;
 
 import javax.servlet.RequestDispatcher;
@@ -20,8 +17,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.*;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
+
+import static eu.ensup.myresto.presentation.Common.errorFlag;
+import static eu.ensup.myresto.presentation.Common.succesFlag;
 
 @WebServlet(
         name = "OrderServlet",
@@ -34,10 +35,19 @@ import java.util.concurrent.atomic.AtomicReference;
         }
 )
 public class OrderController extends HttpServlet {
-    OrderService orderService = null;
+    String className = getClass().getName();
+
+    private OrderService orderService = null;
+    private LoggerService loggerService = null;
 
     public OrderController() {
         super();
+    }
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        loggerService = new LoggerService();
         orderService = new OrderService();
     }
 
@@ -52,6 +62,7 @@ public class OrderController extends HttpServlet {
     }
 
     private void handleMethods(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         if (!checkUser(req, resp)) {
             return;
         }
@@ -76,27 +87,29 @@ public class OrderController extends HttpServlet {
                 inProgress(req, resp);
                 break;
             }
+            default:
+                loggerService.logServiceError(className, methodName,"Unknown Route name requested");
+                break;
         }
     }
 
     boolean checkUser(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         boolean res = true;
         HttpSession checkUserSession = req.getSession(false);
         if (checkUserSession.getAttribute("email") == null) {
-            System.out.println(req.getMethod() + " Redirected to home no user logged in");
-            resp.sendRedirect("/myresto/home");
+            req.setAttribute(errorFlag, "Please log in to proceed.");
+            loggerService.logServiceError(className, methodName,"L'utilisation tente d'effectuer une action nécessitant un compte utilisateur");
+            resp.sendRedirect(req.getContextPath()+"/login");
             res = false;
         }
         return res;
     }
 
     private void create(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         if(req.getMethod().equals("GET"))
         {
-            // list id_product List(1,2,2,2,2)
-            // for(
-            // id_user
-
             List<ProductDTO> list_product = (List<ProductDTO>) req.getSession(false).getAttribute("cards");
             HashMap<Integer, ProductDTO> productMap = new HashMap<>();
             for(ProductDTO p : list_product)
@@ -115,36 +128,38 @@ public class OrderController extends HttpServlet {
             String id_user = (String) req.getSession(false).getAttribute("email");
             try {
                 // Creation de l'order
-                OrderDTO orderDTO = new OrderDTO(new UserService().get(id_user), list_product_updated, new java.sql.Date(Calendar.getInstance().getTime().getTime()), Status.ENATTENTE);
-
+                OrderDTO orderDTO = new OrderDTO(new UserService().get(id_user), list_product_updated, java.util.Date.from(Calendar.getInstance().toInstant()), Status.ENATTENTE);
                 orderService.create(orderDTO);
-
-                //resp.sendRedirect("/myresto/orders_show");
-                req.getRequestDispatcher("manage_orders.jsp").forward(req, resp);
-
+                req.getSession().setAttribute(succesFlag, "La commande a été créée avec succès");
+                resp.sendRedirect(req.getContextPath()+"/orders_show");
             } catch (ExceptionService exceptionService) {
-                exceptionService.printStackTrace();
+                loggerService.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode."+ exceptionService.getMessage());
+                req.getSession().setAttribute(errorFlag, "Erreur serveur. La création de la commande a échoué.");
             }
         }
     }
 
-    private void inProgress(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void inProgress(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         if(req.getMethod().equals("POST"))
         {
             // get order id
             int id_order = Integer.parseInt(req.getParameter("id_order"));
 
-            // update order status
+            // update order status and product stock
             try {
                 orderService.update(id_order, StatusDTO.ENCOURS);
+                req.getSession().setAttribute(succesFlag, "La commande " + id_order + " a été mise à jours avec succès.");
+                resp.sendRedirect(req.getContextPath()+"/update_stock?id="+id_order);
             } catch (ExceptionService exceptionService) {
-                System.out.println("order InProgress exception" + exceptionService.getMessage());
+                loggerService.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode."+ exceptionService.getMessage());
+                req.getSession().setAttribute(errorFlag, "Erreur serveur. La modification du status de la commande a échoué.");
             }
-            resp.sendRedirect(req.getContextPath() + "/orders_show");
         }
     }
 
     private void close(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         if(req.getMethod().equals("POST"))
         {
             // get order id
@@ -153,14 +168,17 @@ public class OrderController extends HttpServlet {
             // update order status
             try {
                 orderService.update(id_order, StatusDTO.TERMINE);
+                req.getSession().setAttribute(succesFlag, "La commande " + id_order + " a été mis à jours avec succès");
+                resp.sendRedirect(req.getContextPath()+"/orders_show");
             } catch (ExceptionService exceptionService) {
-                System.out.println("order close exception" + exceptionService.getMessage());
+                loggerService.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode." + exceptionService.getMessage());
+                req.getSession().setAttribute(errorFlag, "Erreur serveur. La modification du status de la commande a échoué.");
             }
-            resp.sendRedirect(req.getContextPath() + "/orders_show");
         }
     }
 
     private void cancel(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         if(req.getMethod().equals("POST"))
         {
             // get order id
@@ -169,48 +187,52 @@ public class OrderController extends HttpServlet {
             // update order status
             try {
                 orderService.update(id_order, StatusDTO.ANNULE);
+                req.getSession().setAttribute(succesFlag, "La commande " + id_order + " a été annulé avec succès.");
+                resp.sendRedirect(req.getContextPath()+"/orders_show");
             } catch (ExceptionService exceptionService) {
-                System.out.println("order Cancel exception" + exceptionService.getMessage());
+                loggerService.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode." + exceptionService.getMessage());
+                req.getSession().setAttribute(errorFlag, "Erreur serveur. La modification du status de la commande a échoué.");
             }
-            resp.sendRedirect(req.getContextPath() + "/orders_show");
         }
     }
 
     private void show(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         if(req.getMethod().equals("GET"))
         {
             HttpSession session = req.getSession(false);
-
             String emailuser = (String) session.getAttribute("email");
-
 
             List<OrderDTO> orderlist = new ArrayList<OrderDTO>();
 
             try { // Récupération de toutes les commandes
                 orderlist = orderService.getAll();
             } catch (ExceptionService exceptionService) {
-                exceptionService.printStackTrace();
+                loggerService.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode." + exceptionService.getMessage());
+                req.getSession().setAttribute(errorFlag, "Erreur serveur. L'affichage des commandes est indisponible pour le moment.");
             }
-
             // Si l'utilisateur est un client, on trie les commandes pour ne récupérer que les siennes
-            if(session.getAttribute("role").equals("2")){ // Si c'est un client, on trie les commandes
-
-                List<OrderDTO> neworderlist = new ArrayList<OrderDTO>();
-                for(OrderDTO o : orderlist){
-                    if(o.getUser().getEmail().equals(emailuser))
-                    {
-                        neworderlist.add(o);
-                    }
-                }
-                req.setAttribute("orderlist", neworderlist);
+            if(session.getAttribute("role").equals(String.valueOf(RoleDTO.CLIENT.getNum()))) { // Si c'est un client, on trie les commandes
+                orderlist = orderlist.stream().filter(order -> order.getUser().getEmail().equals(emailuser)).collect(Collectors.toList());
+                Comparator<OrderDTO> compareByDateAsc = Comparator.comparing(OrderDTO::getOrder_date).reversed();
+                orderlist.sort(compareByDateAsc);
+            }else{
+                Comparator<OrderDTO> compareByStatusDesc = Comparator.comparing(OrderDTO::getStatus);
+                orderlist.sort(compareByStatusDesc);
             }
-            else
-            {
-                Comparator<OrderDTO> compareByStatusAsc = Comparator.comparing(OrderDTO::getStatus);
-                orderlist.sort(compareByStatusAsc);
-                req.setAttribute("orderlist", orderlist);
-            }
+            // Compute time since order and it to the map
+            LinkedHashMap<OrderDTO, LinkedHashMap<String, String>> sinceTimeList = new LinkedHashMap<>();
+            orderlist.forEach(e -> {
+                var w_map = new LinkedHashMap<String, String>();
+                var dateDiff = Date.from(Instant.now().minusSeconds(e.getOrder_date().toInstant().getEpochSecond()));
+                var calendar = new Calendar.Builder().setInstant(dateDiff).build();
 
+                w_map.put("hour", String.valueOf(calendar.get(Calendar.HOUR)-1));
+                w_map.put("minute", String.valueOf(calendar.get(Calendar.MINUTE)));
+                sinceTimeList.put(e, w_map);
+            });
+
+            req.setAttribute("orderlist", sinceTimeList);
             req.getRequestDispatcher("manage_orders.jsp").forward(req, resp);
         }
     }

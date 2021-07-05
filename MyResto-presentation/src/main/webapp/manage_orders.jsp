@@ -18,12 +18,12 @@
     <div class="relative px">
         <c:forEach items="${orderlist}" var="orders">
             <div class="orders">
-                <p class="orders-time">Il y a 5 min <span class="product-status">${orders.status.name}</span></p>
-                <p class="orders-id">N° ${orders.id} - ${orders.user.surname} ${orders.user.firstname}</p>
+                <p class="orders-time">Il y a <c:if test="${orders.value.hour > 0}" >${orders.value.hour} h et</c:if> ${orders.value.minute} min <span class="product-status">${orders.key.status.name}</span></p>
+                <p class="orders-id">N° ${orders.key.id} - ${orders.key.user.surname} ${orders.key.user.firstname}</p>
                 <hr>
                 <table>
                     <c:set var="somme" value="<%=Double.valueOf(0)%>" />
-                    <c:forEach items="${orders.product}" var="product">
+                    <c:forEach items="${orders.key.product}" var="product">
                         <tr>
                             <td>${product.name}</td>
                             <td>x ${product.stock}</td>
@@ -34,13 +34,13 @@
                 <hr>
                 <p class="orders-price"><c:out value="${somme}"/> € TTC</p>
 
-                <form method="POST" action="order_cancel" style="display:${orders.status.name == 'Terminé' || orders.status.name == 'Annulé' || orders.status.name == 'En cours' ? 'none;' : 'initial;'}">
-                    <input type="hidden" name="id_order" value="${orders.id}">
+                <form method="POST" action="order_cancel" style="display:${orders.key.status.name == 'Terminé' || orders.key.status.name == 'Annulé' || orders.key.status.name == 'En cours' ? 'none;' : 'initial;'}">
+                    <input type="hidden" name="id_order" value="${orders.key.id}">
                     <input type="submit" class="btn btn-unset order" value="Annuler cette commande"/>
                 </form>
-                <form method="POST" action="${orders.status.name == 'En attente' ? 'order_inprogress' : 'order_close'}" style="display:${orders.status.name == 'Terminé' || orders.status.name == 'Annulé' ? 'none;' : 'initial;'}">
-                    <input type="hidden" name="id_order" value="${orders.id}">
-                    <input type="submit" class="btn order" value="${orders.status.name == 'En attente' ? 'Je prépare cette commande' : 'Commande finalisée'}"/>
+                <form method="POST" action="${orders.key.status.name == 'En attente' ? 'order_inprogress' : 'order_close'}" style="display:${orders.key.status.name == 'Terminé' || orders.key.status.name == 'Annulé' ? 'none;' : 'initial;'}">
+                    <input type="hidden" name="id_order" value="${orders.key.id}">
+                    <input type="submit" class="btn order" value="${orders.key.status.name == 'En attente' ? 'Je prépare cette commande' : 'Commande finalisée'}"/>
                 </form>
             </div>
         </c:forEach>

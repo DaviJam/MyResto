@@ -13,6 +13,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 public class OrderDao implements IDao<Order> {
@@ -46,7 +47,9 @@ public class OrderDao implements IDao<Order> {
                     "id_user)" +
                     "VALUES(?, ?, ?) ";
             st = cn.prepareStatement(sql_request, Statement.RETURN_GENERATED_KEYS);
-            st.setDate(1, new java.sql.Date(entity.getOrder_date().getTime()));
+
+            java.sql.Timestamp date = java.sql.Timestamp.from(entity.getOrder_date().toInstant());
+            st.setTimestamp(1, date);
             st.setInt(2, entity.getStatus().getNum());
             st.setInt(3, entity.getUser().getId());
 
@@ -196,7 +199,7 @@ public class OrderDao implements IDao<Order> {
             {
                 List<Product> listproduct = new ArrayList<Product>();
                 User user = new User(res.getString("surname"), res.getString("firstname"), Role.CLIENT, res.getString("email"), res.getString("password"), res.getString("address"));
-                java.sql.Date date = res.getDate("order_date");
+                java.util.Date date = java.util.Date.from(res.getTimestamp("order_date").toInstant());
                 java.sql.Time time = res.getTime("order_date");
                 System.out.println(time.toString());
 
