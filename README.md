@@ -8,8 +8,9 @@ Application web et mobile permettant :<br>
 
 ## Pré-requis
 Version java : 15.0.2 <br>
-Système de gestion de Base de donnée: MySQL <br>
-Container web Tomcat : version 9.0
+Système de gestion de Base de donnée : MySQL <br>
+Container web Tomcat : version 9.0 <br>
+Le gestionnaire de version Git
 
 ## Release V0
 * Création de l'application avec les fonctionnalités de base
@@ -19,24 +20,23 @@ Container web Tomcat : version 9.0
 *  Aux utilisateurs authentifiés de commander
 
 ## Utilisation
-Aller sur le site www.myresto.com
+1. Créer un répertoire à l'emplacement de votre choix,
+2. Lancer la commande git clone https://github.com/DaviJam/MyResto.git,
+3. Créer une base de donnée mysql à partir du fichier .sql situé à la racine du projet,
+3. Déployer le fichier .war se trouvant à la racine du projet,
+4. Rendez-vous sur http://localhost:[port]/myresto,
 
 Deux choix sont alors possibles.
 
-* Accéder à l'application avec le compte Directeur :
+* Accéder à l'application avec le compte Restaurateur :
 
   > Identifiant : gestion@myresto.com
-  >  <br/>Mot de passe : gestion01*
+  >  <br/>Mot de passe : myresto
+  
+* Accéder à l'application avec le compte Client :
 
-* Accéder à l'application avec le compte Responsable :
-
-  > Identifiant : m.dillon@gmail.com
-  >  <br/>Mot de passe : m.dillon
-
-## Localisation du répertoire des Logs
-
-Format application
-* Le répertoire des logs est situé dans le même répertoire que le .jar.
+  > Identifiant : client1@gmail.com
+  >  <br/>Mot de passe : client
 
 ## Convention de nommage
 

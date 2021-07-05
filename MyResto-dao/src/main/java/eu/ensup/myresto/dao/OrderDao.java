@@ -200,8 +200,6 @@ public class OrderDao implements IDao<Order> {
                 List<Product> listproduct = new ArrayList<Product>();
                 User user = new User(res.getString("surname"), res.getString("firstname"), Role.CLIENT, res.getString("email"), res.getString("password"), res.getString("address"));
                 java.util.Date date = java.util.Date.from(res.getTimestamp("order_date").toInstant());
-                java.sql.Time time = res.getTime("order_date");
-                System.out.println(time.toString());
 
                 Status status = Status.getStatusByNum(res.getInt("id_status"));
                 int idorder = res.getInt("id_order");
