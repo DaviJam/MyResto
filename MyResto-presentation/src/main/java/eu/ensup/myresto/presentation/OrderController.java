@@ -150,7 +150,7 @@ public class OrderController extends HttpServlet {
             try {
                 orderService.update(id_order, StatusDTO.ENCOURS);
                 req.getSession().setAttribute(succesFlag, "La commande " + id_order + " a été mise à jours avec succès.");
-                resp.sendRedirect(req.getContextPath()+"/update_stock?id="+id_order);
+                resp.sendRedirect(req.getContextPath()+"/update_stock?id="+id_order+"&action=inprogress");
             } catch (ExceptionService exceptionService) {
                 loggerService.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode."+ exceptionService.getMessage());
                 req.getSession().setAttribute(errorFlag, "Erreur serveur. La modification du status de la commande a échoué.");
@@ -188,7 +188,7 @@ public class OrderController extends HttpServlet {
             try {
                 orderService.update(id_order, StatusDTO.ANNULE);
                 req.getSession().setAttribute(succesFlag, "La commande " + id_order + " a été annulé avec succès.");
-                resp.sendRedirect(req.getContextPath()+"/orders_show");
+                resp.sendRedirect(req.getContextPath()+"/update_stock?id="+id_order+"&action=cancel");
             } catch (ExceptionService exceptionService) {
                 loggerService.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode." + exceptionService.getMessage());
                 req.getSession().setAttribute(errorFlag, "Erreur serveur. La modification du status de la commande a échoué.");

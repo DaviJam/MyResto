@@ -3,6 +3,13 @@ var DEBUG_MODE = true;
 //Bulle nombre de produit dans le panier
 document.querySelector(".cardCount").innerText = document.querySelectorAll("div.product.no-float").length;
 
+//Bouton pour fermer les popup d'erreur de la validation
+let closingBtn = document.querySelectorAll(".alertClose");
+if (DEBUG_MODE) {console.log(closingBtn);}
+closingBtn.forEach(c => c.addEventListener('click', event => {
+    c.parentNode.style.display = "none";
+}));
+
 //Filtre page accueil
 let filters = document.querySelectorAll(".filter");
 if (DEBUG_MODE) {console.log(filters);}
@@ -92,7 +99,6 @@ function changeQqt(qtt) {
 }
 
 function filterProduct(filter) {
-debugger;
     let cnt = 0;
     let allCard = document.querySelectorAll(".card");
     let categories = document.querySelectorAll(".filter");
@@ -102,7 +108,6 @@ debugger;
     allCard.forEach(function(card){
       if (card.getAttribute("data-category") != filter && filter != "*") {card.style.display = "none";} else {card.style.display = "initial"; cnt += 1;}
     });
-
     document.querySelector(".defaut-title").innerText = cnt + " produits trouvés";
 }
 

@@ -10,12 +10,12 @@
 
   <error-page>
     <exception-type>java.lang.Exception</exception-type>
-    <location>/home.jsp</location>
+    <location>/home</location>
   </error-page>
 
   <error-page>
     <error-code>404</error-code>
-    <location>/home.jsp</location>
+    <location>/home</location>
   </error-page>
 </web-app>
 

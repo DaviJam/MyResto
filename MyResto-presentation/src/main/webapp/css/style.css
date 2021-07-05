@@ -146,9 +146,19 @@ header span.cardCount{position: absolute; right: 15px; top: 15px; background-col
 .scrollbar::-webkit-scrollbar{width: 0.5rem;}
 .scrollbar::-webkit-scrollbar-thumb{border-radius: 10px; background-color: #f6724c;}
 
+/* Alert */
+.alert{background-color: #fff; height: 64px; width: 80%; margin-left: auto; margin-top: 25px; margin-right: auto; border-radius: 32px; box-shadow: 0 5px 10px rgb(154 160 185 / 45%), 0 15px 40px rgb(166 173 201 / 20%); position: relative;}
+.alert svg{width: 32px; height: 32px; margin-top: 16px; margin-left: 16px; float: left;}
+.alert p{margin: 0;line-height: 64px;margin-left: 64px; font-weight: 400; color: #292d30;}
+.alert .alertClose{position: absolute!important; top: 50%!important; right: 25px!important; transform: translateY(-50%)!important; margin: 0!important;}
+.alert .alertClose path{fill: #292d30!important;}
+.alert.alert-success svg path{fill: #5dc157;}
+.alert.alert-success span{font-weight: 600; color: #5ec159;}
+.alert.alert-error svg path{fill: #fd734e;}
+.alert.alert-error span{font-weight: 600; color: #fd734e;}
+
 /* stock */
 .page_stock{margin-bottom:calc(48px + 25px + 25px)/*button+bottom+espace*/}
-
 /* todo
 HTML
 7. Faire les deux changement décrit dnas le css
