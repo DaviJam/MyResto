@@ -5,6 +5,7 @@ import eu.ensup.myresto.dao.ExceptionDao;
 import eu.ensup.myresto.dao.ProductDao;
 import eu.ensup.myresto.dto.ProductDTO;
 import eu.ensup.myresto.mapper.ProductMapper;
+import org.javatuples.Triplet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,6 +113,18 @@ public class ProductService implements IService<ProductDTO> {
             throw new ExceptionService(exceptionDao.getMessage());
         }
 
+    }
+
+    public List<Triplet<Integer, Integer, Integer>> getOrderProducts(int orderId) throws ExceptionService{
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+
+        try{
+            List<Triplet<Integer, Integer, Integer>> productInfo = this.productDao.getOrderProducts(orderId);
+            return productInfo;
+        } catch(ExceptionDao exceptionDao){
+            serviceLogger.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode.");
+            throw new ExceptionService(exceptionDao.getMessage());
+        }
     }
 
     public Boolean updateStock(int id_product, int quantity) throws ExceptionDao, ExceptionService {

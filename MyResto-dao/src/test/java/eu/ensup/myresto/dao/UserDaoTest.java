@@ -70,7 +70,7 @@ public class UserDaoTest
     @Tag("UserDaoTest")
     public void personNotNull() throws ExceptionDao {
         User p = null;
-        p = daoUser.get("root@root.com");
+        p = daoUser.get("name-surname@test.fr");
         assertNotNull(p);
         assertThat(p, notNullValue(User.class));
     }

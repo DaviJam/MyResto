@@ -2,6 +2,7 @@ package eu.ensup.myresto.presentation;
 
 import eu.ensup.myresto.dto.UserDTO;
 import eu.ensup.myresto.service.ExceptionService;
+import eu.ensup.myresto.service.LoggerService;
 import eu.ensup.myresto.service.OrderService;
 import eu.ensup.myresto.service.UserService;
 
@@ -14,19 +15,32 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static eu.ensup.myresto.presentation.Common.errorFlag;
+
 @WebServlet(
         name = "ProfilServlet",
         urlPatterns = "/profile"
 )
 public class ProfilController extends HttpServlet {
+    String className = getClass().getName();
+
+    private LoggerService loggerService = null;
+    private UserService service = null;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        loggerService = new LoggerService();
+        service = new UserService();
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher;
-        requestDispatcher = req.getRequestDispatcher("profile.jsp");
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
 
         HttpSession session = req.getSession();
         String email = (String) session.getAttribute("email");
-        UserService service = new UserService();
+
         try {
             UserDTO userDTO = service.get(email);
             req.setAttribute("surname", userDTO.getSurname());
@@ -36,10 +50,10 @@ public class ProfilController extends HttpServlet {
             req.setAttribute("id_role", userDTO.getRole());
 
         } catch (ExceptionService exceptionService) {
-            // TODO A CHANGER !!!!!!!!!!!!!
-            exceptionService.printStackTrace();
+            req.setAttribute(errorFlag, "Les informations de l'utilisateur sont momentanément indisponibles.");
+            loggerService.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode." + exceptionService.getMessage());
         }
-        requestDispatcher.forward(req, resp);
+        req.getRequestDispatcher("profile.jsp").forward(req, resp);
     }
 
     @Override
