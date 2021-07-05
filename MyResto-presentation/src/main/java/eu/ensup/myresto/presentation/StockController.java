@@ -129,11 +129,19 @@ public class StockController extends HttpServlet {
             case "GET": {
                 String id_order = req.getQueryString();
                 int orderId = Integer.parseInt(id_order.split("=")[1]);
+                String action = id_order.split("=")[2];
                 try {
                     var productsinfo = productService.getOrderProducts(orderId);
                     productsinfo.forEach(info->{
                         try {
-                            productService.updateStock(info.getValue0(), (info.getValue1() - info.getValue2()));
+                            if(action.equals("inprogress"))
+                            {
+                                productService.updateStock(info.getValue0(), (info.getValue1() - info.getValue2()));
+                            }
+                            else if(action.equals("cancel"))
+                            {
+                                productService.updateStock(info.getValue0(), (info.getValue1() + info.getValue2()));
+                            }
                             req.getSession().setAttribute(succesFlag, "Le stock du produit à été mis à jours avec succès.");
                         } catch (ExceptionDao | ExceptionService exception) {
                             req.getSession().setAttribute(errorFlag, "Erreur serveur. La page est indisponible pour le moment.");
