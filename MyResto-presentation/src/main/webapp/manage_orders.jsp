@@ -34,26 +34,14 @@
                 <hr>
                 <p class="orders-price"><c:out value="${somme}"/> € TTC</p>
 
-                <form id="cancel" method="POST" action="order_cancel">
+                <form method="POST" action="order_cancel" style="display:${orders.key.status.name == 'Terminé' || orders.key.status.name == 'Annulé' || orders.key.status.name == 'En cours' ? 'none;' : 'initial;'}">
                     <input type="hidden" name="id_order" value="${orders.key.id}">
+                    <input type="submit" class="btn btn-unset order" value="Annuler cette commande"/>
                 </form>
-                <form id="close" method="POST" action="order_close">
+                <form method="POST" action="${orders.key.status.name == 'En attente' ? 'order_inprogress' : 'order_close'}" style="display:${orders.key.status.name == 'Terminé' || orders.key.status.name == 'Annulé' ? 'none;' : 'initial;'}">
                     <input type="hidden" name="id_order" value="${orders.key.id}">
+                    <input type="submit" class="btn order" value="${orders.key.status.name == 'En attente' ? 'Je prépare cette commande' : 'Commande finalisée'}"/>
                 </form>
-                <form id="progress" method="POST" action="order_inprogress">
-                    <input type="hidden" name="id_order" value="${orders.key.id}">
-                </form>
-                <c:if test="${(sessionScope.role == '1' && (orders.key.status.num == '1' || orders.key.status.num == '2')) || (sessionScope.role == '2' && orders.key.status.num == '1')}">
-                <input form="cancel" type="submit" class="btn btn-unset" style="border: none; bottom: 25px; right: 25px; box-shadow: 0 5px 10px rgb(154 160 185 / 45%), 0 15px 40px rgb(166 173 201 / 20%);" value="Annuler cette commande"/>
-                </c:if>
-                <c:if test="${ sessionScope.role == '1' && orders.key.status.num == '1'}">
-                    <input form="progress" type="submit" class="btn" style="border: none; bottom: 25px; right: 25px; box-shadow: 0 5px 10px rgb(154 160 185 / 45%), 0 15px 40px rgb(166 173 201 / 20%);" value="Accepter cette commande"/>
-                </c:if>
-                <c:if test="${ sessionScope.role == '1' && orders.key.status.num == '2'}">
-                <input form="close" type="submit" class="btn" style="border: none; bottom: 25px; right: 25px; box-shadow: 0 5px 10px rgb(154 160 185 / 45%), 0 15px 40px rgb(166 173 201 / 20%);" value="Terminer"/>
-                </c:if>
-                <!-- <a href="" class="btn btn-unset">Annuler</a> -->
-                <!-- <a href="" class="btn">Terminer</a> -->
             </div>
         </c:forEach>
     </div>
