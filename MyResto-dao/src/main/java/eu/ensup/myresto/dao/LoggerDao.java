@@ -3,6 +3,7 @@ package eu.ensup.myresto.dao;
 import eu.ensup.myresto.logger.LoggerHandler;
 import org.apache.log4j.Logger;
 
+
 public class LoggerDao extends LoggerHandler {
     public LoggerDao(){
         super();

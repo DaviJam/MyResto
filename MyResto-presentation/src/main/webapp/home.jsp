@@ -14,7 +14,6 @@
 
     <h1 class="main-title">Découvre nos produits</h1>
 
-     <h1>${error}</h1>
     <input class="form-control form-full-w" type="text" placeholder="Recherche">
     <div class="relative">
         <ul class="main-carrousel">
