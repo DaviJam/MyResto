@@ -135,8 +135,9 @@ public class StockController extends HttpServlet {
             }
             case "GET": {
                 String id_order = req.getQueryString();
-                int orderId = Integer.parseInt(id_order.split("=")[1]);
-                String action = id_order.split("=")[2];
+                int orderId = Integer.parseInt(req.getParameter("id"));
+                String action = req.getParameter("action");
+
                 try {
                     var productsinfo = productService.getOrderProducts(orderId);
                     productsinfo.forEach(info->{
