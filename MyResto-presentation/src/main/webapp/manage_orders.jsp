@@ -15,7 +15,7 @@
     <%} else {%>
         <h1 class="main-title">Mes commandes</h1>
     <%}%>
-    <div class="relative px">
+    <div class="relative px orders-list">
         <c:forEach items="${orderlist}" var="orders">
             <div class="orders">
                 <p class="orders-time">Il y a <c:if test="${orders.value.hour > 0}" >${orders.value.hour} h et</c:if> ${orders.value.minute} min <span class="product-status">${orders.key.status.name}</span></p>

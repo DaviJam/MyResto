@@ -177,6 +177,9 @@ header span.cardCount{position: absolute; right: 15px; top: 15px; background-col
 .main-carrousel li{cursor: pointer}
 .v-carrousel{display :flex; flex-direction:row; flex-wrap: wrap; align-items: center; margin-bottom:1rem}
 
+.orders-list{display :flex; flex-direction:row; flex-wrap: wrap; align-items: center}
+.modal_card{}
+
 
 /*
 todo
