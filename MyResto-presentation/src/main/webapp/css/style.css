@@ -2,7 +2,10 @@ html, body{font-family: 'Poppins', sans-serif; margin: 0; border: 0; padding: 0;
 html{scroll-behavior: smooth; }
 body{min-height: 100vh; position: relative; float: left; width: 100%; background-image: url('../img/bg.svg'); background-size: cover; background-repeat: no-repeat;}
 a {color: inherit; text-decoration: none;}
-input{font-family: 'Poppins'}
+
+::selection{background:#F6724C; color:white;}
+::-moz-selection{background:#F6724C; color:white;}
+
 /* Componant */
 
 /* Card */
@@ -159,7 +162,26 @@ header span.cardCount{position: absolute; right: 15px; top: 15px; background-col
 
 /* stock */
 .page_stock{margin-bottom:calc(48px + 25px + 25px)/*button+bottom+espace*/}
-/* todo
-HTML
-7. Faire les deux changement décrit dnas le css
+/* product */
+.button-toReset{
+     background: none!important;
+     border: none!important;
+     padding: 0!important;
+}
+.product-img---hidden{width: 100%; position: absolute; top: 0; left: -50%; transition: 0.8s all ease;}
+.product-img{width: 100%; position: absolute; top: 0; left: -50%;}
+.product-title{margin: 8rem 0; text-align: right;}
+
+/* last minute*/
+.link-add-card{cursor: pointer}
+.main-carrousel li{cursor: pointer}
+.v-carrousel{display :flex; flex-direction:row; flex-wrap: wrap; align-items: center; margin-bottom:1rem}
+
+
+/*
+todo
+1. Quelques focus/active sur les liens (navbar + buttons)
+2. Quelques cursor pointer sur des a
+3. Le hover sur le Bouton de deconnexion
+4. Prendre en com:pte les paddings left/right sur les liens des boutons de nav
 */
