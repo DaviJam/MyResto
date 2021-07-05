@@ -4,6 +4,7 @@ import eu.ensup.myresto.business.Category;
 import eu.ensup.myresto.business.Product;
 import eu.ensup.myresto.business.Role;
 import eu.ensup.myresto.business.User;
+import org.javatuples.Triplet;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -458,30 +459,64 @@ public class ProductDao implements IDao<Product> {
         return product;
     }
 
-    public Boolean updateStock(int id_product, int quantity) throws ExceptionDao {
+    public Boolean updateStock(int id_product, int newQuantity) throws ExceptionDao {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         try {
-
-            Product product = this.getProductById(id_product);
-            int finalstock = product.getStock() - quantity;
 
             Connection cn = openConnection();
             String request = "UPDATE `product` SET `stock`=? WHERE id_product=?";
             // Update TableA a Set Valeur_Total = (select sum(Valeur) from TableA where id1 = A.ID1 and ID2 = A.ID2)
             PreparedStatement st = cn.prepareStatement(request);
-            st.setInt(1, finalstock);
+            st.setInt(1, newQuantity);
+            st.setInt(2, id_product);
+
             st.executeUpdate();
 
+            cn.close();
             /*if(res == 0)
             {
                 DaoLogger.logDaoError(className, methodName,"Echec de la mise à jour du produit : " + entity.getName());
                 throw new ExceptionDao("La mise à jour a échoué. Le produit n'existe pas en base de donnée.");
             }*/
 
-            DaoLogger.logDaoInfo(className, methodName,"Les information du produit " + product.getName() + " ont bien été modifié.");
+            DaoLogger.logDaoInfo(className, methodName,"Les information du produit numéro " + id_product + " ont bien été modifié.");
             return true;
         } catch (SQLException | ExceptionDao e) {
             DaoLogger.logDaoError(className, methodName,"La transaction UPDATE dans la méthode update a échouée.",e);
+            throw new ExceptionDao("Un problème est survenu au niveau de la base de donnée. Veuillez contacter votre administrateur.");
+        }
+    }
+
+    public List<Triplet<Integer, Integer, Integer>> getOrderProducts(int orderId) throws ExceptionDao{
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        List<Triplet<Integer, Integer, Integer>> list = new ArrayList<>();
+        try {
+
+            Connection cn = openConnection();
+            String request = "SELECT list.id_product, list.quantity, product.stock FROM `list`, `product` WHERE list.id_product = product.id_product AND list.id_order = ?";
+            PreparedStatement st = cn.prepareStatement(request);
+            st.setInt(1, orderId);
+            rs = st.executeQuery();
+
+            while(rs.next()){
+                int id_product = rs.getInt("id_product");
+                int stock = rs.getInt("stock");
+                int quantity = rs.getInt("quantity");
+                list.add(new Triplet<>(id_product, stock, quantity));
+            }
+
+            if(list.isEmpty()){
+                DaoLogger.logDaoInfo(className, methodName,"La récupération des informations des produit pour la commande " +orderId + " a échoué.");
+            } else {
+                DaoLogger.logDaoInfo(className, methodName,"Les information du produit pour la commande " +orderId + " ont bien été récupérés.");
+            }
+
+            cn.close();
+
+
+            return list;
+        } catch( SQLException | ExceptionDao e) {
+            DaoLogger.logDaoError(className, methodName,"La transaction SELECT dans la méthode update a échouée.",e);
             throw new ExceptionDao("Un problème est survenu au niveau de la base de donnée. Veuillez contacter votre administrateur.");
         }
     }

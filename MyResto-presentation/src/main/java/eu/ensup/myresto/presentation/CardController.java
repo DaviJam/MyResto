@@ -36,7 +36,7 @@ public class CardController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             req.setAttribute("cards", listProduct);
-            req.getRequestDispatcher("index.jsp").forward(req, resp);
+            req.getRequestDispatcher("home.jsp").forward(req, resp);
         } catch (Exception e) {
 
         }
@@ -48,7 +48,7 @@ public class CardController extends HttpServlet {
     }
 
     private void handleMethods(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println(req.getRequestURI());
+
         switch (req.getRequestURI()) {
             case "/myresto/card_add": {
                 add(req, resp);
@@ -64,7 +64,6 @@ public class CardController extends HttpServlet {
     private void add(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //On récupère le produit ajouter au panier
         String product = req.getParameter("product");
-        System.out.println(product);
 
         //On supprime le panier si la session est null
         HttpSession session = req.getSession(true);
@@ -73,7 +72,7 @@ public class CardController extends HttpServlet {
         }
 
         //On update la variable panier
-        ProductDTO p = new ProductDTO();
+        ProductDTO p = null;
         try {
             p = productService.get(Integer.parseInt(req.getParameter("product")));
             listProduct.add(p);
@@ -115,6 +114,7 @@ public class CardController extends HttpServlet {
         resp.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
         resp.setCharacterEncoding("UTF-8"); // You want world domination, huh?
         resp.getWriter().write(responseHTML);       // Write response body.
+        resp.getWriter().flush();
     }
 
     private void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -151,7 +151,7 @@ public class CardController extends HttpServlet {
                 "</div>" +
                         "<h3 class=\"main-title\" style=\"text-align: right; margin: 0;\">Total : " + String.valueOf(sum) + " TTC</h3>\n" +
                         "        <div class=\"relative px\">\n" +
-                        "            <a href=\"#\" class=\"btn\" style=\"margin-top: 25px;\">Valider ma commande</a>\n" +
+                        "            <a href=\"order_create\" class=\"btn\" style=\"margin-top: 25px;\">Valider ma commande</a>\n" +
                         "        </div>";
 
 
@@ -162,5 +162,6 @@ public class CardController extends HttpServlet {
         resp.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
         resp.setCharacterEncoding("UTF-8"); // You want world domination, huh?
         resp.getWriter().write(responseHTML);       // Write response body.
+        resp.getWriter().flush();
     }
 }
