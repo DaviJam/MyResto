@@ -1,0 +1,8 @@
+eu.ensup.gestionetablissement.business
+eu.ensup.myresto.business
+eu.ensup.myresto.dao
+eu.ensup.myresto.dto
+eu.ensup.myresto.logger
+eu.ensup.myresto.mapper
+eu.ensup.myresto.presentation
+eu.ensup.myresto.service
