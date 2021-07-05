@@ -34,14 +34,21 @@
                 <hr>
                 <p class="orders-price"><c:out value="${somme}"/> € TTC</p>
 
-                <form method="POST" action="order_cancel" style="display:${orders.status.name == 'Terminé' || orders.status.name == 'Annulé' || orders.status.name == 'En cours' ? 'none;' : 'initial;'}">
-                    <input type="hidden" name="id_order" value="${orders.id}">
-                    <input type="submit" class="btn btn-unset order" value="Annuler cette commande"/>
-                </form>
-                <form method="POST" action="${orders.status.name == 'En attente' ? 'order_inprogress' : 'order_close'}" style="display:${orders.status.name == 'Terminé' || orders.status.name == 'Annulé' ? 'none;' : 'initial;'}">
-                    <input type="hidden" name="id_order" value="${orders.id}">
-                    <input type="submit" class="btn order" value="${orders.status.name == 'En attente' ? 'Je prépare cette commande' : 'Commande finalisée'}"/>
-                </form>
+                <% if (str.equals("1")) { %>
+                    <form method="POST" action="order_cancel" style="display:${orders.status.name == 'Terminé' || orders.status.name == 'Annulé' || orders.status.name == 'En cours' ? 'none;' : 'initial;'}">
+                        <input type="hidden" name="id_order" value="${orders.id}">
+                        <input type="submit" class="btn btn-unset order" value="Annuler cette commande"/>
+                    </form>
+                    <form method="POST" action="${orders.status.name == 'En attente' ? 'order_inprogress' : 'order_close'}" style="display:${orders.status.name == 'Terminé' || orders.status.name == 'Annulé' ? 'none;' : 'initial;'}">
+                        <input type="hidden" name="id_order" value="${orders.id}">
+                        <input type="submit" class="btn order" value="${orders.status.name == 'En attente' ? 'Je prépare cette commande' : 'Commande finalisée'}"/>
+                    </form>
+                <% } else { %>
+                    <form method="POST" action="order_cancel" style="display:${orders.status.name == 'Terminé' || orders.status.name == 'Annulé' || orders.status.name == 'En cours' ? 'none;' : 'initial;'}">
+                        <input type="hidden" name="id_order" value="${orders.id}">
+                        <input type="submit" class="btn order" value="Je n'ai plus faim"/>
+                    </form>
+                <% } %>
             </div>
         </c:forEach>
     </div>
