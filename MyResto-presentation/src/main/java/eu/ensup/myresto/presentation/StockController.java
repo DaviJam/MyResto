@@ -16,6 +16,9 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.List;
 
+import static eu.ensup.myresto.presentation.Common.errorFlag;
+import static eu.ensup.myresto.presentation.Common.succesFlag;
+
 @WebServlet(
         name = "StockController",
         urlPatterns = {
@@ -63,7 +66,7 @@ public class StockController extends HttpServlet {
             update(req, resp);
         }else {
             loggerService.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode.");
-            req.getSession().setAttribute("error", "Erreur serveur. La page est indisponible pour le moment.");
+            req.getSession().setAttribute(errorFlag, "Erreur serveur. La page est indisponible pour le moment.");
         }
     }
 
@@ -95,7 +98,7 @@ public class StockController extends HttpServlet {
                     }
                 } catch (ExceptionService exceptionService) {
                     loggerService.logServiceError(className, methodName, "POST - La modification du stock n'as pus être effectué");
-                    req.getSession().setAttribute("error", "Erreur serveur. Echec lors de la modification du stock. Veuillez contacter votre administrateur");
+                    req.getSession().setAttribute(errorFlag, "Erreur serveur. Echec lors de la modification du stock. Veuillez contacter votre administrateur");
                 }
                 resp.sendRedirect(req.getContextPath() + "/manage_stock");
                 break;
@@ -107,7 +110,7 @@ public class StockController extends HttpServlet {
                     req.setAttribute("listProduct", listProduct);
                     req.getRequestDispatcher("manage_stock.jsp").forward(req, resp);
                 } catch (ExceptionService exceptionService) {
-                    req.getSession().setAttribute("error", "Erreur serveur. La page est indisponible pour le moment.");
+                    req.getSession().setAttribute(errorFlag, "Erreur serveur. La page est indisponible pour le moment.");
                     loggerService.logServiceError(className,methodName,"GET - Un problème est survenue lors de l'appel à cette méthode.");
                 }
                 break;
@@ -131,13 +134,14 @@ public class StockController extends HttpServlet {
                     productsinfo.forEach(info->{
                         try {
                             productService.updateStock(info.getValue0(), (info.getValue1() - info.getValue2()));
+                            req.getSession().setAttribute(succesFlag, "Le stock du produit à été mis à jours avec succès.");
                         } catch (ExceptionDao | ExceptionService exception) {
-                            req.getSession().setAttribute("error", "Erreur serveur. La page est indisponible pour le moment.");
+                            req.getSession().setAttribute(errorFlag, "Erreur serveur. La page est indisponible pour le moment.");
                             loggerService.logServiceError(className, methodName ,"GET - Un problème est survenue lors de l'appel à cette méthode.");
                         }
                     });
                 } catch (ExceptionService exceptionService) {
-                    req.getSession().setAttribute("error", "Erreur serveur. La page est indisponible pour le moment.");
+                    req.getSession().setAttribute(errorFlag, "Erreur serveur. La page est indisponible pour le moment.");
                     loggerService.logServiceError(className, methodName ,"GET - Un problème est survenue lors de l'appel à cette méthode.");
                 }
                 resp.sendRedirect(req.getContextPath()+ "/orders_show");

@@ -22,6 +22,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static eu.ensup.myresto.presentation.Common.errorFlag;
+import static eu.ensup.myresto.presentation.Common.succesFlag;
 
 @WebServlet(
         name = "OrderServlet",
@@ -109,9 +110,6 @@ public class OrderController extends HttpServlet {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         if(req.getMethod().equals("GET"))
         {
-            // list id_product List(1,2,2,2,2)
-            // for(
-            // id_user
             List<ProductDTO> list_product = (List<ProductDTO>) req.getSession(false).getAttribute("cards");
             HashMap<Integer, ProductDTO> productMap = new HashMap<>();
             for(ProductDTO p : list_product)
@@ -132,6 +130,7 @@ public class OrderController extends HttpServlet {
                 // Creation de l'order
                 OrderDTO orderDTO = new OrderDTO(new UserService().get(id_user), list_product_updated, java.util.Date.from(Calendar.getInstance().toInstant()), Status.ENATTENTE);
                 orderService.create(orderDTO);
+                req.getSession().setAttribute(succesFlag, "La commande a été créée avec succès");
                 resp.sendRedirect(req.getContextPath()+"/orders_show");
             } catch (ExceptionService exceptionService) {
                 loggerService.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode."+ exceptionService.getMessage());
@@ -150,7 +149,7 @@ public class OrderController extends HttpServlet {
             // update order status and product stock
             try {
                 orderService.update(id_order, StatusDTO.ENCOURS);
-
+                req.getSession().setAttribute(succesFlag, "La commande " + id_order + " a été mise à jours avec succès.");
                 resp.sendRedirect(req.getContextPath()+"/update_stock?id="+id_order);
             } catch (ExceptionService exceptionService) {
                 loggerService.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode."+ exceptionService.getMessage());
@@ -169,6 +168,7 @@ public class OrderController extends HttpServlet {
             // update order status
             try {
                 orderService.update(id_order, StatusDTO.TERMINE);
+                req.getSession().setAttribute(succesFlag, "La commande " + id_order + " a été mis à jours avec succès");
                 resp.sendRedirect(req.getContextPath()+"/orders_show");
             } catch (ExceptionService exceptionService) {
                 loggerService.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode." + exceptionService.getMessage());
@@ -187,6 +187,7 @@ public class OrderController extends HttpServlet {
             // update order status
             try {
                 orderService.update(id_order, StatusDTO.ANNULE);
+                req.getSession().setAttribute(succesFlag, "La commande " + id_order + " a été annulé avec succès.");
                 resp.sendRedirect(req.getContextPath()+"/orders_show");
             } catch (ExceptionService exceptionService) {
                 loggerService.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode." + exceptionService.getMessage());

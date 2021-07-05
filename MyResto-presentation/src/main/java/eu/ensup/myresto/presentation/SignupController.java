@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static eu.ensup.myresto.presentation.Common.errorFlag;
+import static eu.ensup.myresto.presentation.Common.succesFlag;
 
 @WebServlet(
         name = "SignupServlet",
@@ -60,6 +61,7 @@ public class SignupController extends HttpServlet {
         UserDTO userDto = new UserDTO(surname, firstname, Role.CLIENT, email, pass, address);
         try {
             userService.create(userDto);
+            req.getSession().setAttribute(succesFlag, "Le compte a été créé avec succès.");
         } catch (ExceptionService exceptionService) {
             req.setAttribute(errorFlag,"Echec lors de la création d'un compte utilisateur.");
             loggerService.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode." + exceptionService.getMessage());
