@@ -39,7 +39,7 @@
                         <input type="hidden" name="id_order" value="${orders.key.id}">
                         <input type="submit" class="btn btn-unset order" value="Annuler cette commande"/>
                     </form>
-                    <form method="POST" action="${orders.key.status.name == 'En attente' ? 'order_inprogress' : 'order_close'}" style="display:${orders.key.status.name == 'Terminé' || orders.status.name == 'Annulé' ? 'none;' : 'initial;'}">
+                    <form method="POST" action="${orders.key.status.name == 'En attente' ? 'order_inprogress' : 'order_close'}" style="display:${orders.key.status.name == 'Terminé' || orders.key.status.name == 'Annulé' ? 'none;' : 'initial;'}">
                         <input type="hidden" name="id_order" value="${orders.key.id}">
                         <input type="submit" class="btn order" value="${orders.key.status.name == 'En attente' ? 'Je prépare cette commande' : 'Commande finalisée'}"/>
                     </form>
