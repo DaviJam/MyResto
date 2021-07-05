@@ -92,23 +92,13 @@ public class HomeController extends HttpServlet {
             List<ProductDTO> listProduct = productService.getAll();
 
             List<Category> listCategory = Arrays.asList(Category.values());
-            /*for(Category category : listCategory) {
-                System.out.println("category : " + category);
-                System.out.println("category.getNum() : " + category.getNum());
-            }
-            for(ProductDTO productDTO : listProduct) {
-                System.out.println("productDTO : " + productDTO);
-                System.out.println("productDTO.getName() : " + productDTO.getName());
-                System.out.println("productDTO.getDescription(): " + productDTO.getDescription());
-            }*/
-            System.out.println("listProduct.size() : " + listProduct.size());
 
             req.setAttribute("listProduct", listProduct);
             req.setAttribute("listCategory", listCategory);
 
             req.getRequestDispatcher("index.jsp").forward(req, resp);
         } catch (ExceptionService exceptionService) {
-            System.out.println("dans le catch");
+           productServiceLogger.logServiceError(exceptionService.getClass().getName(), "doGet Home controller", "Une erreur est survenue dans la récupération de la liste des produits");
         }
 
     }

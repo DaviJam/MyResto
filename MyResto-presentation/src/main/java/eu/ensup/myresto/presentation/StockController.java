@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.List;
@@ -30,40 +31,38 @@ public class StockController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
+            HttpSession checkUserSession = req.getSession(false);
+            if (checkUserSession == null || Integer.parseInt(checkUserSession.getAttribute("role").toString()) != 1) {
+                resp.sendRedirect("/myresto/home");
+            }
+            else {
 
-            ProductService productService = new ProductService();
-            List<ProductDTO> listProduct = productService.getAll();
+                ProductService productService = new ProductService();
+                List<ProductDTO> listProduct = productService.getAll();
 
-            req.setAttribute("listProduct", listProduct);
-            req.getRequestDispatcher("manage_stock.jsp").forward(req, resp);
+                req.setAttribute("listProduct", listProduct);
+                req.getRequestDispatcher("manage_stock.jsp").forward(req, resp);
+            }
         } catch (ExceptionService exceptionService) {
-            exceptionService.printStackTrace();
+            loggerService.logServiceError(exceptionService.getClass().getName(), "doGet stock controller", "La modification du stock n'as pus être effectué");
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        System.out.println("INSIDE DOPOST OF STOCK CONTROLLER");
         try {
-            System.out.println("INSIDE DOPOST OF STOCK CONTROLLER");
             ProductService productService = new ProductService();
             Enumeration keys = req.getParameterNames();
             while (keys.hasMoreElements() ) {
                 String key = (String) keys.nextElement();
                 int stockValue = Integer.parseInt( req.getParameter(key) );
 
-                System.out.println("INSIDE DOPOST OF STOCK CONTROLLER");
-
                 ProductDTO productToUpdate = productService.get(Integer.parseInt(key));
                 productToUpdate.setStock(stockValue);
 
-                System.out.println("before productService update");
                 productService.update(productToUpdate);
-                System.out.println("after productService update");
             }
         } catch (ExceptionService exceptionService) {
-            System.out.println(exceptionService.getMessage());
-            exceptionService.printStackTrace();
             loggerService.logServiceError(exceptionService.getClass().getName(), "doPost stock controller", "La modification du stock n'as pus être effectué");
         }
         resp.sendRedirect(req.getContextPath() + "/manage_stock");
