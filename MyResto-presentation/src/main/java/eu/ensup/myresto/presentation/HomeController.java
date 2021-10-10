@@ -73,7 +73,8 @@ documentedproject-1.0-SNAPSHOT.war
 @WebServlet(
         name = "HomeController",
         urlPatterns = {
-                "/home"
+                "/home",
+                "/"
         }
 
 )

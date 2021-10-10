@@ -21,10 +21,13 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `myresto`
 --
-DROP IF EXISTS USER
-CREATE USER 'user'@'%' IDENTIFIED BY 'Dbtest123&';
-GRANT SELECT, UPDATE, INSERT, DELETE, EXECUTE, FILE, SHOW DATABASES, SHOW VIEW ON *.* TO 'user'@'%' WITH GRANT OPTION;
-ALTER USER 'user'@'%' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0; 
+DROP USER IF EXISTS 'client'@'%';
+CREATE USER 'client'@'%' IDENTIFIED BY 'Dbtest123&';
+GRANT SELECT, UPDATE, INSERT, DELETE, EXECUTE, FILE, SHOW DATABASES, SHOW VIEW ON *.* TO 'client'@'%' WITH GRANT OPTION;
+ALTER USER 'client'@'%' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
+
+DROP DATABASE IF EXISTS `myresto`;
+CREATE DATABASE `myresto`;
 USE `myresto`;
 
 CREATE TABLE role(
@@ -72,13 +75,13 @@ CREATE TABLE users(
    password VARCHAR(50),
    address VARCHAR(50),
    id_role INT NOT NULL,
-   PRIMARY KEY(id_user),
-   FOREIGN KEY(id_role) REFERENCES role(id_role)
+   PRIMARY KEY(id_user)
+--   FOREIGN KEY(id_role) REFERENCES role(id_role)
 );
 
 INSERT INTO `users` (`id_user`, `surname`, `firstname`, `email`, `password`, `address`, `id_role`) VALUES
-(1, 'Gerant', 'Gerant', 'gestion@myresto.com', 'myresto', 'rue', 2),
-(2, 'Client', 'Client', 'client1@gmail.com', 'client', 'rue', 1);
+(1, 'Gerant', 'Gerant', 'gestion@myresto.com', 'myresto', 'rue', 1),
+(2, 'Client', 'Client', 'client1@gmail.com', 'client', 'rue', 2);
 
 CREATE TABLE product(
    id_product INT NOT NULL AUTO_INCREMENT,
@@ -89,8 +92,8 @@ CREATE TABLE product(
    image VARCHAR(50),
    stock int,
    id_category INT NOT NULL,
-   PRIMARY KEY(id_product),
-   FOREIGN KEY(id_category) REFERENCES category(id_category)
+   PRIMARY KEY(id_product)
+--   FOREIGN KEY(id_category) REFERENCES category(id_category)
 );
 
 INSERT INTO `product` (`id_product`, `name`, `description`, `price`, `allergen`, `image`, `stock`, `id_category`) VALUES
@@ -115,18 +118,18 @@ CREATE TABLE orders(
    order_date TIMESTAMP,
    id_status INT NOT NULL,
    id_user INT NOT NULL,
-   PRIMARY KEY(id_order),
-   FOREIGN KEY(id_status) REFERENCES status(id_status),
-   FOREIGN KEY(id_user) REFERENCES users(id_user)
+   PRIMARY KEY(id_order)
+--   FOREIGN KEY(id_status) REFERENCES status(id_status),
+--   FOREIGN KEY(id_user) REFERENCES users(id_user)
 );
 
 CREATE TABLE list(
    id_product INT,
    id_order INT,
    quantity INT,
-   PRIMARY KEY(id_product, id_order),
-   FOREIGN KEY(id_product) REFERENCES product(id_product),
-   FOREIGN KEY(id_order) REFERENCES orders(id_order)
+   PRIMARY KEY(id_product, id_order)
+--   FOREIGN KEY(id_product) REFERENCES product(id_product),
+--   FOREIGN KEY(id_order) REFERENCES orders(id_order)
 );
 
 
@@ -138,14 +141,14 @@ CREATE TABLE list(
 -- Contraintes pour la table `list`
 --
 ALTER TABLE `list`
-  ADD CONSTRAINT `list_ibfk_1` FOREIGN KEY (`id_product`) REFERENCES `product` (`id_product`),
-  ADD CONSTRAINT `list_ibfk_2` FOREIGN KEY (`id_order`) REFERENCES `orders` (`id_order`);
+ADD CONSTRAINT `list_ibfk_1` FOREIGN KEY (`id_product`) REFERENCES `product` (`id_product`),
+ADD CONSTRAINT `list_ibfk_2` FOREIGN KEY (`id_order`) REFERENCES `orders` (`id_order`);
 
 --
 -- Contraintes pour la table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`id_status`) REFERENCES `status` (`id_status`),
+--  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`id_status`) REFERENCES `status` (`id_status`),
   ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);
 
 --

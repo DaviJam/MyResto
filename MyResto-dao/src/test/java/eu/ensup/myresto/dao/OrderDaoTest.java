@@ -1,13 +1,12 @@
 package eu.ensup.myresto.dao;
 
 import eu.ensup.myresto.business.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import eu.ensup.myresto.business.Order;
+import org.junit.jupiter.api.*;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static eu.ensup.myresto.dao.IDao.DaoLogger;
@@ -22,58 +21,77 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class OrderDaoTest {
 
     OrderDao orderDao = new OrderDao();
+    UserDao userDao = new UserDao();
+    ProductDao productDao = new ProductDao();
+    User user;
 
     @BeforeEach
-    public void setUp() {
-        try {
-            Connect.openConnection();
-        } catch (ExceptionDao exceptionDao) {
-        }
+    public void setUp() throws ExceptionDao {
+        Connect.openConnection();
+        user = new User("James", "Jamel", Role.CLIENT, "jamel.J@email.com", "test", "somewhere");
+        userDao.create(user);
+    }
+
+    @AfterEach
+    public void tearDown() throws ExceptionDao {
+        userDao.delete(user.getEmail());
     }
 
     @Test
     @DisplayName("get order and check if it's not null")
     @Tag("OrderDaoTest")
     public void orderNotNull() throws ExceptionDao {
-        Order o = null;
-        o = orderDao.get(1);
-        assertNotNull(o);
-        assertThat(o, notNullValue(Order.class));
+        Order o = createOrder();
+        assertNotNull(orderDao.get(o.getId()));
+        assertThat(orderDao.get(o.getId()), notNullValue(Order.class));
+        deleteOrder(o.getId());
     }
 
     @Test
     @DisplayName("update order status")
     @Tag("OrderDaoTest")
     public void orderUpdated() throws ExceptionDao {
-        Boolean res = orderDao.update(1, Status.ENCOURS);
+        Order o = createOrder();
+        Boolean res = orderDao.update(o.getId(), Status.ENCOURS);
         assertEquals(res, true);
+        o = orderDao.get(o.getId());
+        assertEquals(o.getStatus(), Status.ENCOURS);
+        deleteOrder(o.getId());
     }
 
     @Test
-    @DisplayName("delete order")
-    @Tag("OrderDaoTest")
-    public void orderDelete() throws ExceptionDao {
-        //int result = orderDao.delete(13);
-        //assertEquals(result, 1);
-    }
-
-    @Test
-    @DisplayName("getAll orders")
+    @DisplayName("get all orders")
     @Tag("OrderDaoTest")
     public void orderGetAll() throws ExceptionDao {
+        createOrder();
+        createOrder();
+
         List<Order> orderlist = orderDao.getAll();
         assertNotNull(orderlist);
+
+        orderlist.forEach(o -> {
+            try {
+                deleteOrder(o.getId());
+            } catch (ExceptionDao exceptionDao) {
+                exceptionDao.printStackTrace();
+            }
+        });
+
     }
 
-    @Test
-    @DisplayName("create orders")
-    @Tag("OrderDaoTest")
-    public void orderCreate() throws ExceptionDao {
-        /*User user = new User(341, "dupont","jean", Role.CLIENT, "jdupont@gmail.com", "1234", "2 rue des jeans");
-        Product prod1 = new ProductDao().getProductById(1);
-        List<Product> listproduct= new ArrayList<Product>();
-        listproduct.add(prod1);
-        Order order = new Order(user, listproduct, new Date(2021, 06, 06), Status.ENCOURS);
-        new OrderDao().create(order);*/
+    Order createOrder() throws ExceptionDao {
+        List<Product> products = new ArrayList<>();
+
+        products.add(productDao.get(1));
+        products.add(productDao.get(4));
+        products.add(productDao.get(3));
+
+        int orderId = orderDao.create(new Order(userDao.get(user.getEmail()),products, new Date(), Status.ENATTENTE));
+        return orderDao.get(orderId);
     }
+
+    void deleteOrder(int id) throws ExceptionDao {
+        orderDao.delete(id);
+    }
+
 }

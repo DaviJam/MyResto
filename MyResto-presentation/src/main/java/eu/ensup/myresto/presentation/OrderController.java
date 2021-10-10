@@ -136,6 +136,9 @@ public class OrderController extends HttpServlet {
                 loggerService.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode."+ exceptionService.getMessage());
                 req.getSession().setAttribute(errorFlag, "Erreur serveur. La création de la commande a échoué.");
             }
+
+            req.getSession(false).setAttribute("cards", null);
+            req.getSession(false).setAttribute("sum", 0);
         }
     }
 
@@ -209,7 +212,7 @@ public class OrderController extends HttpServlet {
                 orderlist = orderService.getAll();
             } catch (ExceptionService exceptionService) {
                 loggerService.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode." + exceptionService.getMessage());
-                req.getSession().setAttribute(errorFlag, "Erreur serveur. L'affichage des commandes est indisponible pour le moment.");
+                req.getSession().setAttribute(errorFlag, "Pas de commande à afficher.");
             }
             // Si l'utilisateur est un client, on trie les commandes pour ne récupérer que les siennes
             if(session.getAttribute("role").equals(String.valueOf(RoleDTO.CLIENT.getNum()))) { // Si c'est un client, on trie les commandes

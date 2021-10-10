@@ -22,7 +22,6 @@ import static eu.ensup.myresto.presentation.Common.succesFlag;
 )
 public class LoginController extends HttpServlet {
     String className = getClass().getName();
-
     public LoginController() {
         super();
     }

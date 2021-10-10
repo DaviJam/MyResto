@@ -32,6 +32,7 @@ public class OrderDao implements IDao<Order> {
     @Override
     public int create(Order entity) throws ExceptionDao {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        int id_order = 0;
         try {
             /*
              * CrÃ©er la connexion
@@ -41,7 +42,7 @@ public class OrderDao implements IDao<Order> {
             /*
              * Créer la requete
              */
-            String sql_request = "INSERT INTO Orders(" +
+            String sql_request = "INSERT INTO orders(" +
                     "order_date," +
                     "id_status," +
                     "id_user)" +
@@ -59,23 +60,26 @@ public class OrderDao implements IDao<Order> {
              */
             res = st.executeUpdate();
             ResultSet resultset = st.getGeneratedKeys();
-            int id_order = 0;
-            if(!resultset.next()){
 
-            }
-            else
-            {
+            if(resultset.next()) {
                 id_order = resultset.getInt(1);
+            }
+
+            cn.close();
+            cn = openConnection();
+
+            if(id_order > 0) {
+
+                String sql_request_list = "INSERT INTO list(" +
+                        "id_product," +
+                        "id_order," +
+                        "quantity)" +
+
+                        "VALUES(?, ?, ?) ";
 
                 // Ajout des produits dans la table List avec l'id de la commande
-                for(Product product : entity.getProduct())
-                {
-                    String sql_request_list = "INSERT INTO List(" +
-                            "id_product," +
-                            "id_order," +
-                            "quantity)" +
+                for (Product product : entity.getProduct()) {
 
-                            "VALUES(?, ?, ?) ";
                     st = cn.prepareStatement(sql_request_list);
                     st.setInt(1, product.getId());
                     st.setInt(2, id_order);
@@ -86,8 +90,6 @@ public class OrderDao implements IDao<Order> {
                 //*****************//
             }
 
-
-
             /*
              * Fermer la connexion
              */
@@ -96,13 +98,13 @@ public class OrderDao implements IDao<Order> {
             /**
              * Log to file
              */
-            DaoLogger.logDaoInfo(className, methodName,"La commande numéro " + entity.getId() + " a été créée");
+            DaoLogger.logDaoInfo(className, methodName,"La commande numéro " + id_order + " a été créée");
 
         } catch (SQLException e) {
             DaoLogger.logDaoError(className, methodName,"Problème d'ajout d'une commande à la base de donnée.",e);
             throw new ExceptionDao("Impossible de créer la commande. Veuillez contacter votre administrateur.");
         }
-        return res;
+        return id_order;
     }
 
     @Override
@@ -117,7 +119,7 @@ public class OrderDao implements IDao<Order> {
         Statement st = null;
         try {
             st = cn.createStatement();
-            st.execute("UPDATE Orders SET id_status = "+status.getNum()+" WHERE id_order="+index);
+            st.execute("UPDATE orders SET id_status = "+status.getNum()+" WHERE id_order="+index);
 
             DaoLogger.logDaoInfo(className, methodName,"Le statut de la commande numéro " + index + " a bien été modifié en " + status.toString());
             st.close();
@@ -142,7 +144,7 @@ public class OrderDao implements IDao<Order> {
 
         try{
             st = cn.createStatement();
-            res = st.executeQuery("SELECT * FROM Orders ORDER BY order_date");
+            res = st.executeQuery("SELECT * FROM orders ORDER BY order_date");
             while(res.next()){
                 allidOrders.add(res.getInt("id_order"));
             }
@@ -263,7 +265,7 @@ public class OrderDao implements IDao<Order> {
             try
             {
                 st = cn.createStatement();
-                st.execute("DELETE FROM List WHERE id_order="+index);
+                st.execute("DELETE FROM list WHERE id_order="+index);
 
                 DaoLogger.logDaoInfo(className, methodName,"La suppression des produits relié à la commande a réussie.");
                 st.close();
@@ -278,7 +280,7 @@ public class OrderDao implements IDao<Order> {
             {
                 cn = Connect.openConnection();
                 st = cn.createStatement();
-                st.execute("DELETE FROM Orders WHERE id_order="+index);
+                st.execute("DELETE FROM orders WHERE id_order="+index);
 
                 DaoLogger.logDaoInfo(className, methodName,"La suppression de la commande a réussie.");
                 st.close();

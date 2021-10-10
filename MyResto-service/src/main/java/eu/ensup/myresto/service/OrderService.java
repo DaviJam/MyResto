@@ -41,6 +41,7 @@ public class OrderService implements IService<OrderDTO>{
             for (Order o : this.dao.getAll())
                 listOrderDTO.add(OrderMapper.businessToDto(o));
         } catch (ExceptionDao exceptionDao) {
+            serviceLogger.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode." + exceptionDao);
             throw new ExceptionService(exceptionDao.getMessage());
         }
 

@@ -88,13 +88,14 @@ public class OrderTest {
         String role = "2";
         String emailuser = "youness@gmail.com";
         OrderService orderService = new OrderService();
+
         List<OrderDTO> orderlist = new ArrayList<OrderDTO>();
 
         try { // Récupération de toutes les commandes
             orderlist = orderService.getAll();
             System.out.println("order list : " + orderlist.toString());
         } catch (ExceptionService exceptionService) {
-            // exceptionService.printStackTrace();
+//             exceptionService.printStackTrace();
         }
         // Si l'utilisateur est un client, on trie les commandes pour ne récupérer que les siennes
         if(role == "1"){ // Si c'est un client, on trie les commandes

@@ -1,0 +1,44 @@
+version: '3.3'
+services:
+  mysql:
+    container_name: myresto-db
+    volumes:
+      - 'data:/var/lib/mysql'
+      - './Database:/docker-entrypoint-initdb.d'
+    environment:
+      - MYSQL_ROOT_PASSWORD=nono
+    image: mysql
+    ports:
+    - '3306:3306'
+    networks:
+      - local
+  web:
+    container_name: myresto-web
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+    - '8087:8080'
+    depends_on:
+      - mysql
+#    environment:
+#      - HOST=db
+#      - USER=odoo
+#      - PASSWORD=odoo
+    volumes:
+      - 'logs:/usr/local/tomcat/webapps/logs/'
+      #- /etc/timezone:/etc/timezone:ro
+      #- /etc/localtime:/etc/localtime:ro
+      # - ./entrypoint.sh:/entrypoint.sh   # if you want to install additional Python packages, uncomment this line!
+#      - ./addons:/mnt/extra-addons
+#      - ./etc:/etc/odoo
+    restart: always
+    networks:
+      - local
+networks:
+  local:
+    driver: bridge
+    name: LocalNetwork
+volumes:
+  logs:
+  data:

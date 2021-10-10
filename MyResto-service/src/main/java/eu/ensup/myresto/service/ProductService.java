@@ -144,7 +144,7 @@ public class ProductService implements IService<ProductDTO> {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         try
         {
-            return ProductMapper.businessToDto(this.productDao.getProductById(index));
+            return ProductMapper.businessToDto(this.productDao.get(index));
         }
         catch(ExceptionDao e)
         {
