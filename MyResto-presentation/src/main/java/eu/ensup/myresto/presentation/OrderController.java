@@ -226,9 +226,9 @@ public class OrderController extends HttpServlet {
             // Compute time since order and it to the map
             LinkedHashMap<OrderDTO, LinkedHashMap<String, String>> sinceTimeList = new LinkedHashMap<>();
             orderlist.forEach(e -> {
-                var w_map = new LinkedHashMap<String, String>();
-                var dateDiff = Date.from(Instant.now().minusSeconds(e.getOrder_date().toInstant().getEpochSecond()));
-                var calendar = new Calendar.Builder().setInstant(dateDiff).build();
+                LinkedHashMap w_map = new LinkedHashMap<String, String>();
+                Date dateDiff = Date.from(Instant.now().minusSeconds(e.getOrder_date().toInstant().getEpochSecond()));
+                Calendar calendar = new Calendar.Builder().setInstant(dateDiff).build();
 
                 w_map.put("hour", String.valueOf(calendar.get(Calendar.HOUR)-1));
                 w_map.put("minute", String.valueOf(calendar.get(Calendar.MINUTE)));

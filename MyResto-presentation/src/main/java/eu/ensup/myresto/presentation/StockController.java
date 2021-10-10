@@ -6,6 +6,7 @@ import eu.ensup.myresto.dto.ProductDTO;
 import eu.ensup.myresto.service.ExceptionService;
 import eu.ensup.myresto.service.LoggerService;
 import eu.ensup.myresto.service.ProductService;
+import org.javatuples.Triplet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -139,7 +140,7 @@ public class StockController extends HttpServlet {
                 String action = req.getParameter("action");
 
                 try {
-                    var productsinfo = productService.getOrderProducts(orderId);
+                    List<Triplet<Integer, Integer, Integer>> productsinfo = productService.getOrderProducts(orderId);
                     productsinfo.forEach(info->{
                         try {
                             if(action.equals("inprogress"))
