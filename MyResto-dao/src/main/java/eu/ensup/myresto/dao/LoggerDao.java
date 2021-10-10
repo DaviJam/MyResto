@@ -10,18 +10,18 @@ public class LoggerDao extends LoggerHandler {
     }
 
     public void logDaoError(String className, String methodName, String message) {
-        Logger.getLogger(IDao.class.getPackageName()).error("DAO Error: "+ className + " " + methodName + " - " + message);
+        Logger.getLogger(IDao.class.getSimpleName()).error("DAO Error: "+ className + " " + methodName + " - " + message);
     }
 
     public void logDaoError(String className, String methodName, String message, Exception exec) {
-        Logger.getLogger(IDao.class.getPackageName()).error("DAO Error: "+ className + " " + methodName + " - " + message + ". See exception : " +exec.getMessage());
+        Logger.getLogger(IDao.class.getSimpleName()).error("DAO Error: "+ className + " " + methodName + " - " + message + ". See exception : " +exec.getMessage());
     }
 
     public void logDaoError(String message) {
-        Logger.getLogger(IDao.class.getPackageName()).error("DAO Error: "+message);
+        Logger.getLogger(IDao.class.getSimpleName()).error("DAO Error: "+message);
     }
 
     public void logDaoInfo(String className, String methodName, String message) {
-        Logger.getLogger(IDao.class.getPackageName()).info("DAO Info: "+ className + " " + methodName + " - " + message);
+        Logger.getLogger(IDao.class.getSimpleName()).info("DAO Info: "+ className + " " + methodName + " - " + message);
     }
 }
