@@ -1,4 +1,4 @@
-FROM tomcat:7-jdk8
+FROM tomcat:7.0.108-jdk8-openjdk
 LABEL maintainer="David JAMES"
 RUN apt update -y
 RUN apt-get install maven -y
