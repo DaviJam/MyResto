@@ -105,7 +105,7 @@
                     <configuration>
                         <uriEncoding>UTF-8</uriEncoding>
                         <url>${server-url}</url>
-                        <server>tomcat9</server>
+                        <server>tomcat7</server>
                         <path>/myresto</path>
                         <warFile>target/${project.build.finalName}.war</warFile>
                         <update>true</update>
