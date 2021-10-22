@@ -8,10 +8,9 @@ RUN tar xvzf apache-tomcat-7.0.47.tar.gz --directory /opt/tomcat
 RUN wget https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.6.3/apache-maven-3.6.3-bin.tar.gz
 RUN tar xvzf apache-maven-3.6.3-bin.tar.gz --directory /opt/apache/
 RUN ln -s /opt/apache/apache-maven-3.6.3/bin/mvn /usr/bin
-RUN export MAVEN_HOME=/opt/apache/apache-maven-3.6.3
+ENV MAVEN_HOME=/opt/apache/apache-maven-3.6.3
 RUN export PATH=$PATH:$MAVEN_HOME/bin
-RUN mvn --version
-CMD ["ls"]
+
 ENV CATALINA_HOME=/opt/tomcat/apache-tomcat-7.0.47
 
 ENV JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk
@@ -19,9 +18,10 @@ ENV JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk
 WORKDIR /opt/tomcat/apache-tomcat-7.0.47
 
 ENV TOMCAT_NATIVE_LIBDIR=/opt/tomcat/native-jni-lib
+RUN export PATH=$PATH:$TOMCAT_NATIVE_LIBDIR
 
 #COPY --from=build /app/MyResto-presentation/target/myresto.war /opt/tomcat/webapps/myresto.war
-#COPY --from=build /app/MyResto-presentation/target/myresto/WEB-INF/lib/mysql-connector-java-8.0.22.jar /opt/tomcat/lib/mysql-connector-java-8.0.22.jar
+COPY /MyResto-presentation/target/myresto/WEB-INF/lib/mysql-connector-java-8.0.22.jar /opt/tomcat/apache-tomcat-7.0.47/lib/mysql-connector-java-8.0.22.jar
 COPY tomcat-users.xml /opt/tomcat/apache-tomcat-7.0.47/conf/tomcat-users.xml
 
 COPY context.xml /opt/tomcat/apache-tomcat-7.0.47/conf/context.xml
