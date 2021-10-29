@@ -30,7 +30,7 @@
             <c:forEach items="${listProduct}" var="product">
                 <div class="card" data-category="${ product.category.getNum() }">
                     <div class="link-product" href="product/${ product.id }">
-                        <img class="home-img" src="${ product.image }" alt="">
+                        <img class="home-img" src="${pageContext.request.contextPath}/${ product.image }" alt="">
                         <p>${ product.name }</p>
                         <span>${ product.price }€</span>
                     </div>

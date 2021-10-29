@@ -22,7 +22,6 @@ import java.util.ArrayList;
             "/card_delete", // POST - update current basket
         }
 )
-
 public class CardController extends HttpServlet {
 
     public CardController() {

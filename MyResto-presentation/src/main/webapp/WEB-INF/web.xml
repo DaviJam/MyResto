@@ -6,16 +6,42 @@
          http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
 
   <display-name>Archetype Created Web Application</display-name>
-
-
+<!--  <error-page>-->
+<!--    <exception-type>java.lang.Exception</exception-type>-->
+<!--    <location>/home</location>-->
+<!--  </error-page>-->
+<!--  <servlet>-->
+<!--    <servlet-name>HomeController</servlet-name>-->
+<!--    <servlet-class>eu.ensup.myresto.presentation.HomeController</servlet-class>-->
+<!--  </servlet>-->
+<!--  <servlet-mapping>-->
+<!--    <servlet-name>HomeController</servlet-name>-->
+<!--    <url-pattern>/</url-pattern>-->
+<!--  </servlet-mapping>-->
   <error-page>
-    <exception-type>java.lang.Exception</exception-type>
-    <location>/home</location>
+    <!-- Missing login -->
+    <error-code>401</error-code>
+    <location>/error-page.html</location>
   </error-page>
-
   <error-page>
+    <!-- Forbidden directory listing -->
+    <error-code>403</error-code>
+    <location>/error-page.html</location>
+  </error-page>
+  <error-page>
+    <!-- Missing resource -->
     <error-code>404</error-code>
-    <location>/home</location>
+    <location>/error-page.html</location>
+  </error-page>
+  <error-page>
+    <!-- Uncaught exception -->
+    <error-code>500</error-code>
+    <location>/error-page.html</location>
+  </error-page>
+  <error-page>
+    <!-- Unsupported servlet method -->
+    <error-code>503</error-code>
+    <location>/error-page.html</location>
   </error-page>
 </web-app>
 

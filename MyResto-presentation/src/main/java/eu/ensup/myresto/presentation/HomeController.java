@@ -1,19 +1,15 @@
 package eu.ensup.myresto.presentation;
 
 import eu.ensup.myresto.business.Category;
-import eu.ensup.myresto.business.Product;
 import eu.ensup.myresto.dto.ProductDTO;
 import eu.ensup.myresto.service.*;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -72,10 +68,7 @@ documentedproject-1.0-SNAPSHOT.war
 //https://colorhunt.co/palette/273466
 @WebServlet(
         name = "HomeController",
-        urlPatterns = {
-                "/home"
-        }
-
+        value = "/home"
 )
 public class HomeController extends HttpServlet {
     String className = getClass().getName();
@@ -95,7 +88,6 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
-
         try {
             /**
              * Set the content type

@@ -8,8 +8,8 @@
     <%@include file="card.jsp" %>
 
     <header>
-        <img src="img/menu.svg" alt="" onclick="document.querySelector('header').classList.toggle('active');">
-        <img src="img/card.svg" alt="" id="card" onclick="document.querySelector('#modal_card').classList.toggle('active');">
+        <img src="${pageContext.request.contextPath}/img/menu.svg" alt="" onclick="document.querySelector('header').classList.toggle('active');">
+        <img src="${pageContext.request.contextPath}/img/card.svg" alt="" id="card" onclick="document.querySelector('#modal_card').classList.toggle('active');">
         <span id="productCount" style="background-color: #fd734e;
         padding: 4px;
         border-radius: 20px;
@@ -34,17 +34,17 @@
         </ul>
     </header>
     
-    <img src="img/burger.png" alt="" style="width: 100%; position: absolute; top: 0; left: -50%; transition: 0.8s all ease;" id="icon">
+    <img src="${pageContext.request.contextPath}/img/burger.png" alt="" style="width: 100%; position: absolute; top: 0; left: -50%; transition: 0.8s all ease;" id="icon">
     
     <div class="relative center">
-        <img src="img/burger.png" alt="" style="width: 100%; position: absolute; top: 0; left: -50%;" id="base">
+        <img src="${pageContext.request.contextPath}/img/burger.png" alt="" style="width: 100%; position: absolute; top: 0; left: -50%;" id="base">
         <h1 class="main-title" style="margin: 8rem 0; text-align: right;">Famous burger</h1>
         <!--
         <span class="defaut-title">4 produits trouvés</span>
         <div class="v-carrousel">
             <div class="card">
                 <a class="link-product" href="">
-                    <img src="img/burger.png" alt="">
+                    <img src="${pageContext.request.contextPath}/img/burger.png" alt="">
                     <p>Famous burger</p>
                 </a>
                 <a class="link-add-card" href="">Ajouter au panier</a>
@@ -52,7 +52,7 @@
 
             <div class="card">
                 <a class="link-product" href="">
-                    <img src="img/burger.png" alt="">
+                    <img src="${pageContext.request.contextPath}/img/burger.png" alt="">
                     <p>Famous burger</p>
                 </a>
                 <a class="link-add-card" href="">Ajouter au panier</a>
@@ -60,7 +60,7 @@
 
             <div class="card">
                 <a class="link-product" href="">
-                    <img src="img/burger.png" alt="">
+                    <img src="${pageContext.request.contextPath}/img/burger.png" alt="">
                     <p>Famous burger</p>
                 </a>
                 <a class="link-add-card" href="">Ajouter au panier</a>
@@ -68,7 +68,7 @@
 
             <div class="card">
                 <a class="link-product" href="">
-                    <img src="img/burger.png" alt="">
+                    <img src="${pageContext.request.contextPath}/img/burger.png" alt="">
                     <p>Famous burger</p>
                 </a>
                 <a class="link-add-card" href="">Ajouter au panier</a>

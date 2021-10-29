@@ -1,7 +1,7 @@
 <%@ page pageEncoding="UTF-8" %>
 <header>
-    <img src="img/menu.svg" alt="" onclick="document.querySelector('header').classList.toggle('active');">
-    <img src="img/shopping-cart-solid.svg" width="24" height="24" alt="" id="card" onclick="document.querySelector('#modal_card').classList.toggle('active');">
+    <img src="${pageContext.request.contextPath}/img/menu.svg" alt="" onclick="document.querySelector('header').classList.toggle('active');">
+    <img src="${pageContext.request.contextPath}/img/shopping-cart-solid.svg" width="24" height="24" alt="" id="card" onclick="document.querySelector('#modal_card').classList.toggle('active');">
     <span class="cardCount">0</span>
     <ul class="nav">
         <% String foo = request.getRequestURI().toString(); %>

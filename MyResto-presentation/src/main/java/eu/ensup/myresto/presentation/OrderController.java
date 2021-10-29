@@ -8,8 +8,6 @@ import eu.ensup.myresto.service.ExceptionService;
 import eu.ensup.myresto.service.LoggerService;
 import eu.ensup.myresto.service.OrderService;
 import eu.ensup.myresto.service.UserService;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

@@ -15,7 +15,7 @@
             <c:forEach items="${listProduct}" var="product">
                 <div class="product">
                     <div class="product-body">
-                        <img src="${ product.image }" alt="">
+                        <img src="${pageContext.request.contextPath}/${ product.image }" alt="">
                         <span>${ product.name }</span>
                     </div>
                     <div class="product-action">

@@ -7,10 +7,10 @@
             <c:forEach items="${cards}" var="card" varStatus="loop">
                 <div class="product no-float">
                     <div class="product-body">
-                        <img src="${ card.image }" alt="">
+                        <img src="${pageContext.request.contextPath}/${ card.image }" alt="">
                         <span>${ card.name } <b> x1</b></span>
                     </div>
-                    <img src="img/delete.svg" alt="" class="delete-product" data="${loop.index}" onclick="card_delete(this)">
+                    <img src="${pageContext.request.contextPath}/img/delete.svg" alt="" class="delete-product" data="${loop.index}" onclick="card_delete(this)">
                 </div>
                 <hr>
             </c:forEach>

@@ -30,8 +30,8 @@ COPY context.xml /opt/tomcat/apache-tomcat-7.0.47/webapps/manager/META-INF/conte
 
 RUN apk update
 RUN apk add coreutils
-RUN apk add git -y
-RUN apk add net-tools -y
+RUN apk add git
+RUN apk add net-tools
 
 RUN mkdir /tmp/MyResto
 RUN git clone https://github.com/DaviJam/MyResto.git /tmp/MyResto
@@ -40,5 +40,6 @@ RUN mvn install
 RUN mv /tmp/MyResto/MyResto-presentation/target/myresto.war /opt/tomcat/apache-tomcat-7.0.47/webapps/
 
 EXPOSE 8080
-
+#WORKDIR /tmp/MyResto/MyResto-presentation
+#CMD ["mvn", "tomcat7:run"]
 CMD ["/opt/tomcat/apache-tomcat-7.0.47/bin/catalina.sh", "run"]
